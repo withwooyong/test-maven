@@ -116,7 +116,7 @@ public class GraphForVmstat {
 				}
 				// valid line
 				if (line.charAt(2) == '/') {
-					// timestamp付き
+					// timestamp
 					timestamp.setTime(sdf.parse(line.substring(0, 17)));
 					line = line.substring(17).trim();
 				}
