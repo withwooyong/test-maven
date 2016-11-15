@@ -47,6 +47,7 @@ public class JunitTest {
 
 	@Test
 	public void test() {
+		System.out.println("test");
 		fail("Not yet implemented");
 	}
 
