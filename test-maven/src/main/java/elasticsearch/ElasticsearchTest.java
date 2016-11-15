@@ -1,4 +1,4 @@
-package elasticsearchtest;
+package elasticsearch;
 
 public class ElasticsearchTest {
 
