@@ -38,9 +38,26 @@ public class PermMissingElem {
 		
 	}
 	
-	
-	
 	public int solution(int[] A) {
+        // write your code in Java SE 8
+        
+        boolean occurred[] = new boolean[A.length + 2];
+        
+        for(int i = 0 ; i < A.length ; i++){
+            int occurredNumber = A[i];
+            occurred[occurredNumber] = true;
+        }
+        
+        for(int i = 1 ; i < occurred.length ; i++){
+            if(!occurred[i]){
+                return i;
+            }
+        }
+        
+        return 0;
+    }
+	
+	public int solution2(int[] A) {
 		long N = A.length;
 		long sum = ((N + 1) * (N + 2)) / 2;
 		for (int i = 0; i < N; i++) {

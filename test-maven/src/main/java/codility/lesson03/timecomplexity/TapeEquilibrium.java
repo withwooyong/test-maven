@@ -80,8 +80,30 @@ public class TapeEquilibrium {
 //			System.out.println(Math.abs(input[i]));
 //		}
 	}
-
+	
 	public static int solution(int[] A) {
+        // write your code in Java SE 8
+        
+        int front = 0;
+        int back = 0;
+        for(int i = 0 ; i < A.length ; i++){
+            back += A[i];   
+        }
+        
+        int minDiff = Integer.MAX_VALUE;
+        int p = 1;
+        for(int i = 1 ; i < A.length ; i++){
+            front += A[i-1];
+            back -= A[i-1];
+            p = i;
+            minDiff = Math.min(minDiff, Math.abs(front - back));
+        }
+        
+        return minDiff;
+        
+    }
+
+	public static int solution2(int[] A) {
 
 		int minVal = 0;
 		int arrayLength = A.length;

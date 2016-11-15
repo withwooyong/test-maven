@@ -41,6 +41,27 @@ public class MissingInteger {
 	}
 	
 	public int solution(int[] A) {
+        // write your code in Java SE 8
+        
+        boolean checker[] = new boolean[A.length + 1];
+        
+        for(int i = 0 ; i < A.length ; i++){
+            int value = A[i];
+            if(value > 0 && value < checker.length){
+                checker[value] = true;
+            }
+        }
+        
+        for(int i = 1 ; i < checker.length ; i++){
+            if(checker[i] == false){
+                return i;   
+            }
+        }
+        
+        return checker.length;
+    }
+	
+	public int solution3(int[] A) {
 		HashSet<Integer> set = new HashSet<>();
 		
 		for (int i = 0; i < A.length; i++) {

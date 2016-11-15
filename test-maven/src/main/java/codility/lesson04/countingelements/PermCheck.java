@@ -63,6 +63,29 @@ public class PermCheck {
 	}
 	
 	public int solution(int[] A) {
+        // write your code in Java SE 8
+        
+        boolean checker[] = new boolean[A.length+1];
+        
+        for(int i = 0 ; i < A.length; i++){
+            int value = A[i];
+            if(value < checker.length){
+                checker[value] = true;   
+            }
+        }
+        
+        int result = 1;
+        for(int i = 1 ; i < checker.length ; i++){
+            if(checker[i] == false){
+                result = 0;
+                break;
+            }
+        }
+        
+        return result;
+    }
+	
+	public int solution2(int[] A) {
 		int max = 0;
 		HashSet<Integer> set = new HashSet<>();
 		for (int i = 0; i < A.length; i++) {
