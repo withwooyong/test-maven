@@ -1,14 +1,35 @@
 package codility.lesson02.arrays;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 public class Arrays {
+	
+	public static void main(String[] args) {
+		//solutionA();
+		//solutionB();
+		reverse();
+	}
+	
+	public static void test() {
+		int[] A = new int[] { 2, 1, 5, 1, 2, 2, 2 };
+		
+	}
+	
+	public static void solutionB() {
+		char[] B = new char[10];
+		for (char c : B) {
+			System.out.println("test=" + c);
+		}
+	}
 
-	@Test
-	public void test() {
-		fail("Not yet implemented");
+	public static void solutionA() {
+		int[] A = new int[10];
+		for (int i : A) {
+			System.out.println(i);
+		}
+	}
+	
+	public static void reverse() {
+		String str = "abcd";
+		System.out.println(new StringBuilder(str).reverse().toString());
 	}
 
 }

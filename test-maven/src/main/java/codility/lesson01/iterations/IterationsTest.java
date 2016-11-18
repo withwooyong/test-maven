@@ -24,34 +24,6 @@ public class IterationsTest {
 	private static final Logger log = LoggerFactory.getLogger(IterationsTest.class);
 	
 	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@After
-	public void tearDown() throws Exception {
-	}
-	
-	/**
 	 * Example: We are given some positive integer n. 
 	 * Let’s compute the factorial of n and assign it to the variable factorial. 
 	 * The factorial of n is n! = 1 · 2 · . . . · n. 
