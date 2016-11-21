@@ -72,7 +72,8 @@ package codility.solution.sorting;
 
 public class NumberOfDiscIntersection {
 	public static void main(String[] args) {
-		int[] A = new int[] { 1, 5, 2, 1, 4, 0 };
+		//int[] A = new int[] { 1, 5, 2, 1, 4, 0 };
+		int[] A = new int[] { 1, 2, 6, 5, 5, 8, 9 };
 		System.out.println(solution(A));
 	}
 

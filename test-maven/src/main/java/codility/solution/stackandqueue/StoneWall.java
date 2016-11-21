@@ -64,6 +64,7 @@ public class StoneWall {
 
 	public static void main(String[] args) {
 		int[] A = new int[] { 8, 8, 5, 7, 9, 8, 7, 4, 8 };
+		//int[] A = new int[] { 1, 2, 6, 5, 5, 8, 9 };
 		System.out.println(solution(A));
 	}
 
