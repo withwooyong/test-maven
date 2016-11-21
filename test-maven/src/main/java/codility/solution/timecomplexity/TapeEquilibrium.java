@@ -1,5 +1,6 @@
 /*
-	A non-empty zero-indexed array A consisting of N integers is given. Array A represents numbers on a tape.
+	A non-empty zero-indexed array A consisting of N integers is given. 
+	Array A represents numbers on a tape.
 	Any integer P, such that 0 < P < N, splits this tape into two non-empty parts: A[0], A[1], ..., A[P − 1] and A[P], A[P + 1], ..., A[N − 1].
 	The difference between the two parts is the value of: |(A[0] + A[1] + ... + A[P − 1]) − (A[P] + A[P + 1] + ... + A[N − 1])|
 	In other words, it is the absolute difference between the sum of the first part and the sum of the second part.
@@ -14,8 +15,10 @@
 	P = 2, difference = |4 − 9| = 5 
 	P = 3, difference = |6 − 7| = 1 
 	P = 4, difference = |10 − 3| = 7 
+	
 	Write a function:
 	class Solution { public int solution(int[] A); }
+	
 	that, given a non-empty zero-indexed array A of N integers, returns the minimal difference that can be achieved.
 	For example, given:
 	  A[0] = 3
@@ -24,16 +27,20 @@
 	  A[3] = 4
 	  A[4] = 3
 	the function should return 1, as explained above.
+	
 	Assume that:
 	N is an integer within the range [2..100,000];
 	each element of array A is an integer within the range [−1,000..1,000].
+	
 	Complexity:
 	expected worst-case time complexity is O(N);
 	expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
 	Elements of input arrays can be modified.
 	
-	N 개의 정수로 구성된 비어 있지 않은 제로 색인 배열 A가 주어진다. 배열 A는 테이프의 숫자를 나타냅니다.
-	0 <P <N 인 모든 정수 P는이 테이프를 두 개의 비어 있지 않은 부분으로 나눕니다. A [0], A [1], ..., A [P-1] 및 A [P] P + 1], ..., A [N-1]이다.
+	N 개의 정수로 구성된 비어 있지 않은 제로 색인 배열 A가 주어진다. 
+	배열 A는 테이프의 숫자를 나타냅니다.
+	0 <P <N 인 모든 정수 P는이 테이프를 두 개의 비어 있지 않은 부분으로 나눕니다. 
+	A [0], A [1], ..., A [P-1] 및 A [P] P + 1], ..., A [N-1]이다.
 	두 부분의 차이는 | (A [0] + A [1] + ... + A [P - 1]) - (A [P] + A [P + 1] +)의 값입니다. + A [N-1]) |
 	즉, 첫 번째 부분의 합과 두 번째 부분의 합 사이의 절대 차이입니다.
 	

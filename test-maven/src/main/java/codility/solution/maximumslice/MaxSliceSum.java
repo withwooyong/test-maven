@@ -1,8 +1,12 @@
 /*
-	A non-empty zero-indexed array A consisting of N integers is given. A pair of integers (P, Q), such that 0 ≤ P ≤ Q < N, is called a slice of array A. The sum of a slice (P, Q) is the total of A[P] + A[P+1] + ... + A[Q].
+	A non-empty zero-indexed array A consisting of N integers is given. 
+	A pair of integers (P, Q), such that 0 ≤ P ≤ Q < N, is called a slice of array A. 
+	The sum of a slice (P, Q) is the total of A[P] + A[P+1] + ... + A[Q].
+	
 	Write a function:
 	int solution(int A[], int N);
 	that, given an array A consisting of N integers, returns the maximum sum of any slice of A.
+	
 	For example, given array A such that:
 	A[0] = 3  A[1] = 2  A[2] = -6
 	A[3] = 4  A[4] = 0
@@ -11,16 +15,19 @@
 	(2, 2) is a slice of A that has sum −6,
 	(0, 1) is a slice of A that has sum 5,
 	no other slice of A has sum greater than (0, 1).
+	
 	Assume that:
 	N is an integer within the range [1..1,000,000];
 	each element of array A is an integer within the range [−1,000,000..1,000,000];
 	the result will be an integer within the range [−2,147,483,648..2,147,483,647].
+	
 	Complexity:
 	expected worst-case time complexity is O(N);
 	expected worst-case space complexity is O(1), beyond input storage (not counting the storage required for input arguments).
 	Elements of input arrays can be modified.
 	
-	N 개의 정수로 구성된 비어 있지 않은 제로 색인 배열 A가 주어진다. 0 ≤ P ≤ Q <N이되도록 한 쌍의 정수 (P, Q)를 배열 A의 슬라이스 라 부른다. 
+	N 개의 정수로 구성된 비어 있지 않은 제로 색인 배열 A가 주어진다. 
+	0 ≤ P ≤ Q <N이되도록 한 쌍의 정수 (P, Q)를 배열 A의 슬라이스 라 부른다. 
 	슬라이스 (P, Q)의 합은 A [P] + A [P +1] + ... + A [Q]이다.
 	
 	함수 작성 :

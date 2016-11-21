@@ -22,6 +22,7 @@
 	    (3, 2, 2, 3, 2)
 	    (3, 2, 2, 4, 2)
 	The goal is to calculate the value of every counter after all operations.
+	
 	Write a function:
 	class Solution { public int[] solution(int N, int[] A); }
 	that, given an integer N and a non-empty zero-indexed array A consisting of M integers, returns a sequence of integers representing the values of the counters.

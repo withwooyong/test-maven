@@ -4,13 +4,17 @@
 	if you are on rung K, you can move to rungs K + 1 or K + 2,
 	finally you have to stand on rung N.
 	Your task is to count the number of different ways of climbing to the top of the ladder.
-	For example, given N = 4, you have five different ways of climbing, ascending by:
+	
+	For example, given N = 4, you have five different ways of climbing, 
+	ascending by:
 	1, 1, 1 and 1 rung,
 	1, 1 and 2 rungs,
 	1, 2 and 1 rung,
 	2, 1 and 1 rungs, and
 	2 and 2 rungs.
-	Given N = 5, you have eight different ways of climbing, ascending by:
+	
+	Given N = 5, you have eight different ways of climbing, 
+	ascending by:
 	1, 1, 1, 1 and 1 rung,
 	1, 1, 1 and 2 rungs,
 	1, 1, 2 and 1 rung,
@@ -20,9 +24,12 @@
 	2, 1 and 2 rungs, and
 	2, 2 and 1 rung.
 	The number of different ways can be very large, so it is sufficient to return the result modulo 2P, for a given integer P.
+	
 	Write a function:
 	class Solution { public int[] solution(int[] A, int[] B); }
-	that, given two non-empty zero-indexed arrays A and B of L integers, returns an array consisting of L integers specifying the consecutive answers; position I should contain the number of different ways of climbing the ladder with A[I] rungs modulo 2B[I].
+	that, given two non-empty zero-indexed arrays A and B of L integers, returns an array consisting of L integers specifying the consecutive answers; 
+	position I should contain the number of different ways of climbing the ladder with A[I] rungs modulo 2B[I].
+	
 	For example, given L = 5 and:
 	    A[0] = 4   B[0] = 3
 	    A[1] = 4   B[1] = 2
@@ -30,10 +37,12 @@
 	    A[3] = 5   B[3] = 3
 	    A[4] = 1   B[4] = 1
 	the function should return the sequence [5, 1, 8, 0, 1], as explained above.
+	
 	Assume that:
 	L is an integer within the range [1..30,000];
 	each element of array A is an integer within the range [1..L];
 	each element of array B is an integer within the range [1..30].
+	
 	Complexity:
 	expected worst-case time complexity is O(L);
 	expected worst-case space complexity is O(L), beyond input storage (not counting the storage required for input arguments).
@@ -42,10 +51,10 @@
 	사다리를 타고 올라 가야합니다. 
 	사다리는 1에서 N까지 번호가 매겨진 N 개의 렁이 있습니다. 
 	각 단계마다 하나 또는 두 개의 렁이 올라갈 수 있습니다. 
+	
 	더 정확하게:
 	당신의 첫 번째 단계에서 당신은 1 또는 2 단계에 서있을 수 있습니다,
-	R 단계에있는 경우 K + 1 또는 K + 2 단계로 이동할 수 있으며,
-	마침내 너는 열 N에서야한다.
+	R 단계에있는 경우 K + 1 또는 K + 2 단계로 이동할 수 있으며, 마침내 너는 열 N에서야한다.
 	너의 임무는 등반의 다른 방법의 수를 사다리 꼭대기에 세는 것이다.
 	
 	예를 들어 N = 4 일 때 다음과 같은 다섯 가지 등반 방법이 있습니다.
@@ -63,7 +72,8 @@
 	2, 1, 1 및 1 단계,
 	2, 1 및 2 단계 및
 	2, 2 및 1 단계.
-	다른 방법의 수는 매우 클 수 있습니다. 따라서 주어진 정수 P에 대해 2P를 기준으로 결과를 반환하는 것으로 충분합니다.
+	다른 방법의 수는 매우 클 수 있습니다. 
+	따라서 주어진 정수 P에 대해 2P를 기준으로 결과를 반환하는 것으로 충분합니다.
 	
 	함수 작성 :
 	클래스 솔루션 {public int [] solution (int [] A, int [] B); }

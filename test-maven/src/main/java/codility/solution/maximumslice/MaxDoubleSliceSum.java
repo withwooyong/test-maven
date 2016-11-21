@@ -15,7 +15,9 @@
 	double slice (0, 3, 6), sum is 2 + 6 + 4 + 5 = 17,
 	double slice (0, 3, 7), sum is 2 + 6 + 4 + 5 − 1 = 16,
 	double slice (3, 4, 5), sum is 0.
+	
 	The goal is to find the maximal sum of any double slice.
+	
 	Write a function:
 	class Solution { public int solution(int[] A); }
 	that, given a non-empty zero-indexed array A consisting of N integers, returns the maximal sum of any double slice.
@@ -29,9 +31,11 @@
 	    A[6] = -1
 	    A[7] = 2
 	the function should return 17, because no double slice of array A has a sum of greater than 17.
+	
 	Assume that:
 	N is an integer within the range [3..100,000];
 	each element of array A is an integer within the range [−10,000..10,000].
+	
 	Complexity:
 	expected worst-case time complexity is O(N);
 	expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
