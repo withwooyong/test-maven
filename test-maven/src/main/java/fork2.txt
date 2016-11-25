@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <regex.h>
+
+#define BUF_SIZE 1024
+int main()
+{
+   pid_t pid;
+   pid   = fork();
+   char buff[BUF_SIZE];
+   FILE *fp;
+   const char *pattern1 = "Duration: (.*?), start:";
+   const char *pattern2 = "time=(.*?) bitrate";
+   regex_t state;
+   int status;
+   char *pos;
+   char *delimiter = ":";
+   double totalsecs;
+   double progress;
+   char HH[2];
+   char mm[2];
+   char ss[2];
+
+   switch( pid)
+   {
+      case -1:
+      {
+         printf( "child process fail\n");
+         return -1;
+      }
+      case 0:
+      {
+         popen("ffmpeg -y -i /home/tvingadmin/ffmpeg/160713.mp4 -vcodec libx264 -s 320x180 -b:v 300k -r 30 -acodec aac -ac 2 -ar 44.1k -ab 64k -threads 16 /home/tvingadmin/ffmpeg/160713_0300.mp4 2>&1 | tr '\r' '\n' > 160713.log", "r"); 
+         sleep( 1);
+      }
+      default:
+      {
+         printf( "# child pid는 %d\n", pid);
+         sleep( 1); // file create time delay
+
+         fp = popen("tail -f 160713.log", "r");
+
+         if (NULL == fp) {
+            printf( "read fail\n");
+            perror("# popen() 실패");
+            return -1;
+         }
+
+         // ffmpeg 실행로그
+         while(fgets(buff, BUF_SIZE, fp)) {
+             if (regcomp(&state, pattern1, REG_EXTENDED)) {
+                 printf( "# not match\n");
+             } else {
+                 status = regexec(&state, buff, 0, NULL, 0);
+    
+                 if (status == 0) { // match
+                     //printf( "# %s", buff); // Duration: 00:59:18.99, start: 0.000000, bitrate: 3132 kb/s
+                     pos = strtok(buff, delimiter); // Duration
+                     pos = strtok(NULL, delimiter); // 00
+                     strcpy(HH, pos);
+                     pos = strtok(NULL, delimiter); // 59
+                     strcpy(mm, pos);
+                     pos = strtok(NULL, delimiter); // 18.99, start
+                     pos = strtok(pos, "."); // 18
+                     strcpy(ss, pos);
+                     totalsecs = atoi(HH) * 3600 + atoi(mm) * 60 + atoi(ss);
+                     printf( "totalsecs = ## %s %s %s %.2f \n", HH, mm, ss, totalsecs);
+                     //while(ptr != NULL ) {
+                       //  printf( "# %s\n" , pos);
+                     //}
+                 }
+             }
+             
+             if (regcomp(&state, pattern2, REG_EXTENDED)) {
+                 printf( "# not match\n");
+             } else {
+                 status = regexec(&state, buff, 0, NULL, 0);
+                  
+                 if (status == 0) { // match
+                    pos = strtok(buff, delimiter); // 
+                    //printf ("pos ## %s\n", pos); 
+                    strcpy(HH, pos + (strlen(pos)-2));
+                    //printf ("HH ## %s\n", HH);
+                    pos = strtok(NULL, delimiter); // 59
+                    strcpy(mm, pos);
+                    //printf ("mm ## %s\n", mm);
+                    pos = strtok(NULL, delimiter); // 18.99, start
+                    pos = strtok(pos, "."); // 18
+                    strcpy(ss, pos);
+                    //printf ("ss ## %s\n", ss);
+                    printf( "%d %d %d \n", atoi(HH)*3600, atoi(mm) * 60, atoi(ss));
+                    progress = ((atoi(HH) * 3600) + (atoi(mm) * 60) + atoi(ss)) / totalsecs;
+                    printf( "progress2 ## %s %s %s %.2f %.2f % \n", HH, mm, ss, progress, (progress * 100));
+                 }
+             }
+         }
+         printf("### end ###\n");
+         pclose( fp);
+         sleep( 1);
+      }
+   }
+   return 0;
+}

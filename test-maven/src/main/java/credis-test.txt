@@ -1,0 +1,43 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/time.h>
+
+#include "credis.h"
+
+int main() {
+    REDIS redis;
+    REDIS_INFO info;
+    char *val, **valv, lstr[50000];
+    const char *value[] = {
+                            "priority": 0,
+                            "correlation_ID": "FFMPEG-COMMAND-52518088236937888",
+                            "srcfile": "/home/tvingadmin/ffmpeg/in/160713 나는 자연인이다 200회.mp4",
+                            "destfile1": "/home/tvingadmin/ffmpeg/out/52518088236937888.01.mp4",
+                            "destfile2": "/home/tvingadmin/ffmpeg/out/52518088236937888.02.mp4",
+                            "destfile3": "/home/tvingadmin/ffmpeg/out/52518088236937888.03.mp4",
+                            "destfile4": "/home/tvingadmin/ffmpeg/out/52518088236937888.04.mp4",
+                            "destfile5": "/home/tvingadmin/ffmpeg/out/52518088236937888.05.mp4",
+                            "progress": 100
+                        };
+    int rc;
+  
+    redis = credis_connect("119.149.188.226", 6379, 10000);
+  
+    if (redis == NULL) {
+        printf("Error connecting to Redis server. Please start server to run tests.\n");
+        exit(1);
+    }    
+    
+    if (credis_set(redis, "credis1", "value1") != 0)
+        printf("get returned error\n");
+    }
+    
+    rc = credis_getset(redis, "credis1", "credis1", &value);
+    printf("getset returned: %s\n", &value);
+    
+    credis_close(redis);
+    exit(0);
+  
+    return 0;
+}

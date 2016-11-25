@@ -1,17 +1,11 @@
 package algorithm.recursion;
 
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 public class Powerset {
 
 	public static void main(String[] args) {
 		// powerSet(5);
-		
-		
-		
 	}
 
 	private static char data[] = { 'a', 'b', 'c', 'd', 'e', 'f' };
@@ -28,6 +22,7 @@ public class Powerset {
 			System.out.println();
 			return;
 		}
+		
 		include[k] = false;
 		powerSet(k + 1);
 		include[k] = true;
