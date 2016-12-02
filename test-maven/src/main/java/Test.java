@@ -6,10 +6,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Optional;
 
 public class Test {
 	
+	protected static Logger log = LoggerFactory.getLogger(Test.class);
 	
 	public static void main(String[] args) throws IOException {
 		//BufferedReadWrite();
@@ -24,6 +28,9 @@ public class Test {
 		testList.add("test");
 		testList.add("test1");
 		System.out.println(testList.get(1));
+		
+		double dTest = 77.852;
+		log.info("{}", dTest);
 		
 		//Strings.isNullOrEmpty(string)
 	}

@@ -108,6 +108,7 @@ public class MinMaxDivision {
 		System.out.println(solution(K, M, A));
 	}
 
+	// 분할 K 최고값 M 배열 A
 	public static int solution(int K, int M, int[] A) {
 		int sum = 0;
 		int largestEl = 0;
@@ -121,20 +122,7 @@ public class MinMaxDivision {
 		int idealMin = Math.max((int) Math.ceil((double) sum / K), largestEl);
 		return binarySearchIterative(idealMin, sum, A, K);
 	}
-
-	public static int binarySearchRecursive(int min, int max, int[] A, int K) {
-		if (max - min < 2)
-			if (verifySolution(min, A, K))
-				return min;
-			else
-				return max;
-		int middle = (min + max) / 2;
-		if (verifySolution(middle, A, K))
-			return binarySearchRecursive(min, middle, A, K);
-		else
-			return binarySearchRecursive(middle, max, A, K);
-	}
-
+	
 	public static int binarySearchIterative(int min, int max, int[] A, int K) {
 		int res = 0;
 		int beg = min;
@@ -149,7 +137,7 @@ public class MinMaxDivision {
 		}
 		return res;
 	}
-
+	
 	public static boolean verifySolution(int x, int[] A, int K) {
 		int tmp = 0;
 		int count = 1;
@@ -165,4 +153,17 @@ public class MinMaxDivision {
 		}
 		return true;
 	}
+
+	public static int binarySearchRecursive(int min, int max, int[] A, int K) {
+		if (max - min < 2)
+			if (verifySolution(min, A, K))
+				return min;
+			else
+				return max;
+		int middle = (min + max) / 2;
+		if (verifySolution(middle, A, K))
+			return binarySearchRecursive(min, middle, A, K);
+		else
+			return binarySearchRecursive(middle, max, A, K);
+	}		
 }
