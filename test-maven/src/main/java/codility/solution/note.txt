@@ -1,0 +1,21 @@
+
+summation formula 
+합공식 sum = n*(n+1)/2
+
+^ (비트 XOR) 두 피연산자의 대응되는 비트에서 서로 같은 경우에는 0을, 다른 경우에는 1을 반환 a ^ b 
+1. 모든 배열의 항목을 XOR 한다. XOR의 결과를 X
+2. 1에서 n까지의 모든 숫자를 XOR 한다. 이결과를 Y
+3. X와 Y를 XOR하면 빠진 숫자가 나온다.
+
+-- stack 정렬
+public static Stack<Integer> sort(Stack<Integer> stk) {
+		Stack<Integer> rstk = new Stack<Integer>();
+		while (!stk.isEmpty()) {
+			int tmp = stk.pop();
+			while (!rstk.isEmpty() && rstk.peek() > tmp) {
+				stk.push(rstk.pop());
+			}
+			rstk.push(tmp);
+		}
+		return rstk;
+	}

@@ -1,4 +1,5 @@
 /*
+
 	Write a function:
 	class Solution { public int solution(int[] A); }
 	that, given a non-empty zero-indexed array A of N integers, returns the minimal positive integer that does not occur in A.

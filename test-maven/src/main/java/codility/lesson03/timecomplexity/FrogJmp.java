@@ -8,9 +8,11 @@ import org.slf4j.LoggerFactory;
  * The frog is currently located at position X and wants to get to a position greater than or equal to Y. 
  * The small frog always jumps a fixed distance, D.
  * Count the minimal number of jumps that the small frog must perform to reach its target.
+ * 
  * Write a function:
  * class Solution { public int solution(int X, int Y, int D); }
  * that, given three integers X, Y and D, returns the minimal number of jumps from position X to a position equal to or greater than Y.
+ * 
  * For example, given:
  *   X = 10
  *   Y = 85
@@ -19,6 +21,7 @@ import org.slf4j.LoggerFactory;
  * after the first jump, at position 10 + 30 = 40
  * after the second jump, at position 10 + 30 + 30 = 70
  * after the third jump, at position 10 + 30 + 30 + 30 = 100
+ * 
  * Assume that:
  * X, Y and D are integers within the range [1..1,000,000,000];
  * X ≤ Y.
@@ -51,22 +54,32 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class FrogJmp {
-	
-	private static final Logger log = LoggerFactory.getLogger(FrogJmp.class);
 
 	public static void main(String[] args) {
-		log.debug("{}", solution(10, 85, 30));
+		int X = 10, Y = 85, D = 30;
+		System.out.println(mySolution(X, Y, D));
 	}
 	
-	public static int solution(int X, int Y, int D) {
-        // write your code in Java SE 8
-        int distance = Y - X;
-        return distance%D == 0 ? distance/D : distance/D + 1;
-    }
+	public static int mySolution(int X, int Y, int D) {
+		// X, Y and D are integers within the range [1..1,000,000,000];
+		// X ≤ Y.
+		int distance = 0;
+		if ((X > 0) && (X < 1000000000) && (Y > 0) && (Y < 1000000000) && (Y > 0) && (Y < 1000000000) && (X <= Y)) {
+			while (X <= Y) {
+				X += D;
+				distance++;
+			}
+		}
+		return distance;
+	}
 	
-	public static int solution2(int X, int Y, int D) {
-        // write your code in Java SE 8
-        int distance = Y - X;
-        return (distance % D) == 0 ? (distance / D) : (distance / D) + 1;
+	// 이게 좋음.
+	public static int solution(int X, int Y, int D) {
+		int result = 0;
+		if ((X > 0) && (X < 1000000000) && (Y > 0) && (Y < 1000000000) && (Y > 0) && (Y < 1000000000) && (X <= Y)) {
+			int distance = Y - X;
+			result = (distance % D == 0) ? (distance / D) : (distance / D) + 1;
+		} 
+		return result; 
     }
 }
