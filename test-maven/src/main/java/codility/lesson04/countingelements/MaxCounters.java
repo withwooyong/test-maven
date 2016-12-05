@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * You are given N counters, initially set to 0, and you have two possible operations on them:
- * increase(X) − counter X is increased by 1, max counter − all counters are set to the maximum value of any counter.
+ * increase(X) − counter X is increased by 1, 
+ * max counter − all counters are set to the maximum value of any counter.
+ * 
  * A non-empty zero-indexed array A of M integers is given. 
  * 
  * This array represents consecutive operations:
@@ -62,42 +64,107 @@ public class MaxCounters {
 	private static Logger log = LoggerFactory.getLogger(MaxCounters.class);
 	
 	public static void main(String[] args) {
-		int N = 0;
-		int[] A = { '3', '4', '4', '6', '1', '4', '4' };
+		int N = 5;
+		int[] A = { 3, 4, 4, 6, 1, 4, 4 };
+		//log.debug("{}", Arrays.toString(mySolution(N, A)));
 		log.debug("{}", Arrays.toString(solution(N, A)));
+		log.debug("{}", Arrays.toString(solution2(N, A)));
 	}
-
-	public static int[] solution(int N, int[] A) {
-
-		int maxCounter = N + 1;
-		int counters[] = new int[N];
-		for (int i = 0; i < counters.length; i++) {
-			counters[i] = 0;
+	
+	/*
+	 * (0, 0, 1, 0, 0)
+	 * (0, 0, 1, 1, 0)
+	 * (0, 0, 1, 2, 0)
+	 * (2, 2, 2, 2, 2)
+	 * (3, 2, 2, 2, 2)
+	 * (3, 2, 2, 3, 2)
+	 * (3, 2, 2, 4, 2)
+	 * if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X),
+	 * if A[K] = N + 1 then operation K is max counter.
+	 * For example, given integer N = 5 and array A such that:
+	 * 
+	 *  * You are given N counters, initially set to 0, and you have two possible operations on them:
+ * increase(X) − counter X is increased by 1, 
+ * max counter − all counters are set to the maximum value of any counter.
+ * 
+ * A non-empty zero-indexed array A of M integers is given. 
+ * 
+ * This array represents consecutive operations:
+ * if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X), 
+ * if A[K] = N + 1 then operation K is max counter.
+ * For example, given integer N = 5 and array A such that:
+	 */
+	private static int[] mySolution(int N, int[] A) {
+		
+		int[] B = new int[N];
+		
+		for (int i = 0; i < B.length; i++) {
+			B[i] = 0;
 		}
-
-		int nextMax = 0;
-		int curMax = 0;
+		
 		for (int i = 0; i < A.length; i++) {
-			int counterNumber = A[i];
-			int counterIndex = counterNumber - 1;
-
-			if (counterNumber < maxCounter) {
-				if (counters[counterIndex] <= curMax) {
-					counters[counterIndex] = curMax;
+			if (A[i] >= 1 && A[i] <= A.length) {
+				A[i] = A[i+1];
+			} else if (A[i] == A.length + 1) {
+				
+			}
+		}
+		
+		return A;
+	}
+	
+	public static int[] solution(int N, int[] A) {
+		
+		int M = A.length;
+		int[] counters = new int[N];
+		int maxValue = 0; // store the max value in the counters array
+		int currMax = 0; // store the max value when there is a max counter
+		for (int i = 0; i < M; i++) {
+			if (A[i] >= 1 && A[i] <= N) {
+				// max counter
+				if (counters[A[i] - 1] < currMax)
+					counters[A[i] - 1] = currMax;
+				// increase (X)
+				counters[A[i] - 1]++;
+				if (counters[A[i] - 1] > maxValue)
+					maxValue = counters[A[i] - 1];
+				
+				for (int j = 0; j < counters.length; j++) {
+					System.out.print(" "  + counters[j]);
 				}
-				counters[counterIndex]++;
-				nextMax = Math.max(nextMax, counters[counterIndex]);
-			} else {
-				curMax = nextMax;
+				System.out.println();
+			}
+			// update current max value when there is a max counter
+			if (A[i] == N + 1) {
+				currMax = maxValue;
+			}
+		}
+		
+		for (int i = 0; i < N; i++) {
+			// update the rest elements of counters which aren't assigned above.
+			if (counters[i] < currMax)
+				counters[i] = currMax;
+		}
+		return counters;
+	}
+	
+	public static int[] solution2(int N, int[] A) {
+		int[] counters = new int[N];
+		int currMax = 0;
+		int currMin = 0;
+		for (int i = 0; i < A.length; i++) {
+			if (A[i] <= N) {
+				counters[A[i] - 1] = Math.max(currMin, counters[A[i] - 1]);
+				counters[A[i] - 1]++;
+				currMax = Math.max(currMax, counters[A[i] - 1]);
+			} else if (A[i] == N + 1) {
+				currMin = currMax;
 			}
 		}
 
 		for (int i = 0; i < counters.length; i++) {
-			if (counters[i] < curMax) {
-				counters[i] = curMax;
-			}
+			counters[i] = Math.max(counters[i], currMin);
 		}
-		log.debug("{}", counters);
 		return counters;
 	}
 }

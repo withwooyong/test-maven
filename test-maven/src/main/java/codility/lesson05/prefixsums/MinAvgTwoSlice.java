@@ -56,15 +56,36 @@ import org.slf4j.LoggerFactory;
 public class MinAvgTwoSlice {
 
 	private static Logger log = LoggerFactory.getLogger(MinAvgTwoSlice.class);
-	
+
 	public static void main(String[] args) {
 		
 		int[] A = { 4, 2, 2, 5, 1, 5, 8 };
-		mySolution(A);;
+		mySolution(A);
 	}
 	
+	// 이해안됨.
+	// N is an integer within the range [2..100,000];
+	// each element of array A is an integer within the range [−10,000..10,000].
 	public static void mySolution(int[] A) {
-		
+		final int N = A.length;
+
+		int minIndex = 0;
+		double minAvg = Double.MAX_VALUE;
+
+		for (int i = 0; i < N - 1; i++) {
+			double average = (A[i] + A[i + 1]) / 2.0;
+
+			if (i < N - 2) {
+				double threeSliceAvg = (A[i] + A[i + 1] + A[i + 2]) / 3.0;
+				average = Math.min(average, threeSliceAvg);
+			}
+
+			if (average < minAvg) {
+				minAvg = average;
+				minIndex = i;
+			}
+		}
+		log.debug("{}", minIndex);
 	}
 
 }
