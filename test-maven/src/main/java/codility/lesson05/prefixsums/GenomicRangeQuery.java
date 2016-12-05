@@ -1,5 +1,7 @@
 package codility.lesson05.prefixsums;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +26,8 @@ import org.slf4j.LoggerFactory;
  * 
  * Write a function:
  * class Solution { public int[] solution(String S, int[] P, int[] Q); }
- * that, given a non-empty zero-indexed string S consisting of N characters and two non-empty zero-indexed arrays P and Q consisting of M integers, returns an array consisting of M integers specifying the consecutive answers to all queries.
+ * that, given a non-empty zero-indexed string S consisting of N characters and two non-empty zero-indexed arrays P and Q consisting of M integers, 
+ * returns an array consisting of M integers specifying the consecutive answers to all queries.
  * 
  * The sequence should be returned as:
  * For example, given the string S = CAGCCTA and arrays P, Q such that:
@@ -57,13 +60,56 @@ public class GenomicRangeQuery {
 		String S = "CAGCCTA";
 		int[] P = { 2, 5, 0 };
 		int[] Q = { 4, 5, 6 };
-		// [2, 4, 1]
+		mySolution(S, P, Q); // // [2, 4, 1]
+	}
+	
+/*
+ *  * For example, consider string S = CAGCCTA and arrays P, Q such that:
+ * P[0] = 2    Q[0] = 4
+ * P[1] = 5    Q[1] = 5
+ * P[2] = 0    Q[2] = 6
+ * The answers to these M = 3 queries are as follows:
+ * The part of the DNA between positions 2 and 4 contains nucleotides G and C (twice), whose impact factors are 3 and 2 respectively, so the answer is 2.
+ * The part between positions 5 and 5 contains a single nucleotide T, whose impact factor is 4, so the answer is 4.
+ * The part between positions 0 and 6 (the whole string) contains all nucleotides, in particular nucleotide A whose impact factor is 1, so the answer is 1.
+ * ㅡㅡㅡㅡ[2, 4, 1]
+ */
+	
+	public static void mySolution(String S, int[] P, int[] Q) {
+		// C A G C C T A
+		int[] result = new int[P.length];
+		for (int i = 0; i < Q.length; i++) {
+			String subStr = S.substring(P[i], Q[i]+1); // GCC
+			log.debug("{}", subStr);
+			int factors = Integer.MAX_VALUE;
+			int minimal_factor = Integer.MAX_VALUE; 
+			for (int j = 0; j < subStr.length(); j++) {
+				char ch = subStr.charAt(j);
+				log.debug("{} {} {} {}", ch, minimal_factor, j, subStr.length());
+				if (ch == 'A') {
+					minimal_factor = 1;
+				} else if (ch == 'C') {
+					minimal_factor = 2;
+				} else if (ch == 'G') {
+					minimal_factor = 3;
+				} else if (ch == 'T') {
+					minimal_factor = 4;
+				}
+				
+				if (minimal_factor < factors) {
+					factors = minimal_factor;
+				}
+			}
+			result[i] = factors;
+		}
+		log.debug("{}", Arrays.toString(result));
 		
-
+		// Nucleotides of types A, C, G and T have impact factors of 1, 2, 3 and 4, respectively.
+		
 	}
 	
 	public int[] solution(String S, int[] P, int[] Q) {
-		int[] A = new int[S.length()];
+		int[] A = new int[S.length()];     
 		int[] C = new int[S.length()];
 		int[] G = new int[S.length()];
 		char[] CC = S.toCharArray();
