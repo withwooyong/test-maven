@@ -25,31 +25,25 @@ public class Prefixsums {
 	
 	private static Logger log = LoggerFactory.getLogger(Prefixsums.class);
 
+	// pdf 문제 이해안됨.
 	public static void main(String[] args) {
 		int[] A = { 2, 3, 7, 5, 1, 3, 9 };
-		int k = 4;
-		int m = 6;
+		int k = 4; // 0 <= k
+		int m = 6; // m < n (A.length)
 		solution(A, k, m);
-	}
-	
-	/*
-	 * Solution O(m2): Note that the best strategy is to move in one direction optionally followed by some moves in the opposite direction. 
-	 * In other words, the mushroom picker should not change direction more than once. 
-	 * With this observation we can find the simplest solution.
-	 * Make the first p = 0, 1, 2, . . . ,m moves in one direction, then the next m − p moves in the opposite direction. 
-	 * This is just a simple simulation of the moves of the mushroom picker which requires O(m2) time.
-	 * 
-	 * Solution O(n+m): A better approach is to use prefix sums. If we make p moves in one direction, we can calculate the maximal opposite location of the mushroom picker. 
-	 * The mushroom picker collects all mushrooms between these extremes. 
-	 * We can calculate the total number of collected mushrooms in constant time by using prefix sums.
-	 */
+	}	
+
 	private static void solution(int[] A, int k, int m) {
+		// int[] A = { 2, 3, 7, 5, 1, 3, 9 };
 		//  k and m (0 <= k, m < n). 3, 2, 3, 4, 5, 6  1+5+7+3+9 = 25
+		int sum = 0;
 		for (int i = 0; i < A.length; i++) {
-			for (int j = m; j < A.length; j++) {
-				
+			for (int j = k; j < m; j++) {
+				sum += A[j];
+				log.debug("{}", sum);
 			}
 		}
+		log.debug("{}", sum);
 	}
-
+	
 }
