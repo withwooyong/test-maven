@@ -1,8 +1,8 @@
 package codility.lesson02.arrays;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A zero-indexed array A consisting of N integers is given.
@@ -29,20 +29,41 @@ import java.util.Set;
  *
  */
 public class CyclicRotation {
+	
+	private static Logger log = LoggerFactory.getLogger(CyclicRotation.class);
 
+	// 배열의 순서를 오른쪽으로 K번 만큼 시프트 시키는 문제
+	// System.arraycopy 사용하면 됨.
 	public static void main(String[] args) {
 		int[] A = { 3, 8, 9, 7, 6, 8 };
 		int K = 3;
 		// return [9, 7, 6, 3, 8]
-		System.out.println(Arrays.toString(mySolution(A, K)));
-
+		//log.debug(Arrays.toString(mySolution(A, K)));
+		log.debug("{}", solution2(A, K));
 	}
-
-	public int[] solution(int[] A, int K) {
-
-		return A;
+	
+	public static int[] solution1(int[] A, int K) {
+		int[] result = new int[A.length];
+		System.arraycopy(A, A.length - K, result, 0, K);
+		System.arraycopy(A, 0, result, K, A.length - K);
+		return result;
 	}
-
+	
+	public static int[] solution2(int[] A, int K) {
+		int[] result = new int[A.length];
+		
+		if (A.length == 0) {
+	    	return result;
+	    }
+	    
+	    K %= A.length;
+	    log.debug("{}", K);
+	    System.arraycopy(A, A.length - K, result, 0, K);  // 7, 6, 8 복사
+	    System.arraycopy(A, 0, result, K, A.length - K);  // 3, 8, 9 복사
+	    
+	    return result;
+	}
+	
 	public static int[] mySolution(int[] A, int K) {
 		// N and K are integers within the range [0..100];
 		// each element of array A is an integer within the range [−1,000..1,000].

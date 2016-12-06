@@ -71,62 +71,39 @@ public class MaxCounters {
 		log.debug("{}", Arrays.toString(mySolution(N, A)));
 	}
 	
-	/*
-	 * (0, 0, 1, 0, 0)
-	 * (0, 0, 1, 1, 0)
-	 * (0, 0, 1, 2, 0)
-	 * (2, 2, 2, 2, 2)
-	 * (3, 2, 2, 2, 2)
-	 * (3, 2, 2, 3, 2)
-	 * (3, 2, 2, 4, 2)
-	 * 
-	 * if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X),
-	 * if A[K] = N + 1 then operation K is max counter.
-	 * 
-	 * For example, given integer N = 5 and array A such that:
-	 * 
-	 * You are given N counters, initially set to 0, and you have two possible operations on them:
-	 * increase(X) − counter X is increased by 1,
-	 * max counter − all counters are set to the maximum value of any counter.
- * 
- * A non-empty zero-indexed array A of M integers is given. 
- * 
- * This array represents consecutive operations:
- * if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X), 
- * if A[K] = N + 1 then operation K is max counter.
- * For example, given integer N = 5 and array A such that:
-	 */
-	// 이해안됨.
+	// 접근방법: 이부분 'max counter − all counters are set to the maximum value of any counter'
+	// 최대한 수정횟수를 줄이도록 max_counter값을 별도로 기록하고 있다가 최종 수정
+	// [3, 2, 2, 4, 2]
 	public static int[] mySolution(int N, int[] A) {
-			 
-		// You are given N counters, initially set to 0
-		int[] counters = new int[N];
-		for (int i = 0; i < counters.length; i++) { 
-			counters[i] = 0;
+		if (null == A) {
+			return null;
 		}
-		// two possible operations on them
-		// if A[K] = X, such that 1 ≤ X ≤ N, then operation K is increase(X),
-		// if A[K] = N + 1 then operation K is max counter.
-		// increase(X) − counter X is increased by 1,
-		// max counter − all counters are set to the maximum value of any counter.
-		
-		int increaseX = 0;
+
+		int[] counters = new int[N];
+		int max_value = 0;
 		int max_counter = 0;
-		// int[] A = { 3, 4, 4, 6, 1, 4, 4 };
-		for (int K = 0; K < A.length; K++) {
-			int X = A[K];
-			if (X >= 1 && X <= N) {
-				// increase(X)
-				log.debug("K={} X={} increase(X)={}", K, X, X + 1);
-			} else if (X == N + 1) {
-				// operation K is max counter
-				max_counter = K;
-				log.debug("K={}, max_counter={}", K, max_counter);
+
+		for (int i = 0; i < A.length; i++) { // 1 ≤ X ≤ N
+			if (1 <= A[i] && A[i] <= N) {
+				if (counters[A[i] - 1] < max_counter) {
+					counters[A[i] - 1] = max_counter;
+				}
+				counters[A[i] - 1]++; // 증가 X
+				if (max_value < counters[A[i] - 1]) {
+					max_value = counters[A[i] - 1];
+				}
+			} else if (A[i] == N + 1) { // 최대카운터
+				max_counter = max_value;
 			}
 		}
-		return A;
+
+		for (int i = 0; i < N; i++) {
+			if (counters[i] < max_counter) {
+				counters[i] = max_counter;
+			}
+		}
+		return counters;
 	}
-	
 	
 	public static int[] solution(int N, int[] A) {
 		int M = A.length;

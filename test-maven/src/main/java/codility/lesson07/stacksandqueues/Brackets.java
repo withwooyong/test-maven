@@ -43,6 +43,7 @@ public class Brackets {
 	}
 	
 	// string S consists only of the following characters: "(", "{", "[", "]", "}" and/or ")".
+	// 주어진 문자열이 쌍이 맞는지 확인 Stack 사용
 	public static int mySolution(String S) {
 		
 		Stack<Character> stack = new Stack<>();

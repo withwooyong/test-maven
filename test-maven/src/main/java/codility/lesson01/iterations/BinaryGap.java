@@ -1,10 +1,13 @@
 package codility.lesson01.iterations;
 
 
+
 import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang.text.StrTokenizer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * // Solutions for each problem in this lesson (100%) are accessible in my GitHub repo (username = mehmetbajin) under /codility.
  * Find longest sequence of zeros in binary representation of an integer.
@@ -31,19 +34,20 @@ import org.apache.commons.lang.text.StrTokenizer;
  */
 public class BinaryGap {	
 
+	private static Logger log = LoggerFactory.getLogger(BinaryGap.class);
+	
+	// 특정 수를 2진수로 표현할때 1과 1사이의 0의 갯수가 가장 많은 구간의 0의 갯수
 	public static void main(String[] args) {
 		// N is an integer within the range [1..2,147,483,647].
 		int N = 529;
-		solution(N);
-//		for (int i = 10; i < 12; i++) {
-//			solution(i);
-//		}
+		log.debug("{}", solution(N));
+		log.debug("{}", solution1(N));
 	}
 	
 	// 내가 푼거
 	public static int solution(int N) {
 		String binaryString = Integer.toBinaryString(N);
-		System.out.println("binaryString=" + binaryString);
+		
 		StrTokenizer tokenizer = new StrTokenizer(binaryString, '1');
 		int size = 0;
 		while (tokenizer.hasNext()) {
@@ -51,10 +55,23 @@ public class BinaryGap {
 			if (size < token.length()) {
 				size = token.length();
 			}
-			System.out.println(" token=" + token + " ### " + token.length());
 		}
-		
-		return 0;
+		return size;
+	}
+	
+	public static int solution1(int N) {
+		int result = 0;
+		String s = Integer.toBinaryString(N);
+		int iStart = 0;
+		for (int i = 0; i < s.length(); i++) {
+			if (s.charAt(i) == '1') {
+				int length = i - iStart - 1;
+				if (length > result)
+					result = length;
+				iStart = i;
+			}
+		}
+		return result;
 	}
 	
 	public static int solution3(int N) {

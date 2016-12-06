@@ -44,7 +44,7 @@ public class Distinct {
 		log.debug("{}", mySolution(A));
 	}
 	
-	// 중복제거 후 갯수
+	// 중복제거 후 유일한 값의 갯수
 	public static int mySolution(int[] A) {
 		Set<Integer> set = new HashSet<>();
 		for (int i = 0; i < A.length; i++) {

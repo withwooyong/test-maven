@@ -63,6 +63,12 @@ public class GenomicRangeQuery {
 		mySolution(S, P, Q); // // [2, 4, 1]
 	}
 	
+	// 접근방법:
+	// Symbol A,C,G,T중 impact factors가 가장 낮은 A(1), C(2), G(3), T(4)순으로 처리한다.
+	// 4가지 중 1개는 무조건 출현하므로 A, C, G만 메모리에 저장하고 출현하지 않은 경우 T로 본다.
+	// 연속된 범위에 대한 조회이므로 Range Query Start index, End index 특정값의 차이로 출현여부를 알 수 있도록 각 Symbol별 출현횟수를 누적으로 저장하고 계산한다.
+	// 주의사항:
+	// Range Query Start index부터 조회하면 해당 index를 반영하지 못하므로 바로 이전 index부터 계산한다.
 /*
  *  * For example, consider string S = CAGCCTA and arrays P, Q such that:
  * P[0] = 2    Q[0] = 4

@@ -51,6 +51,7 @@ public class NumberOfDiscIntersections {
 
 	private static Logger log = LoggerFactory.getLogger(NumberOfDiscIntersections.class);
 	
+	// 이해못했음.
 	public static void main(String[] args) {
 		int[] A = { 1, 5, 2, 1, 4, 0 };
 		log.debug("{}", solution(A));
@@ -70,12 +71,15 @@ public class NumberOfDiscIntersections {
 	 *  이해안됨.
 	 */
 	public static int mySolution(int[] A) {
-		Arrays.sort(A);
-		
-		log.debug("{}", Arrays.toString(A));
-		int result = 0;
-		
-		return result;
+		int cnt = 0;
+		for (int i = 0; i < A.length - 1; i++) {
+			for (int j = i + 1; j < A.length; j++) {
+				if (i + A[i] >= j - A[j]) {
+					cnt++;
+				}
+			}
+		}
+		return cnt;
 	}
 	
 	

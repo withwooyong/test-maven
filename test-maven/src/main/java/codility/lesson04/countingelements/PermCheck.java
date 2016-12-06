@@ -66,6 +66,7 @@ public class PermCheck {
 		mySolution(A);
 	}
 	
+	// 주어진 배열이 순열인지 체크 / 합의공식 n*(n+1)/2		
 	public static void mySolution(int[] A) {
 		//Arrays.sort(A);		
 		// n*(n+1)/2		

@@ -1,13 +1,14 @@
 package codility.lesson02.arrays;
 
+
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-import java.util.Stack;
+import java.util.TreeSet;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A non-empty zero-indexed array A consisting of N integers is given. 
@@ -59,10 +60,26 @@ import java.util.Stack;
  */
 public class OddOccurrencesInArray {
 
+	private static Logger log = LoggerFactory.getLogger(OddOccurrencesInArray.class);
+	
+	// 배열 속에서 짝이 없는 요소의 값을 리턴.
 	public static void main(String[] args) {
 		int[] A = { 9, 3, 9, 3, 9, 7, 9 };
 		
-		System.out.println(mySolution(A));
+		log.debug("{}", mySolution(A));
+		log.debug("{}", solution2(A));
+	}
+	
+	// O(n)
+	public static int solution2(int[] A) {
+		TreeSet<Integer> unpaired = new TreeSet<>();
+	    for (int i : A) {
+	        if (unpaired.remove(i)) {
+	            continue;
+	        }
+	        unpaired.add(i);
+	    }
+	    return unpaired.first();
 	}
 	
 	public static int mySolution(int[] A) {

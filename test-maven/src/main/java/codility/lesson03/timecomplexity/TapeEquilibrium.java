@@ -1,5 +1,9 @@
 package codility.lesson03.timecomplexity;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A non-empty zero-indexed array A consisting of N integers is given. 
  * Array A represents numbers on a tape.
@@ -78,9 +82,14 @@ package codility.lesson03.timecomplexity;
  */
 public class TapeEquilibrium {
 	
+	private static Logger log = LoggerFactory.getLogger(TapeEquilibrium.class);
+	
+	// N 개의 정수로 구성된 0이 아닌 인덱스가없는 배열 A가 주어지면 달성 할 수있는 최소의 차이를 반환
 	public static void main(String[] args) {
 		int[] A = { 3, 1, 2, 4, 3 };
-		System.out.println(solution(A));
+		log.debug("{}", solution(A));
+//		log.debug("{}", solution2(A));
+		log.debug("{}", mySolution(A));
 	}
 	
 	public static int mySolution(int[] A) {
