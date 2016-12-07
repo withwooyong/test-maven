@@ -34,8 +34,6 @@ public class study {
 		int m = 2;
 		log.debug("{}", problem(A, n, m));
 		log.debug("{}", prefix_sums(A));
-		
-		
 	}
 	
 	/*
