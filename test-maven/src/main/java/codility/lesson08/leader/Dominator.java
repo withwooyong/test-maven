@@ -1,7 +1,5 @@
 package codility.lesson08.leader;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 import org.slf4j.Logger;
@@ -53,15 +51,36 @@ public class Dominator {
 	public static void main(String[] args) {
 		int[] A = new int[] { 3, 4, 3, 2, 3, -1, 3, 3 };
 		log.debug("{}", solution(A));
-		mySolution(A);
+		log.debug("{}", mySolution(A));
 		
 	}
 	
 	// 위치를 반환해야 하기 때문에 정렬할 수 없음.
-	public static void mySolution(int[] A) {
+	// O(n)
+	public static int mySolution(int[] A) {
+		Stack<Integer> stack = new Stack<>();
+		for (int i = 0; i < A.length; i++) {
+			if (stack.isEmpty()) {
+				stack.push(A[i]);
+			} else {
+				if (stack.peek() == A[i]) {
+					stack.push(A[i]); 
+				} else {
+					stack.pop();
+				}
+			}
+		}
 		
-		
-		
+		int candidate = stack.pop();
+		int count = 0;
+		int randomIndex = -1;
+		for (int i = 0; i < A.length; i++) {
+			if (A[i] == candidate) {
+				count++;
+				randomIndex = i;
+			}
+		}
+		return count > A.length / 2 ? randomIndex : -1;
 	} 
 	
 	

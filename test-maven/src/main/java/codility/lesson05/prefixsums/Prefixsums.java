@@ -36,6 +36,7 @@ public class Prefixsums {
 		test2(A, k, m);
 	}
 	
+	// 구간합.
 	// 나열된 수열의 개수 n개
 	// 몇번 범위 합을 구해 볼지의 개수 m개
 	// sum[i] = 1~i 의 합 
