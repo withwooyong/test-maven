@@ -1,5 +1,6 @@
 package codility.lesson03.timecomplexity;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,23 +55,23 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class FrogJmp {
+	
+	private static Logger log = LoggerFactory.getLogger(FrogJmp.class);
 
+	// 개구리가 X-->Y로 가는 점프(D)를 이용하여 최소 점프 횟수 구하기
+	// 접근방법 : 처음 위치의 값(X)을 제외한 Y위치를 구한 후 점프거리로 나눈 몫을 올림하여 횟수 계산
+	// (10, 71, 30) -->  (71-10) / 30 = 2.03 => 3
 	public static void main(String[] args) {
 		int X = 10, Y = 85, D = 30;
-		System.out.println(mySolution(X, Y, D));
+		log.debug("{}", solution(X, Y, D));
+		log.debug("{}", solution1(X, Y, D));
 	}
 	
-	public static int mySolution(int X, int Y, int D) {
-		// X, Y and D are integers within the range [1..1,000,000,000];
-		// X ≤ Y.
-		int distance = 0;
-		if ((X > 0) && (X < 1000000000) && (Y > 0) && (Y < 1000000000) && (Y > 0) && (Y < 1000000000) && (X <= Y)) {
-			while (X <= Y) {
-				X += D;
-				distance++;
-			}
-		}
-		return distance;
+	public static int solution1(int X, int Y, int D) {
+		int result = 0;
+		int distance = Y - X;
+		result = (distance % D == 0) ? (distance / D) : (distance / D) + 1;
+		return result;
 	}
 	
 	// 이게 좋음.

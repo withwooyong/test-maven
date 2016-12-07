@@ -2,6 +2,9 @@ package codility.lesson03.timecomplexity;
 
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * A zero-indexed array A consisting of N different integers is given. 
  * The array contains integers in the range [1..(N + 1)], which means that exactly one element is missing.
@@ -35,9 +38,23 @@ import java.util.Arrays;
  */
 public class PermMissingElem {
 
+	private static Logger log = LoggerFactory.getLogger(PermMissingElem.class);
+	
+	// 없는 숫자를 찾아내는 함수
 	public static void main(String[] args) {
 		int[] A = { 2, 3, 1, 5 };
-		System.out.println(mySolution(A));
+		log.debug("{}", mySolution(A));
+		log.debug("{}", solution(A));
+		log.debug("{}", solution2(A));
+	}
+	
+	public static int solution2(int[] A) {
+		long N = A.length;
+		long sum = ((N + 1) * (N + 2)) / 2;
+		for (int i = 0; i < N; i++) {
+			sum -= A[i];
+		}
+		return (int) sum;
 	}
 	
 	public static int mySolution(int[] A) {
@@ -45,19 +62,20 @@ public class PermMissingElem {
 		// the elements of A are all distinct;
 		// each element of array A is an integer within the range [1..(N + 1)].
 		Arrays.sort(A);		
+		int result = 0;
 		for (int i = 0; i < A.length; i++) {
 			if (A[i] > 0 && A[i] <= 100000) {
 				if (A[i] + 1 != A[i+1]) {
-					return A[i] + 1;
+					result =  A[i] + 1;
+					break;
 				}
-			} else {
-				return 0;
-			}
+			} 
 		}
-		return 0;
+		return result;
 	}
 	
-	public int solution(int[] A) {
+	public static int solution(int[] A) {
+		int result = 0;
 		boolean occurred[] = new boolean[A.length + 2];
 		for (int i = 0; i < A.length; i++) {
 			int occurredNumber = A[i];
@@ -65,18 +83,10 @@ public class PermMissingElem {
 		}
 		for (int i = 1; i < occurred.length; i++) {
 			if (!occurred[i]) {
-				return i;
+				result = i;
+				break;
 			}
 		}
-		return 0;
-	}
-	
-	public int solution2(int[] A) {
-		long N = A.length;
-		long sum = ((N + 1) * (N + 2)) / 2;
-		for (int i = 0; i < N; i++) {
-			sum -= A[i];
-		}
-		return (int) sum;
+		return result;
 	}
 }

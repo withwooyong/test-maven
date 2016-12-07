@@ -41,6 +41,8 @@ public class MissingInteger {
 		mySolution(A);
 	}
 	
+	// 배열에 없는 최소양의 정수
+	// the function should return 5.
 	public static void mySolution(int[] A) {
 		Arrays.sort(A);
 		int min = 1;

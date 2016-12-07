@@ -63,6 +63,7 @@ public class Triangle {
 		log.debug("{}", solution(A));
 	}
 	
+	// 주어진 배열이 삼각형을 구성할 수 있는지 확인
 	public static int solution(int[] A) {
 		// 0 ≤ P < Q < R < N
 		// A[P] + A[Q] > A[R],

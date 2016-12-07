@@ -119,13 +119,31 @@ public class FrogRiverOne {
 		
 	private static Logger log = LoggerFactory.getLogger(FrogRiverOne.class);
 	
+	// 접근방법: 1~X(중복은 무시)까지 수가 모두 순열이 되는 시점은 집합 구성요소가 X인 시점이다.
 	public static void main(String[] args) {
 		int X = 5;
-		int[] A = { '1', '3', '1', '4', '2', '3', '5', '4' };
-		//System.out.println(solution2(X, A));
-		//System.out.println(solution3(X, A));
-		//System.out.println(solution4(X, A));
-		mySolution(X, A);
+		int[] A = { 1, 3, 1, 4, 2, 3, 5, 4 };		
+		//mySolution(X, A);
+		log.debug("{}", solution5(X, A));
+	}
+	
+	public static int solution5(int X, int[] A) {
+		if (A == null) {
+			return 0;
+		} else {
+			HashSet<Integer> set = new HashSet<Integer>();
+			for (int i = 0; i < A.length; i++) {
+				log.debug("{} {}", A[i], X);
+				if (A[i] <= X) {
+					set.add(A[i]);
+					log.debug("{}", set.toString());
+					if (set.size() == X) {
+						return i;
+					}
+				}
+			}
+		}
+		return -1;
 	}
 	
 	public static void mySolution(int X, int[]A) {

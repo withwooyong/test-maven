@@ -56,6 +56,9 @@ public class MaxProductOfThree {
 	public static void main(String[] args) {
 		int[] A = { -3, 1, 2, -2, 5, 6 };
 		log.debug("{}", mySolution(A));
+		//log.debug("{}", solution1(A));
+		
+		
 	}
 	
 	// 배열중 3개 항목의 곲셈 중 최대값 구하는 문제
@@ -82,6 +85,19 @@ public class MaxProductOfThree {
 			}
 		}
 		return maxProduct;
+	}
+	
+	private static int solution1(int[] A) {
+		Arrays.sort(A);
+		int len = A.length;
+
+		int tmp1 = A[len - 1] * A[len - 2] * A[len - 3]; 
+		int tmp2 = A[0] * A[1] * A[len - 1];
+
+		if (tmp1 > tmp2) {
+			return tmp1;
+		}
+		return tmp2;
 	}
 	
 	// 이해안됨.

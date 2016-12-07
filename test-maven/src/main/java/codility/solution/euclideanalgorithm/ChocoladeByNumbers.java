@@ -1,20 +1,31 @@
 /*
-	Two positive integers N and M are given. Integer N represents the number of chocolates arranged in a circle, numbered from 0 to N − 1.
-	You start to eat the chocolates. After eating a chocolate you leave only a wrapper.
-	You begin with eating chocolate number 0. Then you omit the next M − 1 chocolates or wrappers on the circle, and eat the following one.
-	More precisely, if you ate chocolate number X, then you will next eat the chocolate with number (X + M) modulo N (remainder of division).
-	You stop eating when you encounter an empty wrapper.
-	For example, given integers N = 10 and M = 4. You will eat the following chocolates: 0, 4, 8, 2, 6.
-	The goal is to count the number of chocolates that you will eat, following the above rules.
-	Write a function:
-	class Solution { public int solution(int N, int M); }
-	that, given two positive integers N and M, returns the number of chocolates that you will eat.
-	For example, given integers N = 10 and M = 4. the function should return 5, as explained above.
-	Assume that:
-	N and M are integers within the range [1..1,000,000,000].
-	Complexity:
-	expected worst-case time complexity is O(log(N+M));
-	expected worst-case space complexity is O(1).
+ * Two positive integers N and M are given.
+ * Integer N represents the number of chocolates arranged in a circle, numbered from 0 to N − 1.
+ * 
+ * You start to eat the chocolates. 
+ * After eating a chocolate you leave only a wrapper.
+ * You begin with eating chocolate number 0. 
+ * Then you omit the next M − 1 chocolates or wrappers on the circle, and eat the following one.
+ * More precisely, if you ate chocolate number X, then you will next eat the chocolate with number (X + M) modulo N (remainder of division).
+ * You stop eating when you encounter an empty wrapper.
+ * 
+ * For example, given integers N = 10 and M = 4. 
+ * You will eat the following chocolates: 0, 4, 8, 2, 6.
+ * The goal is to count the number of chocolates that you will eat, following the above rules.
+ * 
+ * Write a function:
+ * class Solution { public int solution(int N, int M); }
+ * 
+ * that, given two positive integers N and M, returns the number of chocolates that you will eat.
+ * 
+ * For example, given integers N = 10 and M = 4. the function should return 5, as explained above.
+ * 
+ * Assume that:
+ * N and M are integers within the range [1..1,000,000,000].
+ * 
+ * Complexity:
+ * expected worst-case time complexity is O(log(N+M));
+ * expected worst-case space complexity is O(1).
 	
 	2 개의 양의 정수 N과 M이 주어진다. 
 	정수 N은 0에서 N-1까지 번호가 매겨진 원 안에 배열 된 초콜릿의 수를 나타냅니다.
@@ -43,14 +54,73 @@
 //SCORE: 100/100
 package codility.solution.euclideanalgorithm;
 
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ChocoladeByNumbers {
+	
+	private static Logger log = LoggerFactory.getLogger(ChocoladeByNumbers.class);
 
 	public static void main(String[] args) {
-		int N = 12;
-		int M = 3;
+		int N = 10;
+		int M = 4;
 		int res = 1;
-		System.out.println(solution(N, M, res));
+		log.debug("{}", solution(N, M, res));
+		log.debug("{}", mySolution(N, M));
 	}
+	
+	private static int mySolution(int N, int M) {
+		// Integer N represents the number of chocolates arranged in a circle, numbered from 0 to N − 1.
+		// You begin with eating chocolate number 0. 
+		// Then you omit the next M − 1 chocolates or wrappers on the circle, and eat the following one.
+		// More precisely, 
+		// if you ate chocolate number X, then you will next eat the chocolate with number (X + M) modulo N (remainder of division).
+		// You stop eating when you encounter an empty wrapper.
+		// For example, given integers N = 10 and M = 4. the function should return 5, as explained above.
+		// 결과 값 0, 4, 8, 2, 6.
+		//  
+		// 0부터 시작 You begin with eating chocolate number 0.
+		// X(9)+M(4)/9=4, 0+4=4
+		// X(8)+M(4)/8=4, 4+4=8
+		// X(7)+M(4)/7=4, 8+4=12%10
+		// X(6)+M(4)/6=4, 2+4=6
+		// X(5)+M(4)/5=4, 6+4=10%10 <= 포장지
+		
+		int X = N;
+		int position = 0;
+		int sum = 0;
+		int[] chocolates = new int[N];
+		
+		for (int i = 0; i < chocolates.length; i++) {
+			chocolates[i] = 0;
+		}
+		
+		for (int i = 0; i < N; i++) {
+			if (i == 0) { // 0번째 초콜릿
+				chocolates[i] = 1;
+				log.debug("{} {} {}", sum, position, Arrays.toString(chocolates));
+			} else {
+				//log.debug("{} {} {}", X, M, position);
+				
+				position = (X + M) % X;
+				sum += position;
+				if (sum >= N) {
+					sum = sum % N;
+				}
+				if (chocolates[sum] == 1) { // 포장지
+					break;
+				} else {
+					chocolates[sum] = 1;
+				}
+				log.debug("{} {} {}", sum, position, Arrays.toString(chocolates));
+			}
+			X--;
+		}
+		return 0;
+	}
+	
 
 	private static int solution(int N, int M, int res) {
 		return N / greatestCommonDivisor(N, M, 1);
