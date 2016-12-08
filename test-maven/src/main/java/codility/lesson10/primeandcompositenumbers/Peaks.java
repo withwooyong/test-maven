@@ -1,5 +1,7 @@
 package codility.lesson10.primeandcompositenumbers;
 
+import java.util.ArrayList;
+
 /**
  * Peaks
  * Divide an array into the maximum number of same-sized blocks, each of which should contain an index P such that A[P - 1] < A[P] > A[P + 1].
@@ -79,5 +81,43 @@ Elements of input arrays can be modified.
  *
  */
 public class Peaks {
+
+	public static void main(String[] args) {
+		int[] N = new int[] {1,2,3,4,3,4,1,2,3,4,6,2};
+		System.out.println(solution(N));
+	}
+	
+	public static int solution(int[] A) {
+		int peakCount = 0;
+		ArrayList<Integer> peaks = new ArrayList<Integer>();
+	    for (int i = 1; i < A.length-1; i++) {
+			if (A[i]>A[i-1] && A[i]>A[i+1]) {
+				peaks.add(i);
+				peakCount++;
+			}
+		}
+		for (int size =  1; size <=A.length; size++) {
+			 int blocks = A.length/size;
+			 if (A.length % size != 0 || blocks>peakCount)
+				 continue;
+			 
+			 boolean ok = true;
+			 int threshold = 0;
+			 for (int j = 0; j < peaks.size(); j++) {
+				if(peaks.get(j) / size > threshold) {
+					ok = false;
+					break;
+				}
+				if (peaks.get(j)/size == threshold)
+					threshold++;
+			}
+			
+			if (threshold != blocks) 
+				ok= false;
+			if(ok) 
+				return blocks;
+		}
+		return 0;
+	}	
 
 }

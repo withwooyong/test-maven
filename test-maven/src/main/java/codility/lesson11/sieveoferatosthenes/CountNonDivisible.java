@@ -1,5 +1,7 @@
 package codility.lesson11.sieveoferatosthenes;
 
+import java.util.Arrays;
+
 /**
  * CountNonDivisible
  * Calculate the number of elements of an array that are not divisors of each element.
@@ -55,5 +57,36 @@ Elements of input arrays can be modified.
  *
  */
 public class CountNonDivisible {
+
+	public static void main(String[] args) {
+		int[] A = new int[] { 3, 1, 2, 3, 6 };
+		System.out.println(Arrays.toString(solution(A)));
+	}
+
+	public static int[] solution(int[] A) {
+		int[][] D = new int[2 * A.length + 1][2];
+		int[] res = new int[A.length];
+		for (int i = 0; i < A.length; i++) {
+			D[A[i]][0]++;
+			D[A[i]][1] = -1;
+		}
+		for (int i = 0; i < A.length; i++) {
+			if (D[A[i]][1] == -1) {
+				D[A[i]][1] = 0;
+				for (int j = 1; j * j <= A[i]; j++) {
+					if (A[i] % j == 0) {
+						D[A[i]][1] += D[j][0];
+						if (A[i] / j != j)
+							D[A[i]][1] += D[A[i] / j][0];
+					}
+
+				}
+			}
+		}
+		for (int i = 0; i < A.length; i++) {
+			res[i] = A.length - D[A[i]][1];
+		}
+		return res;
+	}
 
 }

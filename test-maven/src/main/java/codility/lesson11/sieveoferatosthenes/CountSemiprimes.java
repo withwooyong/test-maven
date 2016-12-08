@@ -1,5 +1,7 @@
 package codility.lesson11.sieveoferatosthenes;
 
+import java.util.Arrays;
+
 /**
  * CountSemiprimes
  * Count the semiprime numbers in the given range [a..b]
@@ -50,5 +52,53 @@ Elements of input arrays can be modified.
  *
  */
 public class CountSemiprimes {
+
+	public static void main(String[] args) {
+		int[] A = new int[] { 1, 4, 16 };
+		int[] B = new int[] { 26, 10, 20 };
+		int N = 26;
+		System.out.println(Arrays.toString(solution(A, B, N)));
+
+	}
+
+	public static int[] solution(int[] A, int[] B, int N) {
+		int[] factArray = factorizationArray(N);
+		int[] semiPrimes = new int[factArray.length];
+		for (int i = 0; i < semiPrimes.length; i++) {
+			if (factArray[i] != 0 && factArray[i / factArray[i]] == 0)
+				semiPrimes[i] = 1;
+		}
+		int[] semiPrimesPreSum = prefixSum(semiPrimes);
+		int[] res = new int[A.length];
+		for (int i = 0; i < B.length; i++) {
+			res[i] = semiPrimesPreSum[B[i]] - semiPrimesPreSum[A[i] - 1];
+		}
+		return res;
+	}
+
+	// preparing array for factorization (array with primes)
+	public static int[] factorizationArray(int n) {
+		int[] F = new int[n + 1];
+		for (int i = 2; i * i <= n; i++) {
+			if (F[i] == 0) {
+				for (int k = i * i; k <= n; k += i) {
+					if (F[k] == 0)
+						F[k] = i;
+				}
+			}
+		}
+		return F;
+	}
+
+	public static int[] prefixSum(int[] A) {
+		int[] prefSum = new int[A.length];
+		for (int i = 0; i < A.length; i++) {
+			if (i == 0)
+				prefSum[i] = A[i];
+			else
+				prefSum[i] = prefSum[i - 1] + A[i];
+		}
+		return prefSum;
+	}
 
 }
