@@ -25,4 +25,58 @@ sum[i] = 1~i 의 합
 구간 x 부터 y 까지의 합 = sum[y] - sum[x-1]
 
 http://blog.naver.com/onjo0127/220787710808
+
+1. 사건과 경우의 수
+2. 합의법칙 곱의법칙
+
+* 합의 법칙
+~또는, ~이거나
+
+* 곱의 법칙
+~이고, ~그리고, ~와
+
+* 이웃한다.
+A, B, (C, D)
+3*2*1*2(C,D)
+
+Prefixsums
+NumberOfDiscIntersections
+Fish
+StoneWall
+EquiLeader
+MaxDoubleSliceSum
+MaximumSliceProblem
+MinPerimeterRectangle
+Peaks
+최대공약수(最大公約數)란, 0이 아닌 두 정수나 다항식의 공통되는 약수 중에서 가장 큰 수를 말한다. 두 정수 a와 b의 최대공약수를 기호로 gcd(a,b)로 표기한다. (위키피디아 발췌)
+
+Collections.swap
+
+divisors.sort(Comparator.comparingInt(Integer::intValue));
+arrayList.sort((p1, p2) -> p1.compareTo(p2));
+Arrays.sort(months, Comparator.comparingInt(String::length));
+Arrays.sort(months, comparingInt(String::length));
+Arrays.sort(months, (String a, String b) -> a.length() - b.length());
+Arrays.sort(months, (a, b) -> a.length() - b.length());
+Arrays.sort(months, (String a, String b) -> { return Integer.signum(a.length() - b.length()) };
+);
+Arrays.sort(months, (String a, String b) -> { return Integer.signum(a.length() - b.length()); }
+);
+
+
+int arrMax = Arrays.stream(A).max().getAsInt();
+Arrays.fill(bitList, false); //특정 값으로 초기화
  	
+제곱 square 제곱근 square root
+
+Prime 	
+소수 (素數; 또는 솟수)는 1과 자기 자신 외의 양의 약수를 가지지 않는 1보다 큰 자연수다.
+소수 (小數)는 소수점을 이용한 실수부를 뜻한다.
+
+divisor
+약수(約數, divisor)는 어떤 수를 나누었을 때 나머지가 0인 수를 말하며, 배수 관계와 서로 반대되는 개념이다.
+0이 아닌 임의의 수 n이 있을 때 -1,1,-n,n은 항상 n의 약수이므로 이들을 자명한 약수(trivial divisor), 이들을 제외한 약수를 고유 약수라고 부르며, 
+자기 자신인 n을 제외한 약수를 진약수라고 부른다. 
+
+원둘레공식 "반지름×2×3.14" 2πr
+(π는 3.14 , r은 반지름 2는 2)

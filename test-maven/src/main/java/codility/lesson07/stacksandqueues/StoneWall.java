@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
  * 
  * Solution to this task can be found at our blog.
  * You are going to build a stone wall. 
- * The wall should be straight and N meters long, and its thickness should be constant; however, it should have different heights in different places.
+ * The wall should be straight and N meters long, and its thickness should be constant; 
+ * however, it should have different heights in different places.
  *  
  * The height of the wall is specified by a zero-indexed array H of N positive integers. 
  * H[I] is the height of the wall from I to I+1 meters to the right of its left end. 
@@ -48,23 +49,26 @@ public class StoneWall {
 	
 	private static Logger log = LoggerFactory.getLogger(StoneWall.class);
 
+	// compute the minimum number of blocks
+	// return 7
 	public static void main(String[] args) {
 		// For example, given array H containing N = 9 integers:
 		int[] H = new int[] { 8, 8, 5, 7, 9, 8, 7, 4, 8 };
 		log.debug("{}", solution(H));
-		log.debug("{}", solution2(H));
+		//log.debug("{}", solution2(H));
 	}
 
-	// 답이 맞지 않아 이해못함.
+	// 이해안됨.
 	public static int solution(int[] H) {
 		Stack<Integer> stack = new Stack<Integer>();
 		int blocks = 1;
-		stack.push(H[0]);
+		stack.push(H[0]); // 8
 		for (int i = 1; i < H.length; i++) {
-			if (stack.peek() == H[i])
+			if (stack.peek() == H[i]) { // 8 == 8
 				continue;
-			else if (H[i] > stack.peek()) {
+			} else if (H[i] > stack.peek()) {
 				stack.push(H[i]);
+				log.debug("{}", H[i]);
 				blocks++;
 			} else {
 				while (stack.size() > 0 && stack.peek() > H[i]) {
@@ -73,6 +77,7 @@ public class StoneWall {
 				
 				if (stack.size() == 0 || stack.peek() != H[i]) {
 					stack.push(H[i]);
+					log.debug("{}", H[i]);
 					blocks++;
 				}
 			}
