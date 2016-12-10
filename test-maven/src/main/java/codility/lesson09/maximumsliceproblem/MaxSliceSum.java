@@ -3,8 +3,6 @@ package codility.lesson09.maximumsliceproblem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.sun.tools.javac.code.Attribute.Array;
-
 /**
  * MaxSliceSum
  * Find a maximum sum of a compact subsequence of array elements.
@@ -47,6 +45,9 @@ public class MaxSliceSum {
 	
 	private static Logger log = LoggerFactory.getLogger(MaxSliceSum.class);
 
+	/*
+	 * Find a maximum sum of a compact subsequence of array elements.
+	 */
 	// 어떤 배열이 주어졌을 때, 배열에서 연속된 부분배열 중 가장 큰 합을 찾는 문제이다.
 	/*
 	 *  (3, 4) is a slice of A that has sum 4,

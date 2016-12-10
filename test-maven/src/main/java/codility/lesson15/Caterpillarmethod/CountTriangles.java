@@ -1,5 +1,10 @@
 package codility.lesson15.Caterpillarmethod;
 
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * Count the number of triangles that can be built from a given set of edges.
  * 
@@ -38,9 +43,33 @@ Elements of input arrays can be modified
  */
 public class CountTriangles {
 
+	private static Logger log = LoggerFactory.getLogger(CountTriangles.class);
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		int[] A = new int[] {10, 2, 5, 1, 8, 12};
+		System.out.println(solution(A));
 	}
-
+	
+	public static int solution(int[] A) {
+		return caterpillarMethod(A);
+	}
+	
+	public static int caterpillarMethod(int[] A) {
+		int N = A.length;
+		int res=0;
+		if (N < 3)
+			return 0;
+		int front;
+		Arrays.sort(A);
+		for (int i = 0; i < N-2; i++) {
+			front = i+2;
+			for (int j = i+1; j < N-1; j++) {
+				while(front < N && A[i] + A[j] > A[front]){
+					front++;
+				}
+				res+=front-j-1;
+			}
+		}
+		return res;
+	}
 }

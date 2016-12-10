@@ -1,5 +1,8 @@
 package codility.lesson15.Caterpillarmethod;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * S
 CountDistinctSlices
@@ -50,9 +53,37 @@ Elements of input arrays can be modified.
  */
 public class CountDistinctSlices {
 
+	private static Logger log = LoggerFactory.getLogger(CountDistinctSlices.class);
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		int[] A = new int[]{3, 4, 5, 5, 2};
+		int M = 6;
+		System.out.println(solution(A, M));
+	}
+	
+	public static int solution(int[] A, int M) {
+		return caterpillarMethod(A, M);
 
 	}
-
+	
+	public static int caterpillarMethod(int[] A, int M) {	
+		int res = 0; 
+		int front = 0; 
+		int back =0;
+		boolean[] seen = new boolean [M+1];
+		while(front<A.length && back<A.length) {
+			while(front<A.length && !seen[A[front]]) {
+				res += front - back + 1;
+				seen[A[front]] = true;
+				front++;
+			}
+			while(front<A.length && back<A.length && A[back] != A[front]) {
+				seen[A[back]] = false;
+				back++;
+			}
+			seen[A[back]] = false;
+			back++;
+		}
+		return Math.min(res, 1000000000);
+	}
 }

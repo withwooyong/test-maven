@@ -40,6 +40,9 @@ public class ChocolatesByNumbers {
 
 	// https://www.martinkysel.com/codility-chocolatesbynumbers-solution/
 
+	/*
+	 * There are N chocolates in a circle. Count the number of chocolates you will eat.
+	 */
 	public static void main(String[] args) {
 		int N = 12;
 		int M = 3;

@@ -35,6 +35,9 @@ public class Brackets {
 	
 	private static Logger log = LoggerFactory.getLogger(Brackets.class);
 
+	/*
+	 * Determine whether a given string of parentheses is properly nested.
+	 */
 	public static void main(String[] args) {
 		String S = "{[()()]}"; // true;
 		//String S = "([)()]"; // false;

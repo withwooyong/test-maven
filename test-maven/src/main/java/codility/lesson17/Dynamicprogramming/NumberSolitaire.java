@@ -1,5 +1,8 @@
 package codility.lesson17.Dynamicprogramming;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * In a given array, find the subset of maximal sum in which the distance between consecutive elements is at most 6.
  * 
@@ -54,6 +57,8 @@ Elements of input arrays can be modified.
  */
 public class NumberSolitaire {
 
+	private static Logger log = LoggerFactory.getLogger(NumberSolitaire.class);
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

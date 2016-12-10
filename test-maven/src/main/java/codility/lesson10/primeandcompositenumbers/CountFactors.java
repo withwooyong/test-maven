@@ -36,6 +36,9 @@ public class CountFactors {
 	
 	private static Logger log = LoggerFactory.getLogger(CountFactors.class);
 	
+	/*
+	 * Count factors of given number n.
+	 */
 	// factor 약수
 	// 약수(約數, divisor)는 어떤 수를 나누었을 때 나머지가 0인 수를 말하며, 배수 관계와 서로 반대되는 개념이다.
 	// N = D * M. (24 = 6 * 4).

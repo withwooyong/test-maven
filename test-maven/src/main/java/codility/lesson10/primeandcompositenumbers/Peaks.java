@@ -93,6 +93,9 @@ public class Peaks {
 	
 	private static Logger log = LoggerFactory.getLogger(Peaks.class);
 
+	/*
+	 * Divide an array into the maximum number of same-sized blocks, each of which should contain an index P such that A[P - 1] < A[P] > A[P + 1].
+	 */
 	// 이해안감.
 	public static void main(String[] args) {
 		int[] N = new int[] { 1, 2, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2 };

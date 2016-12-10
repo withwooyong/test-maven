@@ -1,5 +1,8 @@
 package codility.lesson16.Greedyalgorithms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * Tie adjacent ropes to achieve the maximum number of ropes of length >= K.
  * 
@@ -57,6 +60,9 @@ Elements of input arrays can be modified.
 
  */
 public class TieRopes {
+	
+	private static Logger log = LoggerFactory.getLogger(TieRopes.class);
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub

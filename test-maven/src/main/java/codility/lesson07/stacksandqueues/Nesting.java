@@ -37,6 +37,9 @@ public class Nesting {
 
 	private static Logger log = LoggerFactory.getLogger(Nesting.class);
 	
+	/*
+	 * Determine whether given string of parentheses is properly nested.
+	 */
 	// (()(())())
 	// 주어진 문자열이 쌍이 맞는지 확인 Stack 사용
 	// LIFO [Last In First Out]을 구현하기 위해 Stack 이용

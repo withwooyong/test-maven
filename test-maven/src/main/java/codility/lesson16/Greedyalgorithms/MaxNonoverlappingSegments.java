@@ -1,5 +1,8 @@
 package codility.lesson16.Greedyalgorithms;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * Find a maximal set of non-overlapping segments.
  * 
@@ -43,6 +46,8 @@ Elements of input arrays can be modified.
  */
 public class MaxNonoverlappingSegments {
 
+	private static Logger log = LoggerFactory.getLogger(MaxNonoverlappingSegments.class);
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 

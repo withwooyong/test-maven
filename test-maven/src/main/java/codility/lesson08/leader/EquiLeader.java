@@ -56,6 +56,9 @@ import org.slf4j.LoggerFactory;
 public class EquiLeader {
 	private static Logger log = LoggerFactory.getLogger(EquiLeader.class);
 
+	/*
+	 * Find the index S such that the leaders of the sequences A[0], A[1], ..., A[S] and A[S + 1], A[S + 2], ..., A[N - 1] are the same.
+	 */
 	// return 2
 	public static void main(String[] args) {
 		int[] A = { 4, 3, 4, 4, 4, 2 };

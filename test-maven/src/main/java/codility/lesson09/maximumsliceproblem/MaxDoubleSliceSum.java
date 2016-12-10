@@ -58,6 +58,9 @@ public class MaxDoubleSliceSum {
 	
 	private static Logger log = LoggerFactory.getLogger(MaxDoubleSliceSum.class);
 	
+	/*
+	 * Find the maximal sum of any double slice.
+	 */
 	public static void main(String[] args) {
 		int[] A = new int[] { 3, 2, 6, -1, 4, 5, -1, 2 };
 		log.debug("{}", solution(A));

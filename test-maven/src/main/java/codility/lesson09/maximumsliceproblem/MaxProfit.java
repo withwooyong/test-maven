@@ -59,6 +59,9 @@ public class MaxProfit {
 	
 	private static Logger log = LoggerFactory.getLogger(MaxProfit.class);
 	
+	/*
+	 * Given a log of stock prices compute the maximum possible earning.
+	 */
 	// return 356
 	public static void main(String[] args) {
 		int[] A = new int[] { 23171, 21011, 21123, 21366, 21013, 21367 };

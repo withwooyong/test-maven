@@ -70,6 +70,9 @@ public class Fish {
 	
 	private static Logger log = LoggerFactory.getLogger(Fish.class);
 	
+	/*
+	 * N voracious fish are moving along a river. Calculate how many fish are alive.
+	 */
 	// 이해안됨.
 	public static void main(String[] args) {
 		

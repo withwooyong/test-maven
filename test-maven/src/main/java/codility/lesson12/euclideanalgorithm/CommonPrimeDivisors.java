@@ -42,6 +42,9 @@ Elements of input arrays can be modified.
  */
 public class CommonPrimeDivisors {
 
+	/*
+	 * Check whether two numbers have the same prime divisors.
+	 */
 	public static void main(String[] args) {
 		int[] A = new int[] { 15, 10, 3 };
 		int[] B = new int[] { 75, 30, 5 };

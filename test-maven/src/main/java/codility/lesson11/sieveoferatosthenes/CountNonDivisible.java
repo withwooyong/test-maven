@@ -58,6 +58,9 @@ public class CountNonDivisible {
 	
 	private static Logger log = LoggerFactory.getLogger(CountNonDivisible.class);
 
+	/*
+	 * Calculate the number of elements of an array that are not divisors of each element.
+	 */
 	public static void main(String[] args) {
 		
 		int[] A = new int[] { 3, 1, 2, 3, 6 };

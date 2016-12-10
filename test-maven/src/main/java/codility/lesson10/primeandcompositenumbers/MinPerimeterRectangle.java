@@ -40,6 +40,9 @@ public class MinPerimeterRectangle {
 	
 	private static Logger log = LoggerFactory.getLogger(MinPerimeterRectangle.class);
 
+	/*
+	 * Find the minimal perimeter of any rectangle whose area equals N.
+	 */
 	public static void main(String[] args) {
 		log.debug("{}", solution(30));
 		log.debug("{}", solution2(30));

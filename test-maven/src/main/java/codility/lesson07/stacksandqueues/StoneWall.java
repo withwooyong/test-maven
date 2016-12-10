@@ -49,6 +49,9 @@ public class StoneWall {
 	
 	private static Logger log = LoggerFactory.getLogger(StoneWall.class);
 
+	/*
+	 * Cover "Manhattan skyline" using the minimum number of rectangles.
+	 */
 	// compute the minimum number of blocks
 	// return 7
 	public static void main(String[] args) {

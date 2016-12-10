@@ -53,6 +53,9 @@ Elements of input arrays can be modified.
  */
 public class CountSemiprimes {
 
+	/*
+	 * Count the semiprime numbers in the given range [a..b]
+	 */
 	public static void main(String[] args) {
 		int[] A = new int[] { 1, 4, 16 };
 		int[] B = new int[] { 26, 10, 20 };

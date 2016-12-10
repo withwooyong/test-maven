@@ -47,6 +47,9 @@ public class NumberOfDiscIntersections {
 
 	private static Logger log = LoggerFactory.getLogger(NumberOfDiscIntersections.class);
 	
+	/*
+	 * Compute the number of intersections in a sequence of discs.
+	 */
 	// 이해못했음.
 	public static void main(String[] args) {
 		int[] A = { 1, 5, 2, 1, 4, 0 };

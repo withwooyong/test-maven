@@ -53,6 +53,9 @@ public class MaxProductOfThree {
 
 	private static Logger log = LoggerFactory.getLogger(MaxProductOfThree.class);
 	
+	/*
+	 * Maximize A[P] * A[Q] * A[R] for any triplet (P, Q, R).
+	 */
 	public static void main(String[] args) {
 		int[] A = { -3, 1, 2, -2, 5, 6 };
 		log.debug("{}", mySolution(A));

@@ -1,10 +1,13 @@
 package codility.lesson15.Caterpillarmethod;
 
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
- * SS
-AbsDistinct
-COMMENT START
-Compute number of distinct absolute values of sorted array elements.
+ * Compute number of distinct absolute values of sorted array elements.
 
 A non-empty zero-indexed array A consisting of N numbers is given. The array is sorted in non-decreasing order. The absolute distinct count of this array is the number of distinct absolute values among the elements of the array.
 
@@ -46,9 +49,33 @@ Elements of input arrays can be modified.
  */
 public class AbsDistinct {
 
+	private static Logger log = LoggerFactory.getLogger(AbsDistinct.class);
+	
+	/*
+	 * Compute number of distinct absolute values of sorted array elements.
+	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		int[] A = new int[]{-5,-3,-1,0,3,6};
+		System.out.println(solution(A));
+	}
+	
+	//using Java 8
+	public static int solution(int[] A) {
+		return (int)IntStream.of(A).map(i->Math.abs(i)).distinct().count();
+	}
+	
+	public static int solution1(int[] A) {
+		int dupls = 0;
+		for (int i = 0; i < A.length; i++) {
+			if(A[i]<0)
+				A[i] = -A[i];
+		}
+		Arrays.sort(A);
+		for (int i = 1; i < A.length; i++) {
+			if(A[i] == A[i-1])
+				dupls++;
+		}
+		return A.length-dupls;
 	}
 
 }

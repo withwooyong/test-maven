@@ -75,6 +75,9 @@ Elements of input arrays can be modified.
  */
 public class Flags {
 	
+	/*
+	 * Find the maximum number of flags that can be set on mountain peaks.
+	 */
 	public static void main(String[] args) {
 		int[] N = new int[] { 1, 5, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2 };
 		System.out.println(solution(N));

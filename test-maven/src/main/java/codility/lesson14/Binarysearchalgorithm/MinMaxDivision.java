@@ -1,5 +1,8 @@
 package codility.lesson14.Binarysearchalgorithm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * LE
 MinMaxDivision
@@ -59,9 +62,68 @@ Elements of input arrays can be modified.
  */
 public class MinMaxDivision {
 
+	private static Logger log = LoggerFactory.getLogger(MinMaxDivision.class);
+	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		int[] A = new int[]{2,1,5,1,2,2,2};
+		int M = 5;
+		int K = 3;
+		System.out.println(solution(K, M, A));
 	}
-
+	
+	 public static int solution(int K, int M, int[] A) {
+		 int sum=0;
+		 int largestEl = 0;
+		 for (int i = 0; i < A.length; i++) {
+			largestEl= largestEl>=A[i] ? largestEl:A[i];
+			sum += A[i];
+		}
+		int idealMin = Math.max((int)Math.ceil((double)sum/K), largestEl);
+		return binarySearchIterative(idealMin, sum, A, K);
+	 }
+	 
+	 public static int binarySearchRecursive(int min, int max, int[] A, int K) {
+		 if (max - min < 2)
+			 if (verifySolution(min, A, K))
+				 return min;
+			 else
+				 return max;
+		 int middle = (min+max)/2;
+		 if (verifySolution(middle, A, K))
+			 return binarySearchRecursive(min, middle, A, K);
+		 else 
+			 return binarySearchRecursive(middle, max, A, K);	 
+	 }
+	 
+	 public static int binarySearchIterative(int min, int max, int[] A, int K) {
+		 int res=0;
+		 int beg= min;
+		 int end = max;
+		 while (beg<=end) {
+			 int middle = (beg+end)/2;
+			 if (verifySolution(middle,A,K)) {
+				 end=middle-1;
+				 res = middle;
+			 } else
+				 beg=middle+1;
+		 } 
+		 return res;
+	 }
+	 
+	 public static boolean verifySolution(int x, int[] A, int K) {
+		 
+		 int tmp=0;
+		 int count=1;
+		 for (int i = 0; i < A.length; i++) {
+			if (tmp + A[i] <= x)
+				tmp += A[i];
+			else{
+				count++;
+				tmp=A[i];
+				if (count>K)
+					return false;
+			}	
+		}
+		 return true;
+	 }		
 }

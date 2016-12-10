@@ -38,6 +38,9 @@ public class Distinct {
 
 	private static Logger log = LoggerFactory.getLogger(Distinct.class);
 	
+	/*
+	 * Compute number of distinct values in an array.
+	 */
 	public static void main(String[] args) {
 		int[] A = { 2, 1, 1, 2, 3, 1 };
 		//log.debug("{}", solution(A));

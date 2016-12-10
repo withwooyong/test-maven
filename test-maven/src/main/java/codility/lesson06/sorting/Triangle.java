@@ -56,6 +56,9 @@ public class Triangle {
 	
 	private static Logger log = LoggerFactory.getLogger(Triangle.class);
 
+	/*
+	 * Determine whether a triangle can be built from a given set of edges.
+	 */
 	public static void main(String[] args) {
 		int[] A = { 10, 2, 5, 1, 8, 20 }; // triangle
 		//int[] A = { 10, 50, 5, 1 }; // triangle
