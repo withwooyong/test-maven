@@ -53,6 +53,10 @@ import org.slf4j.LoggerFactory;
 public class PassingCars {
 
 	private static Logger log = LoggerFactory.getLogger(PassingCars.class);
+	
+	/*
+	 * Count the number of passing cars on the road.
+	 */
 	public static void main(String[] args) {
 		int[] A = { 0, 1, 0, 1, 1 };
 		log.debug("{}", solution(A));

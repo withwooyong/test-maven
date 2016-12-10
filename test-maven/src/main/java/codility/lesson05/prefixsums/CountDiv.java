@@ -29,6 +29,9 @@ public class CountDiv {
 
 	private static Logger log = LoggerFactory.getLogger(CountDiv.class);
 	
+	/*
+	 * Compute number of integers divisible by k in range [a..b].
+	 */
 	public static void main(String[] args) {
 		int A = 6;
 		int B = 11;

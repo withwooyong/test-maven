@@ -84,6 +84,9 @@ public class TapeEquilibrium {
 	
 	private static Logger log = LoggerFactory.getLogger(TapeEquilibrium.class);
 	
+	/*
+	 * Minimize the value |(A[0] + ... + A[P-1]) - (A[P] + ... + A[N-1])|.
+	 */
 	// N 개의 정수로 구성된 0이 아닌 인덱스가없는 배열 A가 주어지면 달성 할 수있는 최소의 차이를 반환
 	public static void main(String[] args) {
 		int[] A = { 3, 1, 2, 4, 3 };

@@ -40,6 +40,9 @@ public class PermMissingElem {
 
 	private static Logger log = LoggerFactory.getLogger(PermMissingElem.class);
 	
+	/*
+	 * Find the missing element in a given permutation.
+	 */
 	// 없는 숫자를 찾아내는 함수
 	public static void main(String[] args) {
 		int[] A = { 2, 3, 1, 5 };

@@ -58,6 +58,9 @@ public class FrogJmp {
 	
 	private static Logger log = LoggerFactory.getLogger(FrogJmp.class);
 
+	/*
+	 * Count minimal number of jumps from position X to Y.
+	 */
 	// 개구리가 X-->Y로 가는 점프(D)를 이용하여 최소 점프 횟수 구하기
 	// 접근방법 : 처음 위치의 값(X)을 제외한 Y위치를 구한 후 점프거리로 나눈 몫을 올림하여 횟수 계산
 	// (10, 71, 30) -->  (71-10) / 30 = 2.03 => 3

@@ -36,6 +36,9 @@ public class MissingInteger {
 	
 	private static Logger log = LoggerFactory.getLogger(MissingInteger.class);
 
+	/*
+	 * Find the minimal positive integer not occurring in a given sequence.
+	 */
 	public static void main(String[] args) {
 		int[] A = { 1, 3, 6, 4, 1, 2 };
 		mySolution(A);

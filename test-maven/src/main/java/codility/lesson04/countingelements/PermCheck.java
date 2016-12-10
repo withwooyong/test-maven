@@ -58,6 +58,9 @@ public class PermCheck {
 
 	private static Logger log = LoggerFactory.getLogger(PermCheck.class);
 	
+	/*
+	 * Check whether array A is a permutation.
+	 */
 	public static void main(String[] args) {
 		//int[] A = { 4, 1, 3, 2 };
 		int[] A = { 4, 1, 3 };

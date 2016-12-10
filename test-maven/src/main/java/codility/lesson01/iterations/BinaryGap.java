@@ -9,6 +9,7 @@ import org.apache.commons.lang.text.StrTokenizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 /**
+ * 
  * // Solutions for each problem in this lesson (100%) are accessible in my GitHub repo (username = mehmetbajin) under /codility.
  * Find longest sequence of zeros in binary representation of an integer.
  * A binary gap within a positive integer N is any maximal sequence of consecutive zeros that is surrounded by ones at both ends in the binary representation of N.
@@ -36,6 +37,9 @@ public class BinaryGap {
 
 	private static Logger log = LoggerFactory.getLogger(BinaryGap.class);
 	
+	/*
+	 * Find longest sequence of zeros in binary representation of an integer.
+	 */
 	// 특정 수를 2진수로 표현할때 1과 1사이의 0의 갯수가 가장 많은 구간의 0의 갯수
 	public static void main(String[] args) {
 		// N is an integer within the range [1..2,147,483,647].

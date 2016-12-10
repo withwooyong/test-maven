@@ -62,6 +62,9 @@ public class OddOccurrencesInArray {
 
 	private static Logger log = LoggerFactory.getLogger(OddOccurrencesInArray.class);
 	
+	/*
+	 * Find value that occurs in odd number of elements.
+	 */
 	// 배열 속에서 짝이 없는 요소의 값을 리턴.
 	public static void main(String[] args) {
 		int[] A = { 9, 3, 9, 3, 9, 7, 9 };

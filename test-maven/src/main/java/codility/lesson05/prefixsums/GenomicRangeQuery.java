@@ -55,6 +55,9 @@ public class GenomicRangeQuery {
 
 	private static Logger log = LoggerFactory.getLogger(GenomicRangeQuery.class);
 	
+	/*
+	 * Find the minimal nucleotide from a range of sequence DNA.
+	 */
 	// 잘모르겠음.
 	public static void main(String[] args) {
 		String S = "CAGCCTA";

@@ -118,7 +118,9 @@ import org.slf4j.LoggerFactory;
 public class FrogRiverOne {
 		
 	private static Logger log = LoggerFactory.getLogger(FrogRiverOne.class);
-	
+	/*
+	 * Find the earliest time when a frog can jump to the other side of a river.
+	 */
 	// 접근방법: 1~X(중복은 무시)까지 수가 모두 순열이 되는 시점은 집합 구성요소가 X인 시점이다.
 	public static void main(String[] args) {
 		int X = 5;

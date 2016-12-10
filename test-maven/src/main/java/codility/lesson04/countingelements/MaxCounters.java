@@ -63,6 +63,9 @@ public class MaxCounters {
 
 	private static Logger log = LoggerFactory.getLogger(MaxCounters.class);
 	
+	/*
+	 * Calculate the values of counters after applying all alternating operations: increase counter by 1; set value of all counters to current maximum.
+	 */
 	public static void main(String[] args) {
 		int N = 5;
 		int[] A = { 3, 4, 4, 6, 1, 4, 4 };

@@ -32,6 +32,9 @@ public class CyclicRotation {
 	
 	private static Logger log = LoggerFactory.getLogger(CyclicRotation.class);
 
+	/*
+	 * Rotate an array to the right by a given number of steps.
+	 */
 	// 배열의 순서를 오른쪽으로 K번 만큼 시프트 시키는 문제
 	// System.arraycopy 사용하면 됨.
 	public static void main(String[] args) {
