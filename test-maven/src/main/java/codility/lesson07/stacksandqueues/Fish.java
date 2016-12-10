@@ -36,11 +36,11 @@ import org.slf4j.LoggerFactory;
  * The goal is to calculate the number of fish that will stay alive.
  * 
  * For example, consider arrays A and B such that:
- * A[0] = 4    B[0] = 0
- * A[1] = 3    B[1] = 1
- * A[2] = 2    B[2] = 0
- * A[3] = 1    B[3] = 0
- * A[4] = 5    B[4] = 0
+ * A[0] = 4    B[0] = 0 upstream
+ * A[1] = 3    B[1] = 1 downstream 
+ * A[2] = 2    B[2] = 0 upstream
+ * A[3] = 1    B[3] = 0 upstream
+ * A[4] = 5    B[4] = 0 upstream
  * 
  * Initially all the fish are alive and all except fish number 1 are moving upstream. 
  * Fish number 1 meets fish number 2 and eats it, then it meets fish number 3 and eats it too. 
@@ -80,15 +80,7 @@ public class Fish {
 		log.debug("{}", solution2(A, B));
 	}
 	
-	/*
-	 * For every fish ff
-	 * If there no fish on the stack, push ff to ss
-	 * Otherwise
-	 * If ff is going upstream, pop off fish from ss as long as ff eats the fish from top of ss. This fish is eaten.
-	 * If the stack got empty, push ff to the top of ss
-	 * Otherwise, if the configuration of the fish is different from ff upstream, top of ss downstream, push ff to the top of the stack. 
-	 * This signals that ff is safe for now.
-	 */
+	
 	public static int solution(int[] A, int[] B) {
 		
 		Stack<Integer> stack = new Stack<Integer>();
@@ -119,6 +111,7 @@ public class Fish {
 	// 1 represents a fish flowing downstream.
 	// If two fish move in opposite directions and there are no other (living) fish between them, they will eventually meet each other. 
 	public static int solution2(int[] A, int[] B) {
+		
 		Stack<Integer> stack = new Stack<Integer>();
 		int duels = 0;
 		// int A[] = { 4, 3, 2, 1, 5 }; 
@@ -126,20 +119,20 @@ public class Fish {
 		for (int i = 0; i < A.length; i++) {
 			if (B[i] == 0) {
 				while (!stack.isEmpty()) {
-					log.debug("{} {} {} {}", i, duels, A[i], A[stack.peek()]);
-					duels++;
+					//log.debug("{} {} {} {}", i, duels, A[i], A[stack.peek()]);
+					duels++; // 잡아먹힌 수
 					if (A[i] < A[stack.peek()]) {
 						break;
 					}
 					stack.pop();
 				}
+				// 1. stack empty
 			} else {
-				log.debug("{}", B[i]);
-				stack.push(B[i]);
+				stack.push(B[i]); // 2. stack 1 
 			}
+			log.debug("{} {} {}", A[i], B[i], stack.toString());
 		}
-		log.debug("{} ", duels);
+		
 		return A.length - duels;
 	}
-
 }

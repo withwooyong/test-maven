@@ -61,6 +61,8 @@ public class MaxProductOfThree {
 		
 	}
 	
+	// Your goal is to find the maximal product of any triplet.
+	// the function should return 60, as the product of triplet (2, 4, 5) is maximal.
 	// 배열중 3개 항목의 곲셈 중 최대값 구하는 문제
 	// 3..100,000 개의 인수를 갖는 배열에서 3개의 인수를 곱하여 최대 값이 나올 수 있도록 하는 문제
 	private static int mySolution(int[] A) {

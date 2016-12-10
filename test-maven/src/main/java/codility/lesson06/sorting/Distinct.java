@@ -44,6 +44,7 @@ public class Distinct {
 		log.debug("{}", mySolution(A));
 	}
 	
+	// the function should return 3, because there are 3 distinct values appearing in array A, namely 1, 2 and 3.
 	// 중복제거 후 유일한 값의 갯수
 	public static int mySolution(int[] A) {
 		Set<Integer> set = new HashSet<>();

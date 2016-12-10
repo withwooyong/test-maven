@@ -16,7 +16,6 @@ public class study {
 	// 조합 : 중복없이 n개 중에서 r개를 순서에 상관없이 뽑는 것을 말한다.
 	// 중복 조합 : n개 중에서 r개를 같은 것(종류)를 뽑을 수 있으며 뽑히는 순서에 상관없이 선택하는 것을 말한다.
 	
-	
 	public static void main(String[] args) {
 		
 		/*

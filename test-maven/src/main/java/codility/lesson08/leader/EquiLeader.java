@@ -58,16 +58,16 @@ public class EquiLeader {
 
 	// return 2
 	public static void main(String[] args) {
-		int[] A = { 4, 3, 3, 3, 3, 2 };
+		int[] A = { 4, 3, 4, 4, 4, 2 };
 		log.debug("{}", solution(A));
 		
 	}
 	
-	public static int mySolution(int[] A) {
-		
-		return 0;
-	}
-	
+	// The goal is to count the number of equi leaders.
+	// The leader of this array is the value that occurs in more than half of the elements of A.
+	// we can find two equi leaders:
+	// 0, because sequences: (4) and (3, 4, 4, 4, 2) have the same leader, whose value is 4.
+	// 2, because sequences: (4, 3, 4) and (4, 4, 2) have the same leader, whose value is 4.
 	public static int solution(int[] A) {
 
 		// check if it is dominator at all
@@ -98,8 +98,11 @@ public class EquiLeader {
 		
 		if (domOccurances <= A.length / 2) {
 			return 0;// not dominator
-		}
+		} 
 		
+		// dominator  = 4인걸로 확인했음.
+		// { 4, 3, 4, 4, 4, 2 }; 절반이상 나오는 leader of this array = 4
+		log.debug("dominator={}", dominator);
 		// 요기까지 이해 했음.
 		
 		int nonDomOccurances = A.length - domOccurances;
@@ -119,5 +122,5 @@ public class EquiLeader {
 			}
 		}
 		return equiLeaders;
-	}
+	}	
 }

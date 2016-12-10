@@ -48,14 +48,15 @@ public class Dominator {
 	private static Logger log = LoggerFactory.getLogger(Dominator.class);
 	
 	// 배열에서 가장 많은 빈도수를 갖는 숫자의 위치중 아무거나 반환하는 문제
+	// return 0, 2, 4, 6 or 7 중 하나
 	public static void main(String[] args) {
 		int[] A = new int[] { 3, 4, 3, 2, 3, -1, 3, 3 };
 		log.debug("{}", solution(A));
 		log.debug("{}", mySolution(A));
-		
 	}
 	
 	// 위치를 반환해야 하기 때문에 정렬할 수 없음.
+	// 빈도수 = A.length / 2 이어야하기 때문에 for문 하나 더 있음.
 	// O(n)
 	public static int mySolution(int[] A) {
 		Stack<Integer> stack = new Stack<>();
@@ -70,7 +71,7 @@ public class Dominator {
 				}
 			}
 		}
-		
+		log.debug("{}", stack.toString());
 		int candidate = stack.pop();
 		int count = 0;
 		int randomIndex = -1;
