@@ -1,6 +1,7 @@
 package codility.lesson10.primeandcompositenumbers;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.slf4j.Logger;
@@ -28,22 +29,42 @@ public class Eratosthenes {
 	public static void main(String[] args) {
 		int N = 10;
 		getPrime(N);
+		primes(N);
+		fillSieve(N);
 
 	}
 	
-	public static void getPrime(int N) {
+	public static void fillSieve(int N) {
+		ArrayList<Integer> arrPrimes = new ArrayList<>();
+		boolean[] primes = new boolean[N];
+		Arrays.fill(primes,  true);
+		primes[0] = false;
+		primes[1] = false;
+		for (int i = 2; i < primes.length; i++) {
+			if (primes[i] != false) {
+				for (int j = i; j * i < primes.length; j++) {
+					primes[i * j] = false;
+				}
+			}
+		}
+		
+		for (int i = 2; i < primes.length; i++) {
+			if (primes[i] == true) {
+				arrPrimes.add(i);
+			}
+		}
+		log.debug("{}", arrPrimes.toString());
+	}
+	
+	public static void primes(int N) {
 		boolean[] A = new boolean[N];
 		Arrays.fill(A, false);
-		
+		ArrayList<Integer> primes = new ArrayList<>();
 		for (int i = 2; i < N; i++) {
 			A[i] = true;
 		}
-
-		int sqrt = (int) Math.sqrt(N); // 지정된 숫자의 제곱근을 계산하고 반환
-
-		log.debug("{}", sqrt);
 		
-		for (int i = 2; i < sqrt; i++) {
+		for (int i = 2; i < N; i++) {
 			if (A[i] != false) {
 				for (int j = i; j * i < N; j++) {
 					A[i * j] = false;
@@ -53,6 +74,32 @@ public class Eratosthenes {
 		
 		for (int i = 2; i < N; i++) {
 			if (A[i] == true) {
+				primes.add(i);
+			}
+		}
+		log.debug("{}", primes.toString());
+	}
+	
+	public static void getPrime(int N) {
+		boolean[] A = new boolean[N];
+		Arrays.fill(A, true);
+		A[0] = false;
+		A[1] = false;
+
+		int sqrt = (int) Math.sqrt(N); // 지정된 숫자의 제곱근을 계산하고 반환
+
+		log.debug("{}", sqrt);
+		
+		for (int i = 2; i < sqrt; i++) {
+			if (A[i]) {
+				for (int j = i; j * i < N; j++) {
+					A[i * j] = false;
+				}
+			}
+		}
+		
+		for (int i = 2; i < N; i++) {
+			if (A[i]) {
 				System.out.print(" " + i);
 			}
 		}

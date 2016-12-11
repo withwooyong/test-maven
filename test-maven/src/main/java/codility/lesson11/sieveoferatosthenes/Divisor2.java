@@ -1,7 +1,6 @@
 package codility.lesson11.sieveoferatosthenes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 
 import org.slf4j.Logger;
@@ -17,6 +16,7 @@ public class Divisor2 {
 		log.debug("{}", findDivisorsV2(input));
 	}
 	
+	// 특정 숫자의 약수 구하는 것임..  
 	public static ArrayList<Integer> findDivisorsV1(int input) {
 		ArrayList<Integer> divisors = new ArrayList<>();
 		int count = 0;

@@ -7,7 +7,10 @@ import org.slf4j.LoggerFactory;
 /**
  * A non-empty zero-indexed array A consisting of N integers is given. 
  * Array A represents numbers on a tape.
- * Any integer P, such that 0 < P < N, splits this tape into two non-empty parts: A[0], A[1], ..., A[P − 1] and A[P], A[P + 1], ..., A[N − 1].
+ * 
+ * Any integer P, such that 0 < P < N, splits this tape into two non-empty parts: 
+ * A[0], A[1], ..., A[P − 1] and A[P], A[P + 1], ..., A[N − 1].
+ * 
  * The difference between the two parts is the value of: 
  * |(A[0] + A[1] + ... + A[P − 1]) − (A[P] + A[P + 1] + ... + A[N − 1])|
  * 
@@ -119,16 +122,36 @@ public class TapeEquilibrium {
 		return minimal;
 	}
 		
+	// O(N)
+	/*
+	 * int[] A = { 3, 1, 2, 4, 3 };
+	 * Any integer P, such that 0 < P < N, splits this tape into two non-empty parts:
+	 * A[0], A[1], ..., A[P − 1]
+	 * A[P], A[P + 1], ..., A[N − 1].
+	 * The difference between the two parts is the value of:
+	 * |(A[0] + A[1] + ... + A[P − 1]) − (A[P] + A[P + 1] + ... + A[N − 1])|
+	 * i) 복잡하게 풀어보기
+	 * P를 0부터 N-1까지 늘려보면서, 각 경우에 앞부분의 합 - 뒷부분의 합을 구해볼 수 있겠습니다.
+	 * 이 경우에는 0~N-1까지 N번의 탐색,
+	 * 그리고 각 탐색마다 앞 부분의 합과 뒷부분의 합을 구하며 N번의 탐색이 이루어집니다.
+	 * 때문에 N^2의 시간 복잡도를 갖게 됩니다.
+	 * 
+	 * ii) 시간 복잡도 줄이기
+	 * 합을 매 번 구할 필요없이 P의 위치를 변경할 때 마다, 각 부분의 합을 갱신할 수 있습니다.
+	 * 뒷부분 가장 앞의 원소를 떼서, 앞부분으로 붙여준다고 생각하시면 될 것 같습니다.
+	 * 이렇게 처리하면, P를 옮길 때 마다 앞,뒤부분의 합을 N번의 탐색을 통해 새로 구하지 않아도 됩니다.
+	 * 그렇게 해서 구해진 합을 서로 빼서, 최소값과 비교하여 더 작은 값이 나오면 그 값을 최소값으로 저장합니다.
+	 */
 	public static int solution(int[] A) {
 		int front = 0;
 		int back = 0;
 		for (int i = 0; i < A.length; i++) {
-			back += A[i];
+			back += A[i]; // 총합을 구한다.
 		}
 		int minDiff = Integer.MAX_VALUE;
 		for (int i = 1; i < A.length; i++) {
-			front += A[i - 1];
-			back -= A[i - 1];
+			front += A[i - 1]; // 앞자리 합
+			back -= A[i - 1]; //  뒷자리 합
 			minDiff = Math.min(minDiff, Math.abs(front - back));
 		}
 		return minDiff;

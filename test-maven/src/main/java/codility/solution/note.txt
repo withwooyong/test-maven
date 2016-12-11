@@ -39,6 +39,7 @@ http://blog.naver.com/onjo0127/220787710808
 A, B, (C, D)
 3*2*1*2(C,D)
 
+이해안된 것들
 Prefixsums
 NumberOfDiscIntersections
 Fish
@@ -48,10 +49,23 @@ MaxDoubleSliceSum
 MaximumSliceProblem
 MinPerimeterRectangle
 Peaks
-최대공약수(最大公約數)란, 0이 아닌 두 정수나 다항식의 공통되는 약수 중에서 가장 큰 수를 말한다. 두 정수 a와 b의 최대공약수를 기호로 gcd(a,b)로 표기한다. (위키피디아 발췌)
+CountNonDivisible
+CountSemiprimes
+ChocolatesByNumbers
+CommonPrimeDivisors
+FibFrog
+Ladder
+MinMaxDivision
+NailingPlanks
+CountDistinctSlices
+
+GCD 최대공약수(最大公約數)란, 0이 아닌 두 정수나 다항식의 공통되는 약수 중에서 가장 큰 수를 말한다. 두 정수 a와 b의 최대공약수를 기호로 gcd(a,b)로 표기한다. (위키피디아 발췌)
 
 Collections.swap
 
+new StringBuilder(str).reverse().toString())
+
+약수 divisors
 divisors.sort(Comparator.comparingInt(Integer::intValue));
 arrayList.sort((p1, p2) -> p1.compareTo(p2));
 Arrays.sort(months, Comparator.comparingInt(String::length));
@@ -66,6 +80,10 @@ Arrays.sort(months, (String a, String b) -> { return Integer.signum(a.length() -
 
 int arrMax = Arrays.stream(A).max().getAsInt();
 Arrays.fill(bitList, false); //특정 값으로 초기화
+
+-- 특정 값으로 초기화
+List<Boolean> prime = new ArrayList<Boolean>();
+prime.addAll(Collections.nCopies(maxValue + 1, Boolean.TRUE));
  	
 제곱 square 제곱근 square root
 

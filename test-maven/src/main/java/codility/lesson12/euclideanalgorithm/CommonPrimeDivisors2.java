@@ -1,5 +1,8 @@
 package codility.lesson12.euclideanalgorithm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * CommonPrimeDivisors
  * Check whether two numbers have the same prime divisors.
@@ -39,7 +42,9 @@ package codility.lesson12.euclideanalgorithm;
  * @author wooyong
  *
  */
-public class CommonPrimeDivisors {
+public class CommonPrimeDivisors2 {
+	
+	private static Logger log = LoggerFactory.getLogger(CommonPrimeDivisors2.class);
 
 	/*
 	 * Check whether two numbers have the same prime divisors.
@@ -47,65 +52,59 @@ public class CommonPrimeDivisors {
 	public static void main(String[] args) {
 		int[] A = new int[] { 15, 10, 3 };
 		int[] B = new int[] { 75, 30, 5 };
-		System.out.println(solution(A, B));
+		log.debug("{}", solution(A, B));
 
 	}
+	
+	public static int solution(int[] A, int[] B) {
+		int primeDivisorsSameCount = 0; // Prime Divisors Same
 
-	/*
-	 * 접근방법:
-	 * - 유클리드 호제법을 이용하여 최대공약수(가)를 구한다.
-	 * - 최대공약수는 두개의 수 공약수 중에서 최대인 수 이다. 즉, 모두 나누어지는 최대 수이다.
-	 * - 먼저 두개 수(a,b)의 최대공약수(가)를 구한다.
-	 * - 수(a)와 최대공약수(가)의 최대공약수(나)를 구한다.
-	 * - 최대공약수(나)가 존재한다면 수(a)를 최대공약수(나)로 나눠 몫을 구한다.
-	 *    (공약수이므로 나누어질 것이다.)
-	 * - 계속 반복해서 몫이 1에 도달한 경우 최대공약수에 나타난 소수이외에는 없다는 의미
-	 * - 최대공약수가 1인 경우는 최대공약수가 없다는 의미로 추가 소수가 존재한다는 의미
-	 * - 위 4개를 반복하며 알아낸다.
-	 * - 수(b)도 위 단락 과정을 반복한다.
-	 * - 수(a)와 수(b) 모두 결국 몫이 1이 되면 최대공약수(가)의 factor 이외에는 없는 경우이다.
-	 */
-	private static int solution(int[] A, int[] B) {
-		int res = 0;
-		for (int i = 0; i < A.length; i++) {
-			int x = A[i];
-			int y = B[i];
-			int gcd = gcd(x, y, 1);
-			int gcdTmp = 0;
-			while (x != 1) {
-				gcdTmp = gcd(x, gcd, 1);
-				if (gcdTmp == 1)
-					break;
-				x /= gcdTmp;
-			}
-			if (x != 1)
-				continue;
+		Outer: for (int i = 0; i < A.length; i++) {
+			int a = A[i];
+			int b = B[i];
 
-			while (y != 1) {
-				gcdTmp = gcd(y, gcd, 1);
-				if (gcdTmp == 1)
-					break;
-				y /= gcdTmp;
+			int gcd = greatestCommonDivisor(a, b); // 최대공약수(가)
+
+			if (a == b) {
+				primeDivisorsSameCount++;
+				continue Outer;
+			} else if (gcd == 1) { // No Greatest Common Divisor
+				continue Outer;
 			}
-			if (y != 1)
-				continue;
-			res++;
+
+			int quotient = 0; // Quotient
+
+			quotient = a;
+			while (quotient != 1) {
+				int gcd_q = greatestCommonDivisor(quotient, gcd);
+				if (gcd_q == 1) { // Exist Extra Prime
+					continue Outer;
+				}
+				quotient = quotient / gcd_q;
+			}
+
+			quotient = b;
+			while (quotient != 1) {
+				int gcd_q = greatestCommonDivisor(quotient, gcd);
+				if (gcd_q == 1) { // Exist Extra Prime
+					continue Outer;
+				}
+				quotient = quotient / gcd_q;
+			}
+			primeDivisorsSameCount++;
 		}
-		return res;
+
+		return primeDivisorsSameCount;
 	}
 
-	private static int gcd(int a, int b, int res) {
-		if (a == b)
-			return res * a;
-		else if (a % 2 == 0 && b % 2 == 0)
-			return gcd(a / 2, b / 2, res * 2);
-		else if (a % 2 == 0)
-			return gcd(a / 2, b, res);
-		else if (b % 2 == 0)
-			return gcd(a, b / 2, res);
-		else if (a > b)
-			return gcd(a - b, b, res);
-		else
-			return gcd(a, b - a, res);
+	public static int greatestCommonDivisor(int a, int b) {
+		if (a % b == 0) {
+			return b;
+		} else {
+			return greatestCommonDivisor(b, a % b);
+		}
 	}
+
+
+	
 }

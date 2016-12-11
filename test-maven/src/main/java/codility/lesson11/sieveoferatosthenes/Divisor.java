@@ -15,7 +15,7 @@ public class Divisor {
 		int[] A = new int[] { 3, 1, 2, 3, 6 };
 //		log.debug("{}", solution());
 //		log.debug("{}", solution2());
-		log.debug("{}", solultion3(A));		
+//		log.debug("{}", solultion3(A));		
 		log.debug("{}", solultion4(6));
 	}
 	

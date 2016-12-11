@@ -1,7 +1,6 @@
 package codility.lesson11.sieveoferatosthenes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
