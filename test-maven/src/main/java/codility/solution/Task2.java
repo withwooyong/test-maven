@@ -13,7 +13,7 @@ public class Task2 {
 		//int[] A = new int[] { 1, 5, 3, 3, 7 };
 		//int[] A = new int[] { 1, 3, 5, 3, 4 };
 		int[] A = new int[] { 1, 3, 5 };
-//		System.out.println(solution(A));
+		System.out.println(solution(A));
 //		System.out.println(checkSortedness(A));
 //		System.out.println(isSorted(A));
 		System.out.println(sortByOneSwap(A));
