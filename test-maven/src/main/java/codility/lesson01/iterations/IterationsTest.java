@@ -1,16 +1,12 @@
 package codility.lesson01.iterations;
 
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,6 +19,18 @@ public class IterationsTest {
 	
 	private static final Logger log = LoggerFactory.getLogger(IterationsTest.class);
 	
+	public static void main(String[] args) {
+		int N = 10;
+//		log.debug("{}", factorial(N));
+//		log.debug("{}", factorial2(N));
+//		log.debug("{}", printStar(N));
+//		log.debug("{}", printStar2(N));
+//		log.debug("{}", example3());
+//		log.debug("{}", example4());
+		log.debug("{}", example5());
+		
+	}
+	
 	/**
 	 * Example: We are given some positive integer n. 
 	 * Let’s compute the factorial of n and assign it to the variable factorial. 
@@ -32,14 +40,22 @@ public class IterationsTest {
 	 * 2 for i in range (1, n + 1):
 	 * 3 factorial *= i
 	 */
-	@Test
-	public void example1() {
+	public static int factorial(int N) {
 		int factorial = 1;
-		for (int i = 1; i <= 5; i++) {
+		for (int i = 1; i <= N; i++) {
 			factorial *= i;			
-			log.debug("{}", factorial);
+			//log.debug("factorial={}", factorial);
 		}
+		return factorial;
 	}
+	
+	public static int factorial2(int N) {		
+		if (N <= 1) {
+			return N;
+		} else {
+			return factorial2(N - 1) * N; // <-- 재귀
+		}
+	}	
 	
 	/**
 	 * Example: Let’s print a triangle made of asterisks (‘*’) separated by spaces. 
@@ -55,15 +71,26 @@ public class IterationsTest {
 	 * 3 print ’*’,
 	 * 4 print
 	 */
-	@Test
-	public void example2() {
-		int n = 4;
-		for (int i = 1; i <= n; i++) {
+	public static int printStar(int N) {
+		for (int i = 1; i <= N; i++) {
 			for (int j = 1; j <= i; j++) {
 				System.out.print("*");
 			}
 			System.out.println();
 		}
+		return 0;
+	}
+	
+	// 역삼각형
+	public static int printStar2(int N) {
+		for (int i = 1; i <= N; i++) {
+			for (int j = i; j <= N; j++) {
+				System.out.print("*");
+			}
+			System.out.println();
+		}
+		
+		return 0;
 	}
 	
 	/**
@@ -85,8 +112,7 @@ public class IterationsTest {
 	 * 5 print ’*’,
 	 * 6 print
 	 */
-	@Test
-	public void example3() {
+	public static int example3() {
 		int n = 4;
 		
 		for (int i = n; i >= 0; i--) {
@@ -107,6 +133,7 @@ public class IterationsTest {
 //			}
 //			System.out.println("");
 //		}
+		return 0;
 	}
 	
 	/**
@@ -118,20 +145,25 @@ public class IterationsTest {
 	 * 2 while n > 0:
 	 * 3 n = n // 10
 	 * 4 result += 1
+	 * 
+	 * * 예 : 양의 정수 n이 주어지면 소수점 이하 자릿수를 어떻게 계산할 수 있습니까?
+	 * * 한 가지 방법은 정수를 문자열로 변환하고 문자를 세는 것입니다.
+	 * * 여기에서는 대신 산술 연산 만 사용합니다.
+	 * * 단순히 숫자를 10으로 나누고 0을 얻는 데 필요한 단계 수를 계산할 수 있습니다.
 	 */
-	@Test
-	public void example4() {
+	public static int example4() {
 		
 		int result = 0;
-		int n = 10;
+		int n = 100;
 		
-		System.out.println(Math.floor(Math.log10(n) + 1));
+		log.debug("{}", Math.floor(Math.log10(n) + 1));
 		
-//		while (n > 0) {
-//			result += 1;
-//			n = n // 10
-//			System.out.println(result);
-//		}
+		while (n > 0) {
+			result += 1;
+			n = n / 10;
+			log.debug("{}", result);
+		}
+		return 0;
 	}
 	
 	/**
@@ -149,8 +181,7 @@ public class IterationsTest {
 	 * 6 a = b
 	 * 7 b = c
 	 */
-	@Test
-	public void example5() {
+	public static int example5() {
 		int n = 13;
 		int a = 0;
 		int b = 1;
@@ -161,6 +192,7 @@ public class IterationsTest {
 			a = b;
 			b = c;
 		}
+		return 0;
 	}
 	
 	/**
@@ -169,7 +201,6 @@ public class IterationsTest {
 	 * 2 for day in days:
 	 * 3 print day
 	 */
-	@Test
 	public void example6() {
 		String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 		for (int i = 0; i < days.length; i++) {
@@ -185,8 +216,7 @@ public class IterationsTest {
 	 * 3 print day
 	 * Monday Tuesday Friday Wednesday Thursday Sunday Saturday
 	 */
-	@Test
-	public void example7() {
+	public void example7() { // 순서 없이 삽입됨.
 		Set<String> set = new HashSet<>();
 		set.add("Monday");
 		set.add("Tuesday");
@@ -216,8 +246,6 @@ public class IterationsTest {
 	 * thu stands for Thursday
 	 * sat stands for Saturday
 	 */
-	
-	@Test
 	public void example8() {
 		
 		Map<String, String> map = new HashMap<>();
@@ -235,8 +263,7 @@ public class IterationsTest {
 			System.out.println(string + ", stands for " + (String)map.get(string));
 		}
 	}
-	
-	@Test
+
 	public void example9() {
 		LinkedList<String> list = new LinkedList<>();
 		list.add("add1");

@@ -13,7 +13,8 @@ import org.slf4j.LoggerFactory;
  * 1 represents a car traveling west.
  * 
  * The goal is to count passing cars. 
- * We say that a pair of cars (P, Q), where 0 ≤ P < Q < N, is passing when P is traveling to the east and Q is traveling to the west.
+ * We say that a pair of cars (P, Q), 
+ * where 0 ≤ P < Q < N, is passing when P is traveling to the east and Q is traveling to the west.
  * 
  * For example, consider array A such that:
  * A[0] = 0
@@ -59,10 +60,15 @@ public class PassingCars {
 	 */
 	public static void main(String[] args) {
 		int[] A = { 0, 1, 0, 1, 1 };
-		log.debug("{}", solution(A));
-
+		log.debug("{}", solution(A)); // return 5
+		log.debug("{}", solution1(A));
+		log.debug("{}", solution2(A));
 	}
 	
+	/*
+	 * We say that a pair of cars (P, Q), 
+	 * where 0 ≤ P < Q < N, is passing when P is traveling to the east and Q is traveling to the west.
+	 */
 	public static int solution(int[] A) {
 
 		int toEast = 0;
@@ -81,7 +87,7 @@ public class PassingCars {
 		return (int) pairCount;
 	}
 
-	public int solution2(int[] A) {
+	public static int solution2(int[] A) {
 		int carsGoingEastCount = 0;
 		int passingPairs = 0;
 
@@ -98,7 +104,7 @@ public class PassingCars {
 		return passingPairs;
 	}
 
-	public int solution1(int[] A) {
+	public static int solution1(int[] A) {
 		int length = A.length;
 		int NoOf1s = 0;
 		int noOfTotalPair = 0;

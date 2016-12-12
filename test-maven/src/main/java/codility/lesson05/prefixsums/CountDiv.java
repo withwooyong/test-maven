@@ -36,13 +36,14 @@ public class CountDiv {
 		int A = 6;
 		int B = 11;
 		int K = 2;
-		mySolution(A, B, K);
+		log.debug("{}", mySolution(A, B, K)); // 3
+		log.debug("{}", solution(A, B, K)); // 3
 	}
 	
 	// For example, for A = 6, B = 11 and K = 2, your function should return 3,
 	// because there are three numbers divisible by 2 within the range [6..11], namely 6, 8 and 10.
 	// 주어진 숫자 사이에 나누어지는 갯수 
-	public static void mySolution(int A, int B, int K) {
+	public static int mySolution(int A, int B, int K) {
 		//i.e.: { i : A ≤ i ≤ B, i mod K = 0 }
 		int count = 0;
 		for (int i = A; i <= B; i++) {
@@ -52,10 +53,11 @@ public class CountDiv {
 			}
 		}
 		log.debug("{}", count);
+		return count;
 	}
 	
 	// 요넘 이해안됨.
-	public int solution(int A, int B, int K) {
+	public static int solution(int A, int B, int K) {
 		
 		int result = B / K + 1;
 		if (A != 0) {

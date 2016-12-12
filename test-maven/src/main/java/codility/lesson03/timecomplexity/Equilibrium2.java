@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Equilibrium2 {
 	
-	private static Logger log = LoggerFactory.getLogger(Equilibrium.class);
+	private static Logger log = LoggerFactory.getLogger(Equilibrium2.class);
 
 	/*
 	 *  * 쌍 (1, 1)은 다음과 같은 이유로 행렬 A의 평형 점입니다.
@@ -52,6 +52,7 @@ public class Equilibrium2 {
 	}
 	
 	private static int solution(int[][] A) {
+		
 		
 		
 		return 0;

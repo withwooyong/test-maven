@@ -53,7 +53,7 @@ public class NumberOfDiscIntersections {
 	// 이해못했음.
 	public static void main(String[] args) {
 		int[] A = { 1, 5, 2, 1, 4, 0 };
-		log.debug("{}", solution(A));
+		log.debug("{}", solution(A)); // return 11
 		log.debug("{}", mySolution(A));	 
 	}
 	
@@ -73,7 +73,7 @@ public class NumberOfDiscIntersections {
 		int cnt = 0;
 		for (int i = 0; i < A.length - 1; i++) {
 			for (int j = i + 1; j < A.length; j++) {
-				if (i + A[i] >= j - A[j]) {
+				if ((i + A[i]) >= (j - A[j])) {
 					cnt++;
 				}
 			}

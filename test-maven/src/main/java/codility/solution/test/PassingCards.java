@@ -3,7 +3,7 @@ package codility.solution.test;
 public class PassingCards {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		
 		int[] a = { 0, 1, 0, 1, 1 };
 		int[] b = { 0, 1 };
 		solution(a);

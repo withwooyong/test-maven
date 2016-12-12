@@ -66,6 +66,8 @@ public class MaxProfit {
 	public static void main(String[] args) {
 		int[] A = new int[] { 23171, 21011, 21123, 21366, 21013, 21367 };
 		log.debug("{}", solution(A));
+		log.debug("{}", solution2(A));
+		
 	}
 	
 	public static int solution(int[] A) {
@@ -82,7 +84,7 @@ public class MaxProfit {
 
 	public static int goldenMaxSlice(int[] A) {
 		int arrMax = Arrays.stream(A).max().getAsInt();
-		log.debug("{} {}", arrMax, Arrays.toString(A));
+		//log.debug("{} {}", arrMax, Arrays.toString(A));
 		if (arrMax < 0) {
 			return arrMax;
 		}
@@ -106,7 +108,7 @@ public class MaxProfit {
 	 * 즉, 최소매수값만을 가지고 차례대로 진행하면서 매도시점값(B) 차이만 계산하여 최대값을 얻는다.
 	 * ※ 단, 최소매수값이 더 낮은 것이 나타나면 해당 최소매수값(A)은 갱신되고 이후시점부터 사용된다.
 	 */
-	public int solution2(int[] A) {
+	public static int solution2(int[] A) {
 		
 		if (A == null || A.length <= 1) {
 			return 0;

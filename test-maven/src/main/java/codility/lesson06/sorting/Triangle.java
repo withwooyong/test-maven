@@ -60,33 +60,23 @@ public class Triangle {
 	 * Determine whether a triangle can be built from a given set of edges.
 	 */
 	public static void main(String[] args) {
-		int[] A = { 10, 2, 5, 1, 8, 20 }; // triangle
-		//int[] A = { 10, 50, 5, 1 }; // triangle
+		int[] A = { 10, 2, 5, 1, 8, 20 }; // triangle 1
+		int[] B = { 10, 50, 5, 1 }; // not triangle 0
 		
 		log.debug("{}", solution(A));
+		log.debug("{}", solution(B));
 	}
 	
-	// 주어진 배열이 삼각형을 구성할 수 있는지 확인
 	public static int solution(int[] A) {
-		// 0 ≤ P < Q < R < N
-		// A[P] + A[Q] > A[R],
-		// A[Q] + A[R] > A[P],
-		// A[R] + A[P] > A[Q]. 
-		Arrays.sort(A);
-		
-		for (int i = 0; i < A.length-2; i++) {
-			int P = A[i];
-			int Q = A[i + 1];
-			int R = A[i + 2];
-			if (P > A.length || Q > A.length || R > A.length) {
-				log.debug("{} {} {}", P, Q, R);
-				continue;
-			} else if (P + Q > R && Q + R > P && R + P > Q) {
-				return 1;
-			} 
+		if (A.length < 3) {
+			return 0;
 		}
-		return -1;
+		Arrays.sort(A);
+		for (int i = 2; i < A.length; i++) {
+			if ((long) A[i - 2] + (long) A[i - 1] > (long) A[i]) {
+				return 1;
+			}
+		}
+		return 0;
 	}
-	
-
 }

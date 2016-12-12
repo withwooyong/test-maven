@@ -55,13 +55,12 @@ public class MaxProductOfThree {
 	
 	/*
 	 * Maximize A[P] * A[Q] * A[R] for any triplet (P, Q, R).
+	 * The product of triplet (P, Q, R) equates to A[P] * A[Q] * A[R] (0 ≤ P < Q < R < N).
 	 */
 	public static void main(String[] args) {
 		int[] A = { -3, 1, 2, -2, 5, 6 };
-		log.debug("{}", mySolution(A));
-		//log.debug("{}", solution1(A));
-		
-		
+		log.debug("{}", mySolution(A)); // return 60
+		log.debug("{}", solution1(A));
 	}
 	
 	// Your goal is to find the maximal product of any triplet.

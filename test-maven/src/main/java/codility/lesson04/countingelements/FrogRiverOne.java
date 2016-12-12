@@ -126,7 +126,7 @@ public class FrogRiverOne {
 		int X = 5;
 		int[] A = { 1, 3, 1, 4, 2, 3, 5, 4 };		
 		//mySolution(X, A);
-		log.debug("{}", solution5(X, A));
+		log.debug("{}", solution5(X, A)); // 6
 	}
 	
 	public static int solution5(int X, int[] A) {

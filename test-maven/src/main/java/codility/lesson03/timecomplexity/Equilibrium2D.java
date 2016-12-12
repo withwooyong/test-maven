@@ -33,9 +33,9 @@ import org.slf4j.LoggerFactory;
  * return 2
  *     
  */
-public class Equilibrium {
+public class Equilibrium2D {
 	
-	private static Logger log = LoggerFactory.getLogger(Equilibrium.class);
+	private static Logger log = LoggerFactory.getLogger(Equilibrium2D.class);
 
 	/*
 	 *  * 쌍 (1, 1)은 다음과 같은 이유로 행렬 A의 평형 점입니다.

@@ -41,7 +41,7 @@ public class MissingInteger {
 	 */
 	public static void main(String[] args) {
 		int[] A = { 1, 3, 6, 4, 1, 2 };
-		mySolution(A);
+		mySolution(A); // 5
 	}
 	
 	// 배열에 없는 최소양의 정수

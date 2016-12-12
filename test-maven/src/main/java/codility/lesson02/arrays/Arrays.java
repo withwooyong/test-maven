@@ -27,6 +27,7 @@ public class Arrays {
 		}
 	}
 	
+	// 문자열 뒤집기
 	public static void reverse() {
 		String str = "abcd";
 		System.out.println(new StringBuilder(str).reverse().toString());

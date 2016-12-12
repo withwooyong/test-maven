@@ -114,13 +114,15 @@ public class EquiLeader {
 		int nonDom = 0;
 		int equiLeaders = 0;
 		for (int i = 0; i < A.length; i++) {
-			if (A[i] == dominator) {
+			if (A[i] == dominator) { // 4와 동일하면
 				dom++;
 			} else {
 				nonDom++;
 			}
 			
-			if (dom > nonDom && (domOccurances - dom) > (nonDomOccurances - nonDom)) {
+			// half of the elements = leader
+			// 3, because sequences: (4, 3, 4, 4) and (4, 2) is not leader <= 요고이해.
+			if ((dom > nonDom) && ((domOccurances - dom) > (nonDomOccurances - nonDom))) {
 				equiLeaders++;
 			}
 		}

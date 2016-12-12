@@ -79,7 +79,7 @@ public class Fish {
 		//  the function should return 2
 		int A[] = { 4, 3, 2, 1, 5 };
 		int B[] = { 0, 1, 0, 0, 0 };
-		log.debug("{}", solution(A, B));
+		log.debug("{}", solution(A, B)); // return 2
 		log.debug("{}", solution2(A, B));
 	}
 	

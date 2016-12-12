@@ -9,7 +9,8 @@ import org.slf4j.LoggerFactory;
  * A DNA sequence can be represented as a string consisting of the letters A, C, G and T, which correspond to the types of successive nucleotides in the sequence. 
  * Each nucleotide has an impact factor, which is an integer. 
  * Nucleotides of types A, C, G and T have impact factors of 1, 2, 3 and 4, respectively. 
- * You are going to answer several queries of the form: What is the minimal impact factor of nucleotides contained in a particular part of the given DNA sequence?
+ * You are going to answer several queries of the form: 
+ * What is the minimal impact factor of nucleotides contained in a particular part of the given DNA sequence?
  * 
  * The DNA sequence is given as a non-empty string S = S[0]S[1]...S[N-1] consisting of N characters. 
  * There are M queries, which are given in non-empty arrays P and Q, each consisting of M integers. 
@@ -63,7 +64,9 @@ public class GenomicRangeQuery {
 		String S = "CAGCCTA";
 		int[] P = { 2, 5, 0 };
 		int[] Q = { 4, 5, 6 };
-		mySolution(S, P, Q); // // [2, 4, 1]
+		log.debug("{}", Arrays.toString(mySolution(S, P, Q))); // // [2, 4, 1]
+		log.debug("{}", Arrays.toString(solution(S, P, Q))); // // [2, 4, 1]
+		
 	}
 	
 	// 접근방법:
@@ -84,7 +87,7 @@ public class GenomicRangeQuery {
  * ㅡㅡㅡㅡ[2, 4, 1]
  */
 	
-	public static void mySolution(String S, int[] P, int[] Q) {
+	public static int[] mySolution(String S, int[] P, int[] Q) {
 		// C A G C C T A
 		int[] result = new int[P.length];
 		for (int i = 0; i < Q.length; i++) {
@@ -112,12 +115,11 @@ public class GenomicRangeQuery {
 			result[i] = factors;
 		}
 		log.debug("{}", Arrays.toString(result));
-		
 		// Nucleotides of types A, C, G and T have impact factors of 1, 2, 3 and 4, respectively.
-		
+		return result;
 	}
 	
-	public int[] solution(String S, int[] P, int[] Q) {
+	public static int[] solution(String S, int[] P, int[] Q) {
 		int[] A = new int[S.length()];     
 		int[] C = new int[S.length()];
 		int[] G = new int[S.length()];
@@ -155,11 +157,11 @@ public class GenomicRangeQuery {
 		return sol;
 	}
 
-	private boolean isRange(int[] array, int start, int end) {
+	private static boolean isRange(int[] array, int start, int end) {
 		return (start == 0 && (array[start] == 1 || array[end] > 0)) || (start > 0 && array[end] > array[start - 1]);
 	}
 
-	private void fillPosition(int[] ToFill, int[] toRepeat1, int[] toReapeat2, int position) {
+	private static void fillPosition(int[] ToFill, int[] toRepeat1, int[] toReapeat2, int position) {
 		ToFill[position] = position == 0 ? ToFill[position] + 1 : ToFill[position - 1] + 1;
 		if (position > 0) {
 			toRepeat1[position] = toRepeat1[position - 1];

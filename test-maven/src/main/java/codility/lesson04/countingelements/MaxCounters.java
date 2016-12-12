@@ -71,7 +71,16 @@ public class MaxCounters {
 		int[] A = { 3, 4, 4, 6, 1, 4, 4 };
 //		log.debug("{}", Arrays.toString(solution(N, A)));
 //		log.debug("{}", Arrays.toString(solution2(N, A)));
-		log.debug("{}", Arrays.toString(mySolution(N, A)));
+		log.debug("{}", Arrays.toString(mySolution(N, A))); // [3, 2, 2, 4, 2]
+		//test();
+	}
+	
+	public static void test() {
+		int[] counters = new int[5];
+		log.debug("{}", Arrays.toString(counters)); // [0, 0, 0, 0, 0]
+		counters[0]++; // 배열값 증가 테스트
+		log.debug("{}", Arrays.toString(counters)); // [1, 0, 0, 0, 0]
+		
 	}
 	
 	// 접근방법: 이부분 'max counter − all counters are set to the maximum value of any counter'
@@ -83,6 +92,7 @@ public class MaxCounters {
 		}
 
 		int[] counters = new int[N];
+		log.debug("{}", Arrays.toString(counters));
 		int max_value = 0;
 		int max_counter = 0;
 
@@ -98,8 +108,13 @@ public class MaxCounters {
 			} else if (A[i] == N + 1) { // 최대카운터
 				max_counter = max_value;
 			}
-		}
-
+			
+			for (int j = 0; j < counters.length; j++) {
+				System.out.print(" " + counters[j]);
+			}
+			System.out.println();
+			
+		}		
 		for (int i = 0; i < N; i++) {
 			if (counters[i] < max_counter) {
 				counters[i] = max_counter;
@@ -138,8 +153,10 @@ public class MaxCounters {
 
 		for (int i = 0; i < N; i++) {
 			// update the rest elements of counters which aren't assigned above.
-			if (counters[i] < currMax)
+			if (counters[i] < currMax) {
 				counters[i] = currMax;
+			}
+			
 		}
 		return counters;
 	}

@@ -18,7 +18,7 @@ public class MaximumSubarrayProblem {
 	 */
 	public static void main(String[] args) {
 		int[] A = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
-		log.debug("{}", max_subarray(A));
+		log.debug("{}", max_subarray(A)); // 6
 		
 	}
 	

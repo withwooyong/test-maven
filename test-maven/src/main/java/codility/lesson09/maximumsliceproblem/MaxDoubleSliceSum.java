@@ -60,6 +60,7 @@ public class MaxDoubleSliceSum {
 	
 	/*
 	 * Find the maximal sum of any double slice.
+	 * return 17
 	 */
 	public static void main(String[] args) {
 		int[] A = new int[] { 3, 2, 6, -1, 4, 5, -1, 2 };

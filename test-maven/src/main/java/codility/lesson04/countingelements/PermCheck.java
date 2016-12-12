@@ -62,8 +62,8 @@ public class PermCheck {
 	 * Check whether array A is a permutation.
 	 */
 	public static void main(String[] args) {
-		//int[] A = { 4, 1, 3, 2 };
-		int[] A = { 4, 1, 3 };
+		//int[] A = { 4, 1, 3, 2 }; // 1
+		int[] A = { 4, 1, 3 }; // 0
 		log.debug("{}", Arrays.toString(A));
 		//log.debug("{}", solution(A));
 		mySolution(A);

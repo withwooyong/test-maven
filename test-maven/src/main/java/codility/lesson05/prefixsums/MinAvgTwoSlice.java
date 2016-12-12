@@ -63,8 +63,8 @@ public class MinAvgTwoSlice {
 	public static void main(String[] args) {
 		
 		int[] A = { 4, 2, 2, 5, 1, 5, 8 };
-		mySolution(A);
-		log.debug("{}", solution(A));
+		log.debug("{}", mySolution(A));
+		log.debug("{}", solution(A)); // return 1
 	}
 	
 	// 접근방법:
@@ -119,7 +119,7 @@ public class MinAvgTwoSlice {
 	// 이해안됨.
 	// N is an integer within the range [2..100,000];
 	// each element of array A is an integer within the range [−10,000..10,000].
-	public static void mySolution(int[] A) {
+	public static int mySolution(int[] A) {
 		final int N = A.length;
 
 		int minIndex = 0;
@@ -139,6 +139,7 @@ public class MinAvgTwoSlice {
 			}
 		}
 		log.debug("{}", minIndex);
+		return minIndex;
 	}
 
 }

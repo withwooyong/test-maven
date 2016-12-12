@@ -7,7 +7,6 @@ public class PermMissingElem {
 	// score 100/100
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		int[] a = { 1, 2, 3, 4, 5, 7 };
 		int[] b = { 1, 3 };
 		int[] c = { 2, 3, 1, 5 };

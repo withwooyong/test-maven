@@ -1,6 +1,8 @@
 package codility.lesson13.fibonaccinumbers;
 
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,6 +23,7 @@ public class Fibonacci {
 	public static void main(String[] args) {
 		int n = 3;
 		log.debug("{}", fibonacci(n));
+		log.debug("{}", fibonacci2(n));
 	}
 	
 	private static int fibonacci(int n) {
@@ -29,6 +32,21 @@ public class Fibonacci {
 		} else {
 			return fibonacci(n - 2) + fibonacci(n - 1);
 		}
+	}
+	
+	public static int fibonacci2(int n) {
+		ArrayList<Integer> list = new ArrayList<>();
+		int a = 0; 
+		int b = 1;
+		int c = 0;
+		while (a <= n) {
+			list.add(a);
+			c = a + b;
+			a = b;
+			b = c;
+		}
+		log.debug("{} ", list.toString());
+		return c;
 	}
 
 }

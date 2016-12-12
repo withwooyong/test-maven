@@ -1,5 +1,8 @@
 package codingdojang;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /*
  * 1. 재귀함수란?
  * 함수 내에서 자기 자신을(함수)를 계속적으로 콜 하면서 풀어가는 방식이다.
@@ -16,13 +19,15 @@ package codingdojang;
  * 특정 숫자의 팩토리얼 구하기 
  */
 public class Factorial {
+	
+	private static Logger log = LoggerFactory.getLogger(Factorial.class);
 
 	public static void main(String[] args) {
-		int input = 4; // 4!
-		System.out.println(fact(input));
+		int input = 10; // 4!
+		log.debug("{}", fact(input));
 	}
 
-	public static int fact(int n) {
+	public static int fact(int n) {		
 		if (n <= 1) {
 			return n;
 		} else {
