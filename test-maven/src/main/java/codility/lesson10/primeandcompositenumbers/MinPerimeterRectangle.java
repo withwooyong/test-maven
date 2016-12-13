@@ -71,9 +71,9 @@ public class MinPerimeterRectangle {
 	 * rectangle 직사각형 perimeter 둘레 
 	 */
 	public static int solution2(int N) {
-		// 제곱 square 제곱근 square root
-		
+		// 제곱 square 제곱근 square root		
 		int sqrt_num = (int) Math.sqrt(N);
+		log.debug("sqrt_num={}", sqrt_num);
 		int min_perimeter = Integer.MAX_VALUE;
 		for (int i = 1; i <= sqrt_num; i++) {
 			if (N % i == 0) {

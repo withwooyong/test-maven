@@ -1,5 +1,7 @@
 package codility.lesson10.primeandcompositenumbers;
 
+import static org.hamcrest.CoreMatchers.containsString;
+
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -100,6 +102,62 @@ public class Peaks {
 	public static void main(String[] args) {
 		int[] N = new int[] { 1, 2, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2 };
 		log.debug("{}", solution(N));
+		log.debug("{}", mySolution(N));
+//		test();
+	}
+	
+	public static void test() {
+		for (int i = 0; i < 3; i++) {
+			if (i == 1) {
+				break;
+			}
+			log.debug("break={}", i);
+		}
+		for (int i = 0; i < 3; i++) {
+			if (i == 1) {
+				continue;
+			}
+			log.debug("continue={}", i);
+		}
+	}
+	
+	public static int mySolution(int[] A) {
+		int N = A.length;
+		ArrayList<Integer> peaks = new ArrayList<Integer>();
+		for (int i = 1; i < A.length - 1; i++) {
+			if (A[i] > A[i - 1] && A[i] > A[i + 1]) {
+				peaks.add(i); // 좌, 우 값 체크해서 peaks 값을 찾는다.
+			}
+		}
+		log.debug("size={} peaks={}", peaks.size(), peaks.toString());
+		
+		// 소수, 합성수
+		// We want to divide this array into blocks containing the same number of elements.
+		for (int i = 1; i <= N; i++) {  
+			int blocks = N / i; // 블럭 1개 2개, 3개
+			log.debug("blocks={} N={} i={}", blocks, N, i);
+			if (N % i == 0 || blocks <= peaks.size()) { // 나누어서 0으로 떨어져야 same number of elements
+				boolean ok = true;
+				int threshold = 0;
+				for (int j = 0; j < peaks.size(); j++) {					
+					if (peaks.get(j) / i > threshold) {						
+						ok = false;
+						break;
+					} else if (peaks.get(j) / i == threshold) {
+						threshold++;
+					}
+				}
+				log.debug("blocks={} threshold={}", blocks, threshold);
+				if (threshold != blocks) {
+					ok = false;
+				}
+				if (ok) {
+					//log.debug("blocks={}", blocks);
+					return blocks;
+				}
+			}
+		}
+		return 0;
 	}
 
  	public static int solution(int[] A) {

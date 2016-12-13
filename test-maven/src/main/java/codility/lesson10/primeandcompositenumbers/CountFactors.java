@@ -41,7 +41,7 @@ public class CountFactors {
 	 */
 	// factor 약수
 	// 약수(約數, divisor)는 어떤 수를 나누었을 때 나머지가 0인 수를 말하며, 배수 관계와 서로 반대되는 개념이다.
-	// N = D * M. (24 = 6 * 4).
+	// N = D * M. (24 = 6 * 4). 곱셈식으로 약수 구하기 (8의 약수 = 1, 2, 4, 8)
 	public static void main(String[] args) {
 		log.debug("{}", solution(24));
 		log.debug("{}", divisorsCount(24));
@@ -64,7 +64,7 @@ public class CountFactors {
 	}
 	
 	// Most Efficient way to Compute the sum of divisors of N (1 ≤ N ≤ 1 000 000 000)
-	// 약수들의 합
+	// N에 대한 약수들의 합
 	public static int divisorsSum(int N) {
 
 		int maxD = (int) Math.sqrt(N); // 어떤 수 x를 제곱하여 a가 되었을 때에, x를 a의 제곱근이라고 한다.
@@ -83,7 +83,7 @@ public class CountFactors {
 		return sum;
 	}
 	
-	// 약수 갯수
+	// N에 대한 약수 갯수
 	public static int divisorsCount(int N) {
 		int count = 0;
 		int sum = 0;

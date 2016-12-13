@@ -1,6 +1,6 @@
 package codility.lesson11.sieveoferatosthenes;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,62 +63,15 @@ public class CountNonDivisible {
 	public static void main(String[] args) {
 		
 		int[] A = new int[] { 3, 1, 2, 3, 6 };
-		//log.debug("{}", Arrays.toString(solution(A)));
-		mySolution(A);
-		
+		log.debug("{}", Arrays.toString(solution(A)));
 	}
-	/*
-	 * we want to count the number of elements of the array that are not the divisors of A[i]. 
- * We say that these elements are non-divisors.
- * 
- * For example, consider integer N = 5 and array A such that:
- * A[0] = 3
- * A[1] = 1
- * A[2] = 2
- * A[3] = 3
- * A[4] = 6
- * For the following elements:
- * 
- * A[0] = 3, the non-divisors are: 2, 6,
- * A[1] = 1, the non-divisors are: 3, 2, 3, 6,
- * A[2] = 2, the non-divisors are: 3, 3, 6,
- * A[3] = 3, the non-divisors are: 2, 6,
- * A[4] = 6, there aren't any non-divisors.
- * 각 요소의 약수가 아닌 배열의 요소 수를 계산합니다.
-	 */
-	public static void mySolution(int[] A) {
-		
-		int sum = 0;
-		ArrayList<Integer> arr1 = new ArrayList<>();
-		int max = Integer.MIN_VALUE;
-		for (int i = 0; i < A.length; i++) {
-			arr1.add(A[i]);
-			if (A[i] > max) {
-				max = A[i];
-			}
-		}	
 	
-		ArrayList<Integer> arr2 = new ArrayList<>();
-		
-		for (int i = 0; i < A.length; i++) {
-			arr2 = new ArrayList<>();
-			for (int j = 1; j < max; j++) {
-				if (A[i] % j == 0) {
-					arr2.add(j);
-					sum++; // 약수 divisor
-				} else {
-					// non divisor
-				}
-			}
-			log.debug("A[i]={} arr2={}", A[i], arr2.toString());			
-		}
-	}
-
 	// return [2, 4, 3, 2, 0]
 	public static int[] solution(int[] A) {
 		int[][] D = new int[2 * A.length + 1][2];
 		int[] res = new int[A.length];
 		
+		// 2차원 배열초기화 뒤는 true, false 값으로 사용
 		for (int i = 0; i < A.length; i++) {
 			D[A[i]][0]++;
 			D[A[i]][1] = -1;

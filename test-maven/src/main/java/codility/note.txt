@@ -5,31 +5,50 @@ Equilibrium :
 FrogJmp : 개구리가 X-->Y로 가는 점프(D)를 이용하여 최소 점프 횟수 구하기
 PermMissingElem : 없는 숫자를 찾아내는 함수
 TapeEquilibrium : N 개의 정수로 구성된 0이 아닌 인덱스가없는 배열 A가 주어지면 달성 할 수있는 최소의 차이를 반환
-FrogRiverOne : 개구리가 강 저편으로 점프 할 수있는 가장 빠른 시간을 찾는 것입니다.
+FrogRiverOne : 개구리가 강 저편으로 점프 할 수있는 가장 빠른 시간을 찾는 것
 MaxCounters : 배열 연산
 MissingInteger : 배열에 없는 최소양의 정수
 PermCheck : 주어진 배열이 순열인지 체크 / 합의공식 n*(n+1)/2    
 CountDiv : 주어진 숫자 사이에 나누어지는 갯수 
 GenomicRangeQuery : 배열 조합관련
 MinAvgTwoSlice : 배열 슬라이스 최소평균
-PassingCars : Count the number of passing cars on the road.
-Prefixsums : The goal is to calculate the maximum number of mushrooms that the mushroom picker can collect in m moves.
+PassingCars : 도로에서 지나가는 자동차 수(크로스되는)
+Prefixsums : mushroom picker가 m 이동에서 수집 할 수있는 최대 버섯 수
 Distinct : 중복제거 후 유일한 값의 갯수
 MaxProductOfThree : 배열중 3개 항목의 곲셈 중 최대값 구하는 문제
-NumberOfDiscIntersections : Compute the number of intersections in a sequence of discs.
-Triangle : Determine whether a triangle can be built from a given set of edges.
+NumberOfDiscIntersections : 일련의 디스크에서 교차점 수를 계산
+Triangle : 삼각형을 주어진 가장자리 집합으로 만들 수 있는지 여부를 결정
 Brackets : {[()()]}
-Fish : Calculate how many fish are alive. 배열 2개
+Fish : 얼마나 많은 물고기가 살아 있는지 계산. 배열 2개
 Nesting : (()(())()) 주어진 문자열이 쌍이 맞는지 확인 Stack 사용
 StoneWall : 벽을 건축하는 데 필요한 최소 블록 수를 계산하는 것입니다. rectangles 직사각형
 Dominator : stack 사용, 배열에서 가장 많은 빈도수를 갖는 숫자의 위치중 아무거나 반환하는 문제
 EquiLeader : 절반이상 나오는 leader + 배열조합문제 
 Leader : Leader는 배열에서 절반이상의 중복된 값을 말한다.
-MaxDoubleSliceSum : Find the maximal sum of any double slice. Kadane's algorithm
+MaxDoubleSliceSum : 모든 이중 슬라이스의 최대 합계. Kadane's algorithm
 MaximumSliceProblem : 어떤 배열이 주어졌을 때, 배열에서 연속된 부분배열 중 가장 큰 합을 찾는 문제이다.
 MaximumSubarrayProblem
-MaxProfit : Given a log of stock prices compute the maximum possible earning.
-MaxSliceSum : Find a maximum sum of a compact subsequence of array elements.
+MaxProfit : 주식 가격의 로그가 주어지면 가능한 최대 수입을 계산
+MaxSliceSum : 배열 요소의 하위 시퀀스의 최대 합계
+CompositeNumbers : 합성수 1과 그 자신 이외의 수를 약수로 가지는 자연수로, 모두 소수의 곱으로 분해할 수 있다.
+CountFactors : factor 약수 약수(約數, divisor)는 어떤 수를 나누었을 때 나머지가 0인 수를 말하며, 배수 관계와 서로 반대되는 개념이다.
+Eratosthenes : 에라토스테네스, 소수찾는법
+Flags : 산봉우리에서 설정할 수있는 최대 플래그 수
+MinPerimeterRectangle : 면적이 N 인 모든 직사각형의 최소 둘레
+Peaks : 배열 A를 나눌 수있는 최대 블록 수
+CountNonDivisible : 각 요소의 약수가 아닌 배열의 요소 수를 계산
+
+
+
+
+
+
+
+
+
+
+
+
 
 String binaryString = Integer.toBinaryString(N);
 
