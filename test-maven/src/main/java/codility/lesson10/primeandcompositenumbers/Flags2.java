@@ -31,9 +31,9 @@ public class Flags2 {
 		log.debug("{}", peaks.toString());
 		int peaksLength = peaks.size();
 		// peak가 2개일 경우 무조건 가능하므로 리턴
-		if (peaksLength > 2) {
-			return peaksLength;
-		}
+//		if (peaksLength > 2) {
+//			return peaksLength;
+//		}
 		
 		for (int K = 3; K <= peaksLength; ++K) {
 			nowFlags = 1;
@@ -55,6 +55,7 @@ public class Flags2 {
 			} else { // 깃발 갯수가 줄어든다면 그게 최대 갯수이다.
 				return maxFlags;
 			}
+			
 		}
 		return maxFlags;
 	}	

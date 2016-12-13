@@ -43,6 +43,7 @@ import org.slf4j.LoggerFactory;
  * @author wooyong
  *
  */
+//SCORE: 100/62
 public class NumberOfDiscIntersections {
 
 	private static Logger log = LoggerFactory.getLogger(NumberOfDiscIntersections.class);

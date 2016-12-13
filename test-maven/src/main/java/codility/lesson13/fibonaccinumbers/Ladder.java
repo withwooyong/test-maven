@@ -60,6 +60,7 @@ import org.slf4j.LoggerFactory;
  * expected worst-case space complexity is O(L), beyond input storage (not counting the storage required for input arguments).
  * Elements of input arrays can be modified.
  */
+//SCORE: 100/75
 public class Ladder {
 
 	private static Logger log = LoggerFactory.getLogger(Ladder.class);
