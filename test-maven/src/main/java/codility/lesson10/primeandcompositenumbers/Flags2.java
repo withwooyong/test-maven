@@ -29,22 +29,22 @@ public class Flags2 {
 			}
 		}
 		log.debug("{}", peaks.toString());
-		int peaksLength = peaks.size();
+		
 		// peak가 2개일 경우 무조건 가능하므로 리턴
 //		if (peaksLength > 2) {
 //			return peaksLength;
 //		}
 		
-		for (int K = 3; K <= peaksLength; ++K) {
+		for (int K = 1; K <= (int)Math.sqrt(peaks.size()); ++K) {
 			nowFlags = 1;
 			base = 0;
 			// K거리만큼 떨어진 봉우리를 찾는다.
-			for (int j = 1; j < peaksLength; ++j) {
-				if (peaks.get(j) - peaks.get(base) < K) {
+			for (int j = 1; j < peaks.size(); ++j) {
+				if (Math.abs(peaks.get(j) - peaks.get(base)) < peaks.size()) {
 					continue;
 				}
 				// K갯수만큼 깃발을 꼽았으면 종료
-				if (++nowFlags >= K) {
+				if (++nowFlags >= peaks.size()) {
 					break;
 				}
 				base = j;

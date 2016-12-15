@@ -37,12 +37,17 @@ public class Prefixsums {
 //		mySolution(A, k, m);
 //		test(A, k, m);
 //		test2(A, k, m);
-		prefixSum(A, k, m);
-		prefixSumEx(A, m);
-		prefixSumSuccess(A);
-		log.debug("{}", maximumMushrooms(A, k, m));
+//		prefixSum(A, k, m);
+//		prefixSumEx(A, m);
+//		prefixSumSuccess(A);
+//		log.debug("{}", maximumMushrooms(A, k, m));
 	}
 	
+	// 구간합.
+	// 나열된 수열의 개수 n개
+	// 몇번 범위 합을 구해 볼지의 개수 m개
+	// sum[i] = 1~i 의 합 
+	// 구간 x 부터 y 까지의 합 = sum[y] - sum[x-1]
 	private static int solution(int[] A, int k, int m) {
 		int result = 0; // 2
 	    int maxLeftShift = Math.min(k, m); // 4
@@ -140,12 +145,6 @@ public class Prefixsums {
 	
 		log.debug("{} {}", prefixSum[m] - prefixSum[k-1], Arrays.toString(prefixSum));
 	}
-	
-private static void prefixSumEx(int[] A, int n) {
-		
-		
-	}
-	
 	
 	// 구간합.
 	// 나열된 수열의 개수 n개

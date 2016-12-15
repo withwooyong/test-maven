@@ -1,6 +1,8 @@
 package codility.lesson10.primeandcompositenumbers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,9 +91,9 @@ import org.slf4j.LoggerFactory;
  * @author wooyong
  *
  */
-public class Peaks {
+public class Peaks2 {
 	
-	private static Logger log = LoggerFactory.getLogger(Peaks.class);
+	private static Logger log = LoggerFactory.getLogger(Peaks2.class);
 
 	/*
 	 * Divide an array into the maximum number of same-sized blocks, each of which should contain an index P such that A[P - 1] < A[P] > A[P + 1].
@@ -99,7 +101,7 @@ public class Peaks {
 	// 이해안감.
 	public static void main(String[] args) {
 		int[] N = new int[] { 1, 2, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2 };
-		log.debug("{}", solution(N));
+//		log.debug("{}", solution(N));
 		log.debug("{}", mySolution(N));
 //		test();
 	}
@@ -107,55 +109,73 @@ public class Peaks {
 	public static void test() {
 		for (int i = 0; i < 3; i++) {
 			if (i == 1) {
-				break;
+				break; // for문 빠져나감
 			}
 			log.debug("break={}", i);
 		}
 		for (int i = 0; i < 3; i++) {
 			if (i == 1) {
-				continue;
+				continue; // 계속됨
 			}
 			log.debug("continue={}", i);
 		}
+		int[] A = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }; 
+		int[] B = new int[A.length];
+		System.arraycopy(A, 3, B, 0, 3);
+		log.debug("A={}", Arrays.toString(A));
+		log.debug("B={}", Arrays.toString(B));
 	}
 	
 	public static int mySolution(int[] A) {
-		int N = A.length;
+		
 		ArrayList<Integer> peaks = new ArrayList<Integer>();
+		int[] B = new int[A.length]; // 0으로 초기화 됨.
 		for (int i = 1; i < A.length - 1; i++) {
 			if (A[i] > A[i - 1] && A[i] > A[i + 1]) {
 				peaks.add(i); // 좌, 우 값 체크해서 peaks 값을 찾는다.
+				B[i] = 1; // peak 값은 1
 			}
 		}
+		log.debug("A={}", Arrays.toString(A));
+		log.debug("B={}", Arrays.toString(B));
 		log.debug("size={} peaks={}", peaks.size(), peaks.toString());
 		
-		// 소수, 합성수
-		// We want to divide this array into blocks containing the same number of elements.
-		for (int i = 1; i <= N; i++) {  
-			int blocks = N / i; // 블럭 1개 2개, 3개
-			log.debug("blocks={} N={} i={}", blocks, N, i);
-			if (N % i == 0 || blocks <= peaks.size()) { // 나누어서 0으로 떨어져야 same number of elements
-				boolean ok = true;
-				int threshold = 0;
-				for (int j = 0; j < peaks.size(); j++) {					
-					if (peaks.get(j) / i > threshold) {						
-						ok = false;
-						break;
-					} else if (peaks.get(j) / i == threshold) {
-						threshold++;
-					}
-				}
-				log.debug("blocks={} threshold={}", blocks, threshold);
-				if (threshold != blocks) {
-					ok = false;
-				}
-				if (ok) {
-					//log.debug("blocks={}", blocks);
-					return blocks;
-				}
+		// 배열을 나누기 위해서 divisor 약수를 구함. 
+		ArrayList<Integer> divisors = new ArrayList<>();
+		for (int i = 1; i <= A.length; i++) {
+			if (A.length % i == 0) { // divisor
+				divisors.add(i); 
 			}
 		}
-		return 0;
+		log.debug("{}", divisors.toString());
+		int result = 0;
+		
+		for (int i = 0; i < divisors.size(); i++) {
+			int divisor = divisors.get(i);
+			if (divisor < 3) { // peaks 체크해야 되서 블럭사이즈가 3보다 작으면 안됨.
+				continue;
+			}
+			
+			boolean ok = true;
+			int blocksize = B.length / divisor;
+			log.debug("divisor={} blocksize={}", divisor, blocksize);
+			
+			for (int j = 0; j < blocksize; j++) {
+				int[] C = new int[divisor];
+				System.arraycopy(B, j * divisor, C, 0, divisor);
+				log.debug("C={}", C);
+				Arrays.sort(C);
+				if (Arrays.binarySearch(C, 1) < 0) { // 1값이 있는 지 찾는다.
+					ok = false;
+					break;
+				}			
+			}
+						
+			if (ok) {
+				result++;
+			}
+		}
+		return result;
 	}
 
  	public static int solution(int[] A) {

@@ -65,11 +65,38 @@ public class MaxDoubleSliceSum {
 	public static void main(String[] args) {
 		int[] A = new int[] { 3, 2, 6, -1, 4, 5, -1, 2 };
 		log.debug("{}", solution(A));
-		log.debug("{}", solution2(A));
+//		log.debug("{}", solution2(A));
+		log.debug("{}", max_subarray()); // return 10
 	}
+	
+	
+	// Kadane's algorithm
+	// 배열의 최고합 찾는 알고리즘. 
+	// 어떤 배열이 주어졌을 때, 배열에서 연속된 부분배열 중 가장 큰 합을 찾는 문제이다.
+	public static int max_subarray() {
+		int[] A = { 2, -1, 2, 3, 4, -5 };
+		/*
+		 * def max_subarray(A):
+	    max_ending_here = max_so_far = A[0]
+	    for x in A[1:]:
+	        max_ending_here = max(x, max_ending_here + x)
+	        max_so_far = max(max_so_far, max_ending_here)
+	    return max_so_far
+		 */
+		int max_ending_here = A[0];
+		int max_so_far = A[0];
+		
+		for (int i = 1; i < A.length; i++) {
+			max_ending_here = Math.max(i, max_ending_here + A[i]);
+			max_so_far = Math.max(max_so_far, max_ending_here);
+		}
+		return max_so_far;
+	}
+	
 
 	// return 17
 	// A triplet (X, Y, Z), such that 0 ≤ X < Y < Z < N, is called a double slice.
+	// The sum of double slice (X, Y, Z) is the total of A[X + 1] + A[X + 2] + ... + A[Y − 1] + A[Y + 1] + A[Y + 2] + ... + A[Z − 1].
 	// double slice (0, 3, 6), sum is 2 + 6 + 4 + 5 = 17,
 	// double slice (0, 3, 7), sum is 2 + 6 + 4 + 5 − 1 = 16,
 	// double slice (3, 4, 5), sum is 0.
@@ -84,6 +111,7 @@ public class MaxDoubleSliceSum {
 	 */
 	// O(n)
 	public static int solution(int[] A) {
+		// int[] A = new int[] { 3, 2, 6, -1, 4, 5, -1, 2 };
 		int max = 0;
 		int[] A1 = new int[A.length];
 		int[] A2 = new int[A.length];

@@ -1,5 +1,7 @@
 package codility.lesson14.Binarysearchalgorithm;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ public class Binarysearchalgorithm {
 		int[] A = new int[] { 1, 2, 3, 5, 4 };
 		int key = 5;
 		
+		log.debug("{}", Arrays.binarySearch(A, key));		
 		log.debug("{}", binarySearch(key, A));
 		
 	}

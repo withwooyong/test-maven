@@ -37,7 +37,7 @@ public class BruteForceSearch {
 		}
 	}
 	
-	// n개의 항목을 가진 배열에서 세 항목의 합이 주어진 항목 K와 동일한 배열 내의 세 항목의 합.
+	// n개의 항목을 가진 배열에서 세 항목의 합이 주어진 항목 K와 동일한 배열 내의 세 항목의 합. for문 3개
 	// O(n2)
 	public static void solution3(int A[], int K) {
 		int sum = 0;
@@ -55,7 +55,7 @@ public class BruteForceSearch {
 		}
 	}
 	
-	// n개의 항목을 가진 배열에서 두 항목의 합이 주어진 항목 K와 동일한 배열 내의 두 항목의 합.
+	// n개의 항목을 가진 배열에서 두 항목의 합이 주어진 항목 K와 동일한 배열 내의 두 항목의 합. for문 2개
 	// O(n2)
 	public static void solution(int A[], int K) {
 		
@@ -74,7 +74,7 @@ public class BruteForceSearch {
 		Hashtable<Integer, Integer> hashTable = new Hashtable<Integer, Integer>();
 		
 		for (int i = 0; i < A.length; i++) {
-			hashTable.put(A[i], i); // 키값으로 배열의 값을 넣고 순서는 value 로 
+			hashTable.put(A[i], i); // 키값을 배열의 값을 넣고 순서는 value 로 
 		}
 		
 		for (int i = 0; i < A.length; i++) {

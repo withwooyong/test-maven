@@ -79,18 +79,50 @@ public class Fish {
 		//  the function should return 2
 		int A[] = { 4, 3, 2, 1, 5 };
 		int B[] = { 0, 1, 0, 0, 0 };
-		log.debug("{}", solution(A, B)); // return 2
-		log.debug("{}", solution2(A, B));
+		//log.debug("{}", solution(A, B)); // return 2
+//		log.debug("{}", solution2(A, B));
+		//log.debug("{}", solution3());
+		//log.debug("{}", mySolution());
+		log.debug("{}", solution4());
+		
 	}
 	
+	public static int mySolution() {
+		
+		int A[] = { 7, 4, 3, 2, 1, 5, 6 };
+		int B[] = { 1, 0, 1, 0, 0, 0, 0 };
+		int res = 0;
+		int nDead = 0;
+		Stack<Integer> down = new Stack<>();
+
+		for (int i = 0; i < A.length; i++) {
+			if (B[i] == 1) {
+				down.push(A[i]);
+			} else {
+				while (true) {
+					if (down.empty())
+						break;
+					if (down.peek() > A[i]) {
+						nDead++;
+						break;
+					} else {
+						down.pop();
+						nDead++;
+					}
+				}
+			}
+		}
+		res = A.length - nDead;
+		return res;
+	}
 	
 	public static int solution(int[] A, int[] B) {
 		
 		Stack<Integer> stack = new Stack<Integer>();
 		
 		for (int i = 0; i < A.length; i++) {
-			int fishsize = A[i]; // 고기크기 / 큰놈이 작은놈 잡아먹음.
-			int direction = B[i];  // 가는방향
+			int fishsize = A[i]; 	// 고기크기 / 큰놈이 작은놈 잡아먹음.
+			int direction = B[i];   // 가는방향
 			if (stack.empty()) {
 				stack.push(i);
 			} else {
@@ -114,7 +146,12 @@ public class Fish {
 	// 1 represents a fish flowing downstream.
 	// If two fish move in opposite directions and there are no other (living) fish between them, they will eventually meet each other. 
 	public static int solution2(int[] A, int[] B) {
-		
+		/*
+		 * 0번째부터 시작해서 아래로 가는 물고기만 스택에 집어넣는게 포인트
+		 * 위로가는 물고기를 만난 경우 스택의 top부터 비교해서
+		 * 결과에 따라 아래로가는 물고기가 죽는경우 pop하고 스택의 다음물고기와 비교
+		 * 위로가는 물고기가 죽는경우는 nDead만 1증가하고 넘어감
+		 */
 		Stack<Integer> stack = new Stack<Integer>();
 		int duels = 0;
 		// int A[] = { 4, 3, 2, 1, 5 }; 
@@ -136,6 +173,55 @@ public class Fish {
 			log.debug("{} {} {}", A[i], B[i], stack.toString());
 		}
 		
+		return A.length - duels;
+	}
+	
+	public static int solution3() {
+		
+		Stack<Integer> stack = new Stack<Integer>();
+		int duels = 0;
+		int A[] = { 4, 3, 2, 1, 5, 6, 7 }; 
+		int B[] = { 0, 1, 0, 0, 0, 0, 1 };
+		for (int i = 0; i < A.length; i++) {
+			if (B[i] == 0) {
+				while (!stack.isEmpty()) {
+					//log.debug("{} {} {} {}", i, duels, A[i], A[stack.peek()]);
+					duels++; // 잡아먹힌 수
+					if (A[i] < A[stack.peek()]) {
+						break;
+					}
+					stack.pop();
+				}
+				// 1. stack empty
+			} else {
+				stack.push(B[i]); // 2. stack 1 
+			}
+			log.debug("{} {} {}", A[i], B[i], stack.toString());
+		}
+		return A.length - duels;
+	}
+	
+	// P < Q, B[P] = 1 and B[Q] = 0, and there are no living fish between them
+	public static int solution4() {
+		Stack<Integer> stack = new Stack<Integer>();
+		int A[] = { 4, 3, 2, 1, 5, 6 };
+		int B[] = { 0, 1, 0, 0, 0, 1 };
+		
+		int duels = 0;
+		for (int i = 0; i < A.length; i++) {
+			if (B[i] == 0) {
+				while (!stack.isEmpty()) {
+					duels++;
+					if (A[i] < A[stack.peek()]) {
+						break;
+					}
+					stack.pop();
+				}
+			} else {
+				stack.push(B[i]);
+			}
+		}
+		log.debug("{}", stack.toString());
 		return A.length - duels;
 	}
 }

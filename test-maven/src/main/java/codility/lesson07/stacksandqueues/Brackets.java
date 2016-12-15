@@ -65,7 +65,7 @@ public class Brackets {
 			}
 		}
 		log.debug("{}", stack.pop());
-		return stack.size();
+		return stack.size() == 0 ? 1 : 0;
 	}
 	
 	public static int solution(String S) {

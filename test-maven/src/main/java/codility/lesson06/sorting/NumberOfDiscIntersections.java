@@ -1,7 +1,11 @@
 package codility.lesson06.sorting;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javafx.scene.effect.ImageInput;
 
 /**
  * We draw N discs on a plane. 
@@ -51,7 +55,6 @@ public class NumberOfDiscIntersections {
 	/*
 	 * Compute the number of intersections in a sequence of discs.
 	 */
-	// 이해못했음.
 	public static void main(String[] args) {
 		int[] A = { 1, 5, 2, 1, 4, 0 };
 		log.debug("{}", solution(A)); // return 11
@@ -74,6 +77,7 @@ public class NumberOfDiscIntersections {
 		int cnt = 0;
 		for (int i = 0; i < A.length - 1; i++) {
 			for (int j = i + 1; j < A.length; j++) {
+				//if ((i + A[i]) >= (j - A[j])) {
 				if ((i + A[i]) >= (j - A[j])) {
 					cnt++;
 				}
@@ -81,8 +85,7 @@ public class NumberOfDiscIntersections {
 		}
 		return cnt;
 	}
-	
-	
+		
 	// J번째 디스크는 중앙이 (J, 0)이고 반지름 A[J] 으로 그려진다.
 	// J ≠ K이고 J번째 디스크와 K번째 디스크가 적어도 하나의 공통 지점이 있다면(디스크에 경계선도 포함한다고 가정한다.)
 	// J번째 디스크와 K번째 디스크가 '교차'(intersect)한다고 말한다.
@@ -90,6 +93,7 @@ public class NumberOfDiscIntersections {
 		// 6개의 디스크
 		long result = 0;
 
+		log.debug("A={}", Arrays.toString(A));
 		for (int i = 0; i < A.length - 1; i++) {
 			for (int j = i + 1; j < A.length; j++) {
 				long iMax = Math.min((long)i + A[i], A.length);
@@ -97,6 +101,7 @@ public class NumberOfDiscIntersections {
 				if (iMax >= jMin) {
 					result++;
 				}
+				log.debug("i={}, j={}, A[i]={}, A[j]={}, i+A[i]={}, j-A[j]={}, iMax={}, jMin={}, result={}", i, j, A[i], A[j], i + A[i], j - A[j], iMax, jMin, result);
 			}
 		}
 		return (int) result;

@@ -1,6 +1,9 @@
 package codility.lesson10.primeandcompositenumbers;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,72 +22,47 @@ public class Flags3 {
 	private static int solution(int[] A) {
 
 		log.debug("A={}", Arrays.toString(A));
-		int count = 0;
-		int[] peaks = new int[A.length];
-		int[] next = new int[A.length];
 		
-		next[A.length - 1] = -1;
+		ArrayList<Integer> array = new ArrayList<Integer>();
+		
+		int[] peaks = new int[A.length];
 		
 		// 처음과 끝은 peak 가 될수 없다. i = 1, A.length -1
 		for (int i = 1; i < A.length - 1; i++) {
 			if (A[i] > A[i - 1] && A[i] > A[i + 1]) {
 				peaks[i] = 1;
-				count++;
-			}
-			
-			if (peaks[i - 1] == 1) {
-				next[i - 1] = i;
-			} else {
-				next[i - 1] = next[i];
+				array.add(i);
 			}
 		}
 		//     A=[1, 5, 3, 4, 3, 4, 1, 2, 3, 4, 6, 2]
-		// peaks=[0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0] 
-		//  next=[1, 3, 3, 5, 5, 10, 10, 10, 10, 10, -1, -1], total=4
-		// peaks=[0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0] 
-		//  next=[1, 3, 3, 5, 5, 10, 10, 10, 10, 10, -1, -1], total=3
+		// peaks=[0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0]
 		
-		if (next.length > 1) {
-			if (peaks[1] == 1) {
-				next[0] = 1;
-			} else {
-				next[0] = next[1];
-			}
-		}		
-		
-		if (count < 2) {
-			return count;
+		if (array.size() < 2) { // 깃발 하나만 꼽음.
+			return array.size();
 		}
-		// int maxD = (int) Math.sqrt(N); // 어떤 수 x를 제곱하여 a가 되었을 때에, x를 a의 제곱근이라고 한다.
-		int max = (int)Math.min(count, Math.sqrt(A.length)) + 1;
+		log.debug("{}", array.toString()); // [1, 3, 5, 10] 
+		log.debug("peaks={}", Arrays.toString(peaks));
 		
-		for (int j = max; j > 0; j--) {
-			if (check(peaks, next, j)) {
-				return j;
-			}
+		ArrayList<Integer> list = new ArrayList<>();
+		int startPosition = 0;
+		int endPosition = 0;
+		int position = 0;
+		
+		for (int i = 0; i < peaks.length; i++) {
+			log.debug("i={} {} start={} end={} list={}", i, peaks[i], startPosition, endPosition, list.toString());
+			if (peaks[i] == 1) {
+				if (position == 0) { // 첫번째 깃발
+					list.add(i);
+					position = i;
+				} else if (i - position >= array.size()) {
+					list.add(i);
+					position = i;
+				} else if (i - position < array.size()) {
+					endPosition = i;
+				}
+			} 
 		}
-
-		return 0;
+		
+		return list.size();
 	}
-
-	public static boolean check(int[] peaks, int[] next, int total) {
-		log.debug("peaks={} next={}, total={}", Arrays.toString(peaks), Arrays.toString(next), total);
-		
-		int count = 1;
-		int base = next[0];
-		int j = next[base];
-
-		while (j < peaks.length && j > 0) {
-			if (j - base >= total) {
-				count++;
-				base = j;
-				j = next[base];
-			} else {
-				j = next[j];
-			}
-		}
-
-		return count >= total;
-	}
-
 }

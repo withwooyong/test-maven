@@ -21,7 +21,7 @@ public class Fibonacci {
 	private static Logger log = LoggerFactory.getLogger(Fibonacci.class);
 
 	public static void main(String[] args) {
-		int n = 3;
+		int n = 10;
 		log.debug("{}", fibonacci(n));
 		log.debug("{}", fibonacci2(n));
 	}

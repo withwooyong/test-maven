@@ -54,8 +54,9 @@ public class ChocolatesByNumbers {
 	public static void main(String[] args) {
 		int N = 10;
 		int M = 4;
-		log.debug("{}", native1(N, M));
+		log.debug("{}", native1(N, M));  //return 5
 		log.debug("{}", solution(N, M));
+		log.debug("{}", solution2(N, M));
 	}
 	
 	private static int solution(int N, int M) {
@@ -88,16 +89,15 @@ public class ChocolatesByNumbers {
 		return cnt;
 	}
 
-//	private static int solution(int N, int M) {
-//		BigInteger a = BigInteger.valueOf(N);
-//		BigInteger b = BigInteger.valueOf(M);
-//		int gcd = a.gcd(b).intValue();
-//		if (gcd == 0) {
-//			return N;
-//		} else {
-//			return solution(M, N % M);
-//		}
-//	}
-
-	
+	// 이건아님.
+	private static int solution2(int N, int M) {
+		BigInteger a = BigInteger.valueOf(N);
+		BigInteger b = BigInteger.valueOf(M);
+		int gcd = a.gcd(b).intValue();
+		if (gcd == 0) {
+			return N;
+		} else {
+			return solution(M, N % M);
+		}
+	}	
 }

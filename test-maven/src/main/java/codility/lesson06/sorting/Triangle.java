@@ -73,8 +73,8 @@ public class Triangle {
 		}
 		Arrays.sort(A);
 		for (int i = 2; i < A.length; i++) {
-			if ((long) A[i - 2] + (long) A[i - 1] > (long) A[i]) {
-				return 1;
+			if ((long) A[i - 2] + (long) A[i - 1] > (long) A[i]) { // 두변의 합이 한변의 합보다 크면 삼각형을 만들수 있다.
+				return 1;                                       
 			}
 		}
 		return 0;
