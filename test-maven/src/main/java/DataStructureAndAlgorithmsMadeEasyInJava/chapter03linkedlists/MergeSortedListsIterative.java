@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 public class MergeSortedListsIterative {
 	public ListNode mergeTwoLists(ListNode head1, ListNode head2) {

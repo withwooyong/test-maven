@@ -12,7 +12,7 @@
  */
 
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 import java.util.HashMap;
 import java.util.Map;

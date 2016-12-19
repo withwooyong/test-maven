@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 public class ReverseKNodesAsBlockRecursive {
 	public static ListNode reverseKNodesRecursive(ListNode head, int k) {

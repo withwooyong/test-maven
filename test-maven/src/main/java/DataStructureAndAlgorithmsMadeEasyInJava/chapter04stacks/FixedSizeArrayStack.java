@@ -12,7 +12,7 @@
  */
 
 
-package chapter04stacks;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter04stacks;
 
 public class FixedSizeArrayStack {
 	// Length of the array used to implement the stack.

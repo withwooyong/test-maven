@@ -12,10 +12,11 @@
  */
 
 
-package chapter04stacks;
-import chapter03linkedlists.*;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter04stacks;
 
 import java.util.EmptyStackException;
+
+import DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists.ListNode;
 
 public class LinkedStack {
 	private int length; // indicates the size of the linked list

@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter04stacks;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter04stacks;
 
 import java.util.Stack;
 

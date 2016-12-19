@@ -11,7 +11,7 @@
  * 
  */
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 public class LinkedList {
 	// This class has a default constructor:

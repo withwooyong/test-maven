@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 public class NthNodeFromEnd {
 	private int counter;

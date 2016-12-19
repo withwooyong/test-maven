@@ -11,10 +11,10 @@
  * 
  */
 
-
 package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 public class CircularLinkedList {
+	
 	protected CLLNode tail;
 	protected int length;
 

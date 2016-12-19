@@ -12,7 +12,7 @@
  */
 
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 public class RemoveDuplicatesBruteForce {
 	public static void removeDuplicates(ListNode head) {

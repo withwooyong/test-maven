@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 import java.util.Random;
 
 public class SkipList<T extends Comparable<T>, U> {

@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 public class LoopInALinkedList {
 	public static int findLengthOfTheLoop(ListNode head) {

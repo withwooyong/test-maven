@@ -11,7 +11,7 @@
  * 
  */
 
-package chapter03linkedlists;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists;
 
 public class CommonElementsInSortedLinkedLists {
 	public static ListNode commonElement(ListNode list1, ListNode list2) {
