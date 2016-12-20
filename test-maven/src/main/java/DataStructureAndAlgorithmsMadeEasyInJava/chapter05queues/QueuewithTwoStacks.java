@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter05queues;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter05queues;
 
 import java.util.Stack;
 

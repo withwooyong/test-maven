@@ -12,7 +12,7 @@
  */
 
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class CheckStructurullySameTrees {
 	public boolean checkStructurullySameTrees(BinaryTreeNode root1, BinaryTreeNode root2) {

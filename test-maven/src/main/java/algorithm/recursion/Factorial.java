@@ -10,11 +10,13 @@ public class Factorial {
 	// Factorial : n!
 	public static void main(String[] args) {
 		int n = 10;
-		log.debug("{}", test(n));
-		log.debug("{}", factorial(n));		
+		log.debug("{}", multiply(n));
+		log.debug("{}", factorial(n));
+		log.debug("{}", power(2,  3));
 	}
 	
-	private static int test(int n) {
+	// 곱하기
+	private static int multiply(int n) {
 		int sum = 1;
 		for (int i = 1; i <= n; i++) {
 			sum *= i;
@@ -30,8 +32,9 @@ public class Factorial {
 		}
 	}
 	
+	// 제곱
 	private static double power(double x, int n) {
-		if (n==0) {
+		if (n == 0) {
 			return 1;
 		} else {
 			return x * power(x, n - 1);

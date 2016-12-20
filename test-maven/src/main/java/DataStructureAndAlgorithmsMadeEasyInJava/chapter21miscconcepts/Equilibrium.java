@@ -1,4 +1,4 @@
-package chapter21miscconcepts;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter21miscconcepts;
 /*Copyright (c) Dec 22, 2014 CareerMonk Publications and others.
  * E-Mail           	: info@careermonk.com 
  * Creation Date    	: 2015-01-10 06:15:46 

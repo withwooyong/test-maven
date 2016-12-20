@@ -12,7 +12,7 @@
  */
 
 
-package chapter07priorityqueues;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter07priorityqueues;
 
 public class BinaryHeap<AnyType extends Comparable<? super AnyType>> {
 	// Construct the binary heap.

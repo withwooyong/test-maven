@@ -12,8 +12,8 @@
  */
 
 
-package chapter05queues;
-import chapter03linkedlists.*;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter05queues;
+import DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists.*;
 
 public class LinkedQueue {
 	private int length;

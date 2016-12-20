@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter12selectionalgorithms;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter12selectionalgorithms;
 
 public class MedianInTwoSortedArrays {
 	public double findMedianSortedArrays(int A[], int B[]) {

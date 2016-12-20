@@ -12,7 +12,7 @@
  */
 
 
-package chapter10sorting;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter10sorting;
 
 import java.util.Arrays;
 

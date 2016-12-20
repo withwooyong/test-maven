@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter11searching;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter11searching;
 
 public class BinarySearchRotatedRecursive {
 	public int search(int[] A, int left, int right, int data) {

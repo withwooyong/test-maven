@@ -12,7 +12,7 @@
  */
 
 
-package chapter08disjointsets;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter08disjointsets;
 
 public class DisjointSets {
 	

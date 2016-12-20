@@ -12,7 +12,7 @@
  */
 
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class WidthOfTree {
 	// The width of a binary tree is the maximum number of elements on one level

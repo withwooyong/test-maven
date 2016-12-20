@@ -9,7 +9,7 @@
  * 							merchantability or fitness for a particular purpose. 
  * 
  */
-package chapter10sorting;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter10sorting;
 
 public class QuickSort {
 

@@ -12,7 +12,7 @@
  */
 
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class SearchBinaryTreeRecursive {
 	// Tests whether the root argument contains within itself the data argument.

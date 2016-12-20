@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter18divideandconquer;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter18divideandconquer;
 
 public class MaxSumSubArrayDividAndConquer {
 	public int maxSumSubArray(int[] A) {

@@ -12,7 +12,7 @@
  */
 
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class DiameterOfTree {
 	public static int diameter = 0;

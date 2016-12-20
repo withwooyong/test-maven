@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter19dynamicprogramming;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter19dynamicprogramming;
 
 import java.util.ArrayList;
 import java.util.Collection;

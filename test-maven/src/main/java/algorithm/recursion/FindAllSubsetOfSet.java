@@ -4,15 +4,19 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class FindAllSubsetOfSet {
+	
+	private static Logger log = LoggerFactory.getLogger(FindAllSubsetOfSet.class);
 
 	public static void main(String[] args) {
-		System.out.println("\n" + createSubsetUsingTree("ABCD"));
+		log.debug("{}", createSubsetUsingTree("ABCD"));
 	}
-
+	
 	private static List<String> createSubsetUsingTree(String str) {
 
-		// take set if you want unique results.
 		List<String> result = new ArrayList<String>(); 
 		result.add("[]");
 

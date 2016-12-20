@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class LCABST {
 	public BinarySearchTreeNode LCA(BinarySearchTreeNode root, BinarySearchTreeNode a, BinarySearchTreeNode b) {

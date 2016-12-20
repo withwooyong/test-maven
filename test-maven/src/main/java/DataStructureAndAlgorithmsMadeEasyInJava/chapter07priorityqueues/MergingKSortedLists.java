@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter07priorityqueues;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter07priorityqueues;
 
 import java.util.ArrayList;
 import java.util.Comparator;

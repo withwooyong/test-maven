@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter12selectionalgorithms;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter12selectionalgorithms;
 
 public class KthSmallest {
 	public static int partition(int[] A, int start, int end) {

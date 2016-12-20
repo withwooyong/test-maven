@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter15stringalgorithms;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter15stringalgorithms;
 
 public class MinLengthWindow {
 	public String minWindow(String input, String chars) {

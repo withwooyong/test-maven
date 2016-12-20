@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter19dynamicprogramming;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter19dynamicprogramming;
 
 public class MaxSumSubArrayDP {
 	public int maxSubArray(int[] A) {

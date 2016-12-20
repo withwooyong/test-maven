@@ -12,7 +12,7 @@
  */
 
 
-package chapter18divideandconquer;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter18divideandconquer;
 
 class Building {
 	int left, right, h;

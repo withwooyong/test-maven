@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter11searching;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter11searching;
 
 public class SearchInSorted2DMatrix {
 	public boolean searchMatrix(int[][] A, int target) {

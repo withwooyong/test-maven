@@ -12,7 +12,7 @@
  */
 
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class BinaryTreeSizeRecursive {
 	// Returns the total number of nodes in this binary tree (include the root

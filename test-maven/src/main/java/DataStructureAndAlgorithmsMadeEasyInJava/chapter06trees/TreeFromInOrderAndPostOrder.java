@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class TreeFromInOrderAndPostOrder {
 	public BinaryTreeNode buildBinaryTree(int[] inorder, int[] postorder) {

@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter19dynamicprogramming;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter19dynamicprogramming;
 
 public class EditDistance {
 	public int editDistance(String A, String B) {

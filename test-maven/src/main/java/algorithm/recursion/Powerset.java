@@ -80,7 +80,7 @@ public class Powerset {
 		powerSet(k + 1);
 	}
 
-	public static ArrayList<String> getpowerset(int a[], int n, ArrayList<String> ps) {
+	public static ArrayList<String> getPowerset(int a[], int n, ArrayList<String> ps) {
 		if (n < 0) {
 			return null;
 		} else if (n == 0) {
@@ -90,7 +90,7 @@ public class Powerset {
 			ps.add(" ");
 			return ps;
 		}
-		ps = getpowerset(a, n - 1, ps);
+		ps = getPowerset(a, n - 1, ps);
 		ArrayList<String> tmp = new ArrayList<String>();
 		for (String s : ps) {
 			if (s.equals(" ")) {

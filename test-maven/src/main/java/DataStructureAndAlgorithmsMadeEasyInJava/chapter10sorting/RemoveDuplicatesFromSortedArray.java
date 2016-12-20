@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter10sorting;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter10sorting;
 
 public class RemoveDuplicatesFromSortedArray {
 

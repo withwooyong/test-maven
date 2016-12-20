@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class CheckValidBSTRecursive {
 	public boolean checkValidBST(BinarySearchTreeNode root) {

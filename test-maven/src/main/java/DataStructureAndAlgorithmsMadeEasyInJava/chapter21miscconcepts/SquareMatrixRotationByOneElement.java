@@ -12,7 +12,7 @@
  */
 
 
-package chapter21miscconcepts;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter21miscconcepts;
 
 public class SquareMatrixRotationByOneElement {
 	int[][] rotateByOneElementClockwise(int[][] matrix) {

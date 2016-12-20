@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter07priorityqueues;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter07priorityqueues;
 
 public class ListNode {
 	int data;

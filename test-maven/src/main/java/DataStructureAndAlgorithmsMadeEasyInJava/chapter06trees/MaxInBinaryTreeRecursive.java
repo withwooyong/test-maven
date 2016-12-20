@@ -1,4 +1,4 @@
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 /*Copyright (c) Dec 21, 2014 CareerMonk Publications and others.
  * E-Mail           	: info@careermonk.com 

@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class CheckMirrors {
 	public boolean areMirrors(BinaryTreeNode root1, BinaryTreeNode root2) {

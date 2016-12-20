@@ -10,8 +10,8 @@
  * 
  */
 
-package chapter06trees;
-import chapter03linkedlists.*;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
+import DataStructureAndAlgorithmsMadeEasyInJava.chapter03linkedlists.*;
 
 public class SortedArrayToBST {
 	// bottom up

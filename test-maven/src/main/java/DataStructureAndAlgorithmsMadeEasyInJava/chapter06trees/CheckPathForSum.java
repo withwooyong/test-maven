@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class CheckPathForSum {
 	public boolean hasPathSum(BinaryTreeNode root, int sum) {

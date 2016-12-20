@@ -12,7 +12,7 @@
  */
 
 
-package chapter05queues;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter05queues;
 
 public class DynamicArrayQueue {
 	// Array used to implement the queue.

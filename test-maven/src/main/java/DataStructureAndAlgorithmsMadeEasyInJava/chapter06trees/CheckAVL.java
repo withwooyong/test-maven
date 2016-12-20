@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class CheckAVL {
 	public boolean isAVL(BinarySearchTreeNode root, int min, int max) {

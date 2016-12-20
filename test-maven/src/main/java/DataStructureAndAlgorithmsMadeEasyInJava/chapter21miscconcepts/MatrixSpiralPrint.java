@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter21miscconcepts;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter21miscconcepts;
 
 public class MatrixSpiralPrint {
 	public void Spiral(int[][] A, int m, int n) {

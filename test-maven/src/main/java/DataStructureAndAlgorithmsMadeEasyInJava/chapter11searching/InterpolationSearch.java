@@ -11,7 +11,7 @@
  * 
  */
 
-package chapter11searching;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter11searching;
 
 public class InterpolationSearch {
 

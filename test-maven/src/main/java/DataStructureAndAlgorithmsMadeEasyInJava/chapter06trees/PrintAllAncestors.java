@@ -12,7 +12,7 @@
  */
 
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class PrintAllAncestors {
 	public static boolean printAllAncestors(BinaryTreeNode root, BinaryTreeNode node) {

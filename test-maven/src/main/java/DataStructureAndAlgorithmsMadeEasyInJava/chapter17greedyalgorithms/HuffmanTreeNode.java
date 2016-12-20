@@ -12,7 +12,7 @@
  */
 
 
-package chapter17greedyalgorithms;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter17greedyalgorithms;
 
 public class HuffmanTreeNode implements Comparable<HuffmanTreeNode> {
 

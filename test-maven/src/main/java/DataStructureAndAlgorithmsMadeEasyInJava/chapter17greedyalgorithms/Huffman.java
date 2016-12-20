@@ -12,8 +12,8 @@
  */
 
 
-package chapter17greedyalgorithms;
-import chapter07priorityqueues.BinaryHeap;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter17greedyalgorithms;
+import DataStructureAndAlgorithmsMadeEasyInJava.chapter07priorityqueues.BinaryHeap;
 
 public class Huffman {
 	// Private variables w/ accessors

@@ -12,7 +12,7 @@
  */
 
 
-package chapter21miscconcepts;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter21miscconcepts;
 
 import java.util.ArrayList;
 import java.util.List;

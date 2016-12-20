@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class ConstructMirror {
 	public BinaryTreeNode MirrorOfBinaryTree(BinaryTreeNode root) {

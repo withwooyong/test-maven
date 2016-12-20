@@ -12,7 +12,7 @@
  */
 
 
-package chapter06trees;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter06trees;
 
 public class MinInBinaryTreeRecursive {
 	public int minInBinaryTree(BinaryTreeNode root) {

@@ -23,7 +23,7 @@
  */
 
 
-package chapter18divideandconquer;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter18divideandconquer;
 
 public class ExponentialDivideAndConquer {
 	public static double exponenial(double x, int n) {

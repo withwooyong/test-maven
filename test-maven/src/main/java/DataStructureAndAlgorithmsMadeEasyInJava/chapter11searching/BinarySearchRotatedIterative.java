@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter11searching;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter11searching;
 
 public class BinarySearchRotatedIterative {
 	public boolean search(int[] A, int data) {

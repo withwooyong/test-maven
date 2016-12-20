@@ -11,7 +11,7 @@
  * 
  */
 
-package chapter21miscconcepts;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter21miscconcepts;
 
 public class SquareMatrixRotationByKElementsTest {
 	public static void main(String[] args) {

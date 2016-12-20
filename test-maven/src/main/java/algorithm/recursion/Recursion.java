@@ -75,16 +75,17 @@ public class Recursion {
 	// 이진탐색: Recursion
 	// items[begin]에서 items[end] 사이에서 target을 검색한다.
 	private static int binarySearch(int[] data, int target, int begin, int end) {
-		if (begin > end)
+		if (begin > end) {
 			return -1;
-		else {
+		} else {
 			int middle = (begin + end) / 2;
-			if (data[middle] == target)
+			if (data[middle] == target) {
 				return middle;
-			else if (data[middle] > target)
-				return binarySearch(data, target, begin, middle - 1);
-			else
-				return binarySearch(data, target, middle + 1, end);
+			} else if (data[middle] > target) {
+				return binarySearch(data, target, begin, middle - 1); // 왼쪽배열
+			} else {
+				return binarySearch(data, target, middle + 1, end); // 오른쪽배열
+			}
 		}
 	}
 	
@@ -92,15 +93,16 @@ public class Recursion {
 	// data[begin]에서 data[end] 사이에서 합이 K가 되는 쌍이 존재하는지 검사한다. 
 	// 데이터는 오름차순으로 정렬되어 있다고 가정한다.
 	private static boolean twoSum(int data[], int begin, int end, int K) {
-		if (begin >= end) // 만약 중복 선택이 가능하다면 =을 빼면 됨
+		if (begin >= end) { // 만약 중복 선택이 가능하다면 =을 빼면 됨
 			return false;
-		else {
-			if (data[begin] + data[end] == K)
+		} else {
+			if (data[begin] + data[end] == K) {
 				return true;
-			else if (data[begin] + data[end] < K)
+			} else if (data[begin] + data[end] < K) {
 				return twoSum(data, begin + 1, end, K);
-			else
+			} else {
 				return twoSum(data, begin, end - 1, K);
+			}
 		}
 	}
 

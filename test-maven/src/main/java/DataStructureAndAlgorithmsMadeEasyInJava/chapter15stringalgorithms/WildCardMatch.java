@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter15stringalgorithms;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter15stringalgorithms;
 
 public class WildCardMatch {
 	public boolean wildCardMatch(String text, String pattern) {

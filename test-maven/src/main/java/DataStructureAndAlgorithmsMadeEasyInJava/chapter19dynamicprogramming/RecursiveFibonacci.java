@@ -12,7 +12,7 @@
  */
 
 
-package chapter19dynamicprogramming;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter19dynamicprogramming;
 
 public class RecursiveFibonacci {
 

@@ -10,7 +10,7 @@
  * 
  */
 
-package chapter15stringalgorithms;
+package DataStructureAndAlgorithmsMadeEasyInJava.chapter15stringalgorithms;
 
 import java.util.ArrayList;
 
