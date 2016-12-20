@@ -3,9 +3,10 @@ package codingdojang;
 public class NQueen {
 	
 	public static void main(String[] args) {
-		for (short n = 1; n < 14; n++) {
-			enumerate(n);
-			System.out.println("n = " + (n < 10 ? "0" : "") + n + ", solution count is " + count + ".");
+		
+		for (int queen = 1; queen < 14; queen++) {
+			enumerate(queen);
+			System.out.println("n = " + (queen < 10 ? "0" : "") + queen + ", solution count is " + count + ".");
 			count = 0;
 		}
 	}
@@ -33,15 +34,14 @@ public class NQueen {
 
 	public static boolean isPromising(int[] q, int n) {
 		for (int i = 0; i < n; i++) {
-			if (q[i] == q[n])
+			if (q[i] == q[n]) {
 				return false; // 같은 열인지
-			if ((q[i] - q[n]) == (n - i))
+			} else if ((q[i] - q[n]) == (n - i)) {
 				return false; // '\' 방향
-			if ((q[n] - q[i]) == (n - i))
+			} else if ((q[n] - q[i]) == (n - i)) {
 				return false; // '/' 방향
+			}
 		}
 		return true;
-	}
-
-	
+	}	
 }
