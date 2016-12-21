@@ -17,8 +17,12 @@ public class TwoDimensionalArray {
 	private static Logger log = LoggerFactory.getLogger(TwoDimensionalArray.class);
 
 	public static void main(String[] args) {
-		int[][] arr = {{4, 44, 5, 7, 63, 1}, {7, 88, 31, 95, 9, 6}, {88, 99, 6, 5, 77, 4}};
-		solution(arr);
+		int[][] A = {
+				{ 4, 44, 5, 7, 63, 1 }, 
+				{ 7, 88, 31, 95, 9, 6 }, 
+				{ 88, 99, 6, 5, 77, 4 }
+		};
+		solution(A);
 		
 		/*
 		 * http://codereview.stackexchange.com/questions/42906/partial-sums-of-two-dimensional-array
@@ -45,12 +49,12 @@ public class TwoDimensionalArray {
 	
 	// What I'm trying to do is print the largest number within a two dimensional array and it's index location.
 	// 최고값 위치 찾는법
-	public static void solution(int[][] arr) {
-		int max = arr[0][0];
-		for (int i = 0; i < arr.length; i++) {
-			for (int j = 0; j < arr.length; j++) {
-				if (arr[i][j] > max) { // 특정숫자 찾을려면 여기서 
-					max = arr[i][j];
+	public static void solution(int[][] A) {
+		int max = A[0][0];
+		for (int i = 0; i < A.length; i++) {
+			for (int j = 0; j < A.length; j++) {
+				if (A[i][j] > max) { // 특정숫자 찾을려면 여기서 
+					max = A[i][j];
 					log.debug("{} {} {}", i, j, max); // 2 1 99 최고값
 				}
 			}

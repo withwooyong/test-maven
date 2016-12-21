@@ -68,6 +68,13 @@ public class FrogJmp {
 		int X = 10, Y = 85, D = 30;
 		log.debug("{}", solution(X, Y, D));
 		log.debug("{}", solution1(X, Y, D));
+		log.debug("{}", mySolution(X, Y, D));
+	}
+	
+	public static int mySolution(int X, int Y, int D) {
+		double result = (Y - X) / (double)D;
+		log.debug("{}", result);
+		return (int)Math.ceil(result);
 	}
 	
 	public static int solution1(int X, int Y, int D) {

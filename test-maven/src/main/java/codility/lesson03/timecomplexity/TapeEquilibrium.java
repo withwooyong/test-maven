@@ -90,12 +90,12 @@ public class TapeEquilibrium {
 	/*
 	 * Minimize the value |(A[0] + ... + A[P-1]) - (A[P] + ... + A[N-1])|.
 	 */
-	// N 개의 정수로 구성된 0이 아닌 인덱스가없는 배열 A가 주어지면 달성 할 수있는 최소의 차이를 반환
+	// N 개의 정수로 구성된 0이 아닌 배열 A가 주어지면 달성 할 수있는 최소의 차이를 반환
 	public static void main(String[] args) {
 		int[] A = { 3, 1, 2, 4, 3 };
-		log.debug("{}", solution(A));
+		log.debug("{}", solution(A)); // return 1
 //		log.debug("{}", solution2(A));
-		log.debug("{}", mySolution(A));
+//		log.debug("{}", mySolution(A));
 	}
 	
 	public static int mySolution(int[] A) {
@@ -145,14 +145,16 @@ public class TapeEquilibrium {
 	public static int solution(int[] A) {
 		int front = 0;
 		int back = 0;
+		// 뒷자리 합을 계산하기위해 
 		for (int i = 0; i < A.length; i++) {
 			back += A[i]; // 총합을 구한다.
 		}
 		int minDiff = Integer.MAX_VALUE;
 		for (int i = 1; i < A.length; i++) {
 			front += A[i - 1]; // 앞자리 합
-			back -= A[i - 1]; //  뒷자리 합
+			back -= A[i - 1]; //  뒷자리 합			
 			minDiff = Math.min(minDiff, Math.abs(front - back));
+			log.debug("front={} back={} minDiff={}", front, back, minDiff);
 		}
 		return minDiff;
 	}

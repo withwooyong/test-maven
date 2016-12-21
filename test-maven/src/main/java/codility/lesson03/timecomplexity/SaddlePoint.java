@@ -51,8 +51,41 @@ public class SaddlePoint {
 			{ 0, 2, 1 }, // 3
 			{ 1, 6, 8 } };// 15		
 		solution(n, A);
-		solution2(B);
-		
+		solution2(B);		
+	}
+	
+	public static int solution(int n, int[][] A) {
+		int max, min, x, f = 0;
+		for (int i = 0; i < n; i++) { // Finding the minimum element of a row
+			min = A[i][0]; // Initializing min with first element of every row
+			x = 0;
+			// 행에서 최소값을 찾는다.
+			for (int j = 0; j < n; j++) {
+				if (A[i][j] < min) {
+					min = A[i][j]; 	// 행의 최소값
+					x = j; 			// 최소값 위치 저장
+				}
+			}
+			
+			// 열에서 최고값을 찾는다.
+			max = A[0][x]; // 행의 최소값 위치의 열만 검사하면됩
+			for (int k = 0; k < n; k++) {
+				if (A[k][x] > max) {
+					max = A[k][x];
+				}
+			}
+			
+			if (max == min) {
+				log.debug("Saddle point = {}", max);
+				f = 1;
+			}
+		}
+
+		if (f == 0) {
+			log.debug("{}", "No saddle point");
+			
+		}
+		return 0;
 	}
 	
 	/*
@@ -72,13 +105,13 @@ public class SaddlePoint {
 		int x = 0;
 		int f = 0;
 		
-		for (int i = 0; i < row; i++) { // Finding the minimum element of a row
-			min = A[i][0]; // Initializing min with first element of every row
+		for (int i = 0; i < row; i++) { 	// Finding the minimum element of a row
+			min = A[i][0]; 					// Initializing min with first element of every row
 			x = 0;
 			for (int j = 0; j < column; j++) {
 				if (A[i][j] < min) {
 					min = A[i][j];
-					x = j; // Saving the column position of the minimum element of the row
+					x = j; 					// Saving the column position of the minimum element of the row
 				}
 			}
 			
@@ -99,43 +132,5 @@ public class SaddlePoint {
 			}
 		}
 		return f;
-		
-	}
-	
-	public static int solution(int n, int[][] A) {
-		
-		int max, min, x, f = 0;
-		for (int i = 0; i < n; i++) { // Finding the minimum element of a row
-			min = A[i][0]; // Initializing min with first element of every row
-			x = 0;
-			// 행에서 최소값을 찾는다.
-			for (int j = 0; j < n; j++) {
-				if (A[i][j] < min) {
-					min = A[i][j];
-					x = j; // Saving the column position of the minimum element of the row
-				}
-			}
-
-			// Finding the maximum element in the column corresponding to the minimum element of row
-			// 열에서 최고값을 찾는다.
-			max = A[0][x]; // Initializing max with first element of that column
-			for (int k = 0; k < n; k++) {
-				if (A[k][x] > max) {
-					max = A[k][x];
-				}
-			}
-
-			// If the minimum of a row is same as maximum of the corresponding column, then, we have that element as the Saddle point
-			if (max == min) {
-				log.debug("Saddle point = {}", max);
-				f = 1;
-			}
-		}
-
-		if (f == 0) {
-			log.debug("{}", "No saddle point");
-			
-		}
-		return 0;
 	}
 }

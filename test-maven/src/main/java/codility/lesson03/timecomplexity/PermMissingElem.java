@@ -49,11 +49,22 @@ public class PermMissingElem {
 		log.debug("{}", mySolution(A));
 		log.debug("{}", solution(A));
 		log.debug("{}", solution2(A));
+		log.debug("{}", test(A));
+	}
+	
+	public static int test(int[] A) {
+		Arrays.sort(A);
+		for (int i = 0; i < A.length; i++) {
+			if (A[i] != (i + 1)) {
+				return i + 1;
+			}			
+		}
+		return 0;
 	}
 	
 	public static int solution2(int[] A) {
 		long N = A.length;
-		long sum = ((N + 1) * (N + 2)) / 2;
+		long sum = ((N + 1) * (N + 2)) / 2; // 요넘 중요.
 		for (int i = 0; i < N; i++) {
 			sum -= A[i];
 		}

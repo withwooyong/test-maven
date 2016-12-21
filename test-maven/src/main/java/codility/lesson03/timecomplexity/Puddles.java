@@ -22,40 +22,39 @@ public class Puddles {
 
 	public static void main(String[] args) {
 		int[] A = { 2, 5, 1, 2, 3, 4, 7, 7, 6 };
-		int[] B = { 2, 5, 1, 3, 1, 2, 1, 7, 7, 6 };
-		int[] C = { 6, 1, 4, 6, 7, 5, 1, 6, 4 };
+		int[] B = { 2, 5, 1, 2, 3, 4, 7, 7, 6, 7 };
+		int[] C = { 2, 5, 1, 2, 3, 4, 7, 7, 6, 8 };
 
-		log.debug("Case A, total volume : {}", puddles(A));
-		//log.debug("Case B, total volume : {}", puddles(B));
-		//log.debug("Case C, total volume : {}", puddles(C));
+		log.debug("Case A, total volume : {}", puddles(A)); // return 10
+		log.debug("Case B, total volume : {}", puddles(B));
+		log.debug("Case C, total volume : {}", puddles(C));
 	}
 	
-	private static int puddles(int[] A) {
-		int leftPosition = 0;
-		int rightPosition = A.length - 1;
-		int leftWall = A[leftPosition];
-		int rightWall = A[rightPosition];
+	private static int puddles(int[] A) {		
+		int left = 0;
+		int right = A.length - 1;
+		int leftWall = A[left];
+		int rightWall = A[right];
 
 		int volume = 0;
-		while (leftPosition < rightPosition) {
+		while (left < right) {
 			if (leftWall < rightWall) {
-				leftPosition++;
-				if (A[leftPosition] >= leftWall) {
-					leftWall = A[leftPosition];
+				left++; // 왼쪽벽에서 오른쪽벽으로 
+				if (leftWall <= A[left]) {
+					leftWall = A[left]; // 채워진 물 없음.
 				} else {
-					volume += leftWall - A[leftPosition];
+					volume += leftWall - A[left]; // 채워진 물있음.
 				}
 			} else {
-				rightPosition--;
-				if (A[rightPosition] >= rightWall) {
-					rightWall = A[rightPosition];
+				right--; // 오른쪽 벽에서 왼쪽벽으로
+				if (rightWall <= A[right]) {
+					rightWall = A[right];
 				} else {
-					volume += rightWall - A[rightPosition];
+					volume += rightWall - A[right];
 				}
 			}
-			log.debug("leftWall={} rightWall={} volume={}", leftWall, rightWall, volume);
+			//log.debug("leftWall={} rightWall={} volume={}", leftWall, rightWall, volume);
 		}
 		return volume;
 	}
-
 }
