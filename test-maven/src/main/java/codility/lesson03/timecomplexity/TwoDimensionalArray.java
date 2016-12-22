@@ -50,14 +50,16 @@ public class TwoDimensionalArray {
 	// What I'm trying to do is print the largest number within a two dimensional array and it's index location.
 	// 최고값 위치 찾는법
 	public static void solution(int[][] A) {
+		//log.debug("{} {}", A.length, A[0].length);
 		int max = A[0][0];
 		for (int i = 0; i < A.length; i++) {
-			for (int j = 0; j < A.length; j++) {
+			for (int j = 0; j < A[0].length; j++) {
+				//log.debug("{}", A[i][j]);
 				if (A[i][j] > max) { // 특정숫자 찾을려면 여기서 
 					max = A[i][j];
-					log.debug("{} {} {}", i, j, max); // 2 1 99 최고값
 				}
 			}
+			log.debug("{} {}", i, max); // 2 1 99 최고값
 		}
 	}
 	

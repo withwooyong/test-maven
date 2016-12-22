@@ -36,7 +36,8 @@ import org.slf4j.LoggerFactory;
  *  Write a function:
  *  class Solution { public int[] solution(int N, int[] A); }
  *  
- *  that, given an integer N and a non-empty zero-indexed array A consisting of M integers, returns a sequence of integers representing the values of the counters.
+ *  that, given an integer N and a non-empty zero-indexed array A consisting of M integers, 
+ *  returns a sequence of integers representing the values of the counters.
  *  
  *  For example, given:
  *  A[0] = 3
@@ -83,6 +84,8 @@ public class MaxCounters {
 		
 	}
 	
+	// 문제이해안됨.
+	// 0으로 초기화된 N = 5 배열에 주어진 수식처리하여 저장 
 	// 접근방법: 이부분 'max counter − all counters are set to the maximum value of any counter'
 	// 최대한 수정횟수를 줄이도록 max_counter값을 별도로 기록하고 있다가 최종 수정
 	// [3, 2, 2, 4, 2]
@@ -96,25 +99,26 @@ public class MaxCounters {
 		int max_value = 0;
 		int max_counter = 0;
 
+		/*
+		 * int N = 5;
+		 * int[] A = { 3, 4, 4, 6, 1, 4, 4 };
+		 */
 		for (int i = 0; i < A.length; i++) { // 1 ≤ X ≤ N
 			if (1 <= A[i] && A[i] <= N) {
 				if (counters[A[i] - 1] < max_counter) {
 					counters[A[i] - 1] = max_counter;
 				}
-				counters[A[i] - 1]++; // 증가 X
+				// 요넘 왜 -1 하는지 모르겠음.
+				counters[A[i] - 1]++; // 증가 X, counters[3-1] 의 값을 +1 해서 저장 
 				if (max_value < counters[A[i] - 1]) {
 					max_value = counters[A[i] - 1];
 				}
 			} else if (A[i] == N + 1) { // 최대카운터
 				max_counter = max_value;
-			}
-			
-			for (int j = 0; j < counters.length; j++) {
-				System.out.print(" " + counters[j]);
-			}
-			System.out.println();
-			
+			}			
+			log.debug("{} {} {}", Arrays.toString(counters), max_counter, max_value);			
 		}		
+		
 		for (int i = 0; i < N; i++) {
 			if (counters[i] < max_counter) {
 				counters[i] = max_counter;

@@ -1,6 +1,7 @@
 package codility.lesson05.prefixsums;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,15 +59,34 @@ public class GenomicRangeQuery {
 	
 	/*
 	 * Find the minimal nucleotide from a range of sequence DNA.
-	 */
-	// 잘모르겠음.
+	 */	
 	public static void main(String[] args) {
 		String S = "CAGCCTA";
 		int[] P = { 2, 5, 0 };
 		int[] Q = { 4, 5, 6 };
-		log.debug("{}", Arrays.toString(mySolution(S, P, Q))); // // [2, 4, 1]
-		log.debug("{}", Arrays.toString(solution(S, P, Q))); // // [2, 4, 1]
+//		log.debug("{}", Arrays.toString(mySolution(S, P, Q))); // // [2, 4, 1]
+//		log.debug("{}", Arrays.toString(solution(S, P, Q))); // // [2, 4, 1]
+		log.debug("{}", Arrays.toString(solution2(S, P, Q))); // // [2, 4, 1]
 		
+	}
+	
+	// [2, 4, 1]
+	public static int[] solution2(String S, int[] P, int[] Q) {
+		int M = 3;
+		int[] result = new int[M];
+		// CAGCCTA / A, C, G, T / 1, 2, 3, 4
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("A", 1);
+		map.put("C", 2);
+		map.put("G", 3);
+		map.put("T", 4);
+		
+		for (int i = 0; i < M; i++) {
+			log.debug("{} {}", S.charAt(P[i]), S.charAt(Q[i]));
+			result[i] = Math.min(map.get("" + S.charAt(P[i])), map.get("" + S.charAt(Q[i])));
+		}
+		return result;
 	}
 	
 	// 접근방법:

@@ -22,11 +22,12 @@ public class Permutations {
 
 	private static void perm1(String prefix, String s) {
 		int n = s.length();
-		if (n == 0)
+		if (n == 0) {
 			log.debug("{}", prefix);
-		else {
-			for (int i = 0; i < n; i++)
+		} else {
+			for (int i = 0; i < n; i++) {
 				perm1(prefix + s.charAt(i), s.substring(0, i) + s.substring(i + 1, n));
+			}
 		}
 
 	}

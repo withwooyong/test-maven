@@ -38,6 +38,8 @@ public class CountDiv {
 		int K = 2;
 		log.debug("{}", mySolution(A, B, K)); // 3
 		log.debug("{}", solution(A, B, K)); // 3
+		log.debug("{}", solution2(A, B, K)); // 3
+		
 	}
 	
 	// For example, for A = 6, B = 11 and K = 2, your function should return 3,
@@ -56,7 +58,17 @@ public class CountDiv {
 		return count;
 	}
 	
-	// 요넘 이해안됨.
+	// O(1)
+	private static int solution2(int A, int B, int K) {
+		int offsetForLeftRange = 0;
+		if (A % K == 0) {
+			++offsetForLeftRange;
+		}
+		return (B / K) - (A / K) + offsetForLeftRange;
+	}
+	
+	// 요넘 이해안됨. 무슨 공식인듯 한데.
+	// O(1)
 	public static int solution(int A, int B, int K) {
 		
 		int result = B / K + 1;

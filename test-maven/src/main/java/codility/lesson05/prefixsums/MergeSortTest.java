@@ -3,10 +3,8 @@ package codility.lesson05.prefixsums;
 public class MergeSortTest {
 
 	/*
-	 * Before Sort : PrintArray()
-	 * 4 6 7 1 3 18 16 15 15 20 9
-	 * Arter Sort : PrintArray()
-	 * 1 3 4 6 7 9 15 15 16 18 20 
+	 * Before Sort : PrintArray() 4 6 7 1 3 18 16 15 15 20 9 Arter Sort :
+	 * PrintArray() 1 3 4 6 7 9 15 15 16 18 20
 	 */
 	public static void main(String[] args) {
 		int inputArray[] = { 4, 6, 7, 1, 3, 18, 16, 15, 15, 20, 9 };
