@@ -42,17 +42,6 @@ public class MaximumSliceProblem {
 		return result;
 	}
 	
-	private static int quadratic_max_slice(int[] A, int pref) {
-		
-		int result = 0;
-		for (int i = 0; i < A.length; i++) {
-			for (int j = i; j < A.length; j++) {
-//				int sum = pref[j + 1] - pref[i];
-//				result = Math.max(result, sum);						
-			}
-		}
-		return result;
-	}
 }
 
 

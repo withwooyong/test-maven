@@ -79,12 +79,37 @@ public class Fish {
 		//  the function should return 2
 		int A[] = { 4, 3, 2, 1, 5 };
 		int B[] = { 0, 1, 0, 0, 0 };
-		//log.debug("{}", solution(A, B)); // return 2
+		log.debug("{}", solution(A, B)); // return 2
 //		log.debug("{}", solution2(A, B));
 		//log.debug("{}", solution3());
 		//log.debug("{}", mySolution());
-		log.debug("{}", solution4());
+		log.debug("{}", solution4());		
+	}
+	
+	public static int solution(int[] A, int[] B) {
 		
+		Stack<Integer> stack = new Stack<Integer>();
+		
+		for (int i = 0; i < A.length; i++) {
+			int fishsize = A[i]; 	// 고기크기 / 큰놈이 작은놈 잡아먹음.
+			int direction = B[i];   // 가는방향
+			if (stack.empty()) {
+				stack.push(i);
+			} else {
+				while (!stack.empty() && ((direction - B[stack.peek()]) == -1) && A[stack.peek()] < fishsize) {
+					stack.pop(); // 잡아먹을수 있는 고기는 잡어먹는다.
+				}
+				
+				if (stack.empty() == false) {
+					if (direction - B[stack.peek()] != -1) {
+						stack.push(i);
+					}
+				} else {
+					stack.push(i);
+				}
+			}
+		}
+		return stack.size();
 	}
 	
 	public static int mySolution() {
@@ -114,32 +139,6 @@ public class Fish {
 		}
 		res = A.length - nDead;
 		return res;
-	}
-	
-	public static int solution(int[] A, int[] B) {
-		
-		Stack<Integer> stack = new Stack<Integer>();
-		
-		for (int i = 0; i < A.length; i++) {
-			int fishsize = A[i]; 	// 고기크기 / 큰놈이 작은놈 잡아먹음.
-			int direction = B[i];   // 가는방향
-			if (stack.empty()) {
-				stack.push(i);
-			} else {
-				while (!stack.empty() && ((direction - B[stack.peek()]) == -1) && A[stack.peek()] < fishsize) {
-					stack.pop(); // 잡아먹을수 있는 고기는 잡어먹는다.
-				}
-				
-				if (!stack.empty()) {
-					if (direction - B[stack.peek()] != -1) {
-						stack.push(i);
-					}
-				} else {
-					stack.push(i);
-				}
-			}
-		}
-		return stack.size();
 	}
 	
 	// 0 represents a fish flowing upstream,

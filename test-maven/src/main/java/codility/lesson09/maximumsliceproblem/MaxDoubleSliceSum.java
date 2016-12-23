@@ -1,5 +1,7 @@
 package codility.lesson09.maximumsliceproblem;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,7 +67,7 @@ public class MaxDoubleSliceSum {
 	public static void main(String[] args) {
 		int[] A = new int[] { 3, 2, 6, -1, 4, 5, -1, 2 };
 		log.debug("{}", solution(A));
-//		log.debug("{}", solution2(A));
+		log.debug("{}", solution2(A));
 		log.debug("{}", max_subarray()); // return 10
 	}
 	
@@ -91,8 +93,7 @@ public class MaxDoubleSliceSum {
 			max_so_far = Math.max(max_so_far, max_ending_here);
 		}
 		return max_so_far;
-	}
-	
+	}	
 
 	// return 17
 	// A triplet (X, Y, Z), such that 0 ≤ X < Y < Z < N, is called a double slice.
@@ -116,13 +117,17 @@ public class MaxDoubleSliceSum {
 		int[] A1 = new int[A.length];
 		int[] A2 = new int[A.length];
 		
+		log.debug("{}", Arrays.toString(A));
 		for (int i = 1; i < A.length - 1; i++) {
 			A1[i] = Math.max(A1[i - 1] + A[i], 0);
 		}
+		log.debug("{}", Arrays.toString(A1));
 		
 		for (int i = A.length - 2; i >= 1; i--) {
 			A2[i] = Math.max(A2[i + 1] + A[i], 0);
 		}
+		
+		log.debug("{}", Arrays.toString(A2));
 
 		for (int i = 1; i < A.length - 1; i++) {
 			max = Math.max(max, A1[i - 1] + A2[i + 1]);

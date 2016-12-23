@@ -29,10 +29,9 @@ public class study {
 		 */
 		
 		int[] A = { 2, 3, 5, 4, 1, 3 };
-		int n = 6;
 		int m = 2;
-		log.debug("{}", problem(A, n, m));
-		log.debug("{}", prefix_sums(A));
+		int n = 5;
+		log.debug("{}", prefix_sums(A, m, n));
 	}
 	
 	/*
@@ -41,37 +40,18 @@ public class study {
 	 * a_i~ a_j의 합 = b_j - b_(i-1) 로 O(1)만에 구할 수 있다.
 	 * 이는 2차원으로도 응용이 가능하다.
 	 */
-	private static int prefix_sums(int[] A) {
+	private static int prefix_sums(int[] A, int m, int n) {
 		
-		int[] P = new int[A.length+1];
-		for (int i = 0; i < P.length; i++) {
-			P[i] = 0; // 배열 0값으로 초기화 
-		}
+		int[] P = new int[A.length]; // 배열 0값으로 초기화
 		
-		for (int i = 1; i < A.length + 1; i++) {
-			P[i] = P[i - 1] + A[i - 1];			
+		P[0] = A[0];
+		for (int i = 1; i < A.length; i++) {
+			P[i] = P[i - 1] + A[i];			
 		}
 		log.debug("{}", Arrays.toString(A));
 		log.debug("{}", Arrays.toString(P));
-		return 0;
+		return P[n] - P[m - 1];
 	}
 	
-	private static int problem(int[] A, int n, int m) {
-		int[] B = new int[A.length];
-		int ans = 0;
-		int start = 1;
-		int end = 3;
-		for (int i = 0; i < A.length; i++) {
-			B[i] += A[i];
-		}
-		
-		for (int i = 0; i < m; i++) {
-			if (start == 1) {
-				ans = B[end-1];
-			} else {
-				ans = B[end-1] - B[start-2];
-			}
-		}
-		return ans;
-	}
+	
 }

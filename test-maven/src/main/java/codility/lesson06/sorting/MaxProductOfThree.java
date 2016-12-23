@@ -80,7 +80,7 @@ public class MaxProductOfThree {
 				return -1;
 			}
 		}
-		int maxProduct = A[A.length-1] * A[A.length-2] * A[A.length-3];
+		int maxProduct = A[A.length-1] * A[A.length-2] * A[A.length-3]; // 높은수 3개 곱합
 		log.debug("{}", maxProduct);
 		if (A[0] < 0 && A[1] < 0) { // minus * minus = 양수가 됨.
 			int minusProduct = A[0] * A[1] * A[A.length - 1];
@@ -96,7 +96,7 @@ public class MaxProductOfThree {
 		int len = A.length;
 
 		int tmp1 = A[len - 1] * A[len - 2] * A[len - 3]; 
-		int tmp2 = A[0] * A[1] * A[len - 1];
+		int tmp2 = A[0] * A[1] * A[len - 1]; // 음수 * 음수 = 양수
 
 		if (tmp1 > tmp2) {
 			return tmp1;

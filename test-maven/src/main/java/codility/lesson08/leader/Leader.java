@@ -31,14 +31,14 @@ public class Leader {
 			if (stack.isEmpty()) {
 				stack.push(A[i]);
 			} else {
-				if (stack.peek() != A[i]) {
+				if (stack.peek() != A[i]) { // stack 값과 틀리면 stack 삭제
 					stack.pop();
 				} else {
 					stack.push(A[i]);
 				}
 			}
 		}
-		
+		log.debug("마지막 남은 stack={}", stack.toString());
 		int candidate = stack.pop();
 		int count = 0;
 		for (int i = 0; i < A.length; i++) {
@@ -49,9 +49,9 @@ public class Leader {
 		
 		if (count > A.length / 2) {
 		} else {
-			candidate = -1;
+			candidate = -1; // reader 없음.
 		}
-		return candidate;
+		return candidate; // reader 
 	}
 
 	// O(n2)

@@ -61,23 +61,11 @@ public class NumberOfDiscIntersections {
 		log.debug("{}", mySolution(A));	 
 	}
 	
-	/**
-	 * A[0] = 1 
-	 * A[1] = 5 
-	 * A[2] = 2 
-	 * A[3] = 1 
-	 * A[4] = 4 
-	 * A[5] = 0
-	 *  There are eleven (unordered) pairs of discs that intersect, namely:
-	 *  discs 1 and 4 intersect, and both intersect with all the other discs;
-	 *  disc 2 also intersects with discs 0 and 3.
-	 *  이해안됨.
-	 */
+	// 이놈 사용.
 	public static int mySolution(int[] A) {
 		int cnt = 0;
 		for (int i = 0; i < A.length - 1; i++) {
 			for (int j = i + 1; j < A.length; j++) {
-				//if ((i + A[i]) >= (j - A[j])) {
 				if ((i + A[i]) >= (j - A[j])) {
 					cnt++;
 				}
@@ -96,8 +84,10 @@ public class NumberOfDiscIntersections {
 		log.debug("A={}", Arrays.toString(A));
 		for (int i = 0; i < A.length - 1; i++) {
 			for (int j = i + 1; j < A.length; j++) {
-				long iMax = Math.min((long)i + A[i], A.length);
-				long jMin = Math.max((long)j - A[j], 0);
+//				long iMax = Math.min((long)i + A[i], A.length);
+//				long jMin = Math.max((long)j - A[j], 0);
+				long iMax = Math.min(A[i], A.length);
+				long jMin = Math.max(A[j], 0);
 				if (iMax >= jMin) {
 					result++;
 				}

@@ -29,6 +29,7 @@ public class Combination {
 	// (1,2) (2,3) (1,3) 세개지 경우가 있는데 이는 다음과 같은 경우 두가지로 쪼개진다.
 	// 
 	public static int combination(int n, int r) {		
+		log.debug("{} {}", n, r);
 		if(n == r || r == 0) {
 			return 1;
 		} else {

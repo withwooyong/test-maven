@@ -57,17 +57,20 @@ public class PassingCars {
 	
 	/*
 	 * Count the number of passing cars on the road.
+	 * 도로에서 마주치는 자동차 갯수 
 	 */
 	public static void main(String[] args) {
 		int[] A = { 0, 1, 0, 1, 1 };
-		log.debug("{}", solution(A)); // return 5
-		log.debug("{}", solution1(A));
-		log.debug("{}", solution2(A));
+		log.debug("solution={}", solution(A)); // return 5
+		log.debug("solution1={}", solution1(A));
+		log.debug("solution2={}", solution2(A));
+		
 	}
 	
 	/*
 	 * We say that a pair of cars (P, Q), 
 	 * where 0 ≤ P < Q < N, is passing when P is traveling to the east and Q is traveling to the west.
+	 * 동쪽으로 가는 자동차를 기준으로 서쪽으로 가는 자동차의 수를 세면 만나는 자동차를 셀수 있다.
 	 */
 	public static int solution(int[] A) {
 
