@@ -12,14 +12,7 @@ public class Combination {
 
 	// nCr = n-1Cr-1 + n-1Cr
 	public static void main(String[] args) {
-		ArrayList<Integer> picked = new ArrayList<>();
-		int n = 3;
-		for (int i = 1; i <= n; i++) {
-			picked.add(i);
-		}
-		
-		//combination.pick(n, picked, n);
-		log.debug("{}", combination(3, 2));
+		log.debug("{}", combination(4, 2));
 	}
 	
 	// 6,000,000,000C4
@@ -28,9 +21,10 @@ public class Combination {
 	// 원소가 1,2,3 에서 2개를 골라내는 조합이라고 치자.
 	// (1,2) (2,3) (1,3) 세개지 경우가 있는데 이는 다음과 같은 경우 두가지로 쪼개진다.
 	// 
-	public static int combination(int n, int r) {		
+	public static int combination(int n, int r) {
 		log.debug("{} {}", n, r);
 		if(n == r || r == 0) {
+			//log.debug("{} {}", n, r);
 			return 1;
 		} else {
 			return combination(n - 1, r - 1) + combination(n - 1, r); // nCr = n-1Cr-1 + n-1Cr
@@ -61,7 +55,8 @@ public class Combination {
 	 * toPick : 더 고를 원소의 수
 	 * n개의 원소 중 toPick개를 고르는 모든 조합을 찾는 알고리즘
 	 */
-	public void pick(int n, ArrayList<Integer> picked, int toPick) {
+	public static void pick(int n, ArrayList<Integer> picked, int toPick) {
+		log.debug("{} {} {}", n, picked.toString(), toPick);
 		// 기저사례 : 더 고를 원소가 없을 때 고른 원소들을 출력한다.
 		if (toPick == 0) {
 			log.debug("{}", picked);
@@ -72,7 +67,7 @@ public class Combination {
 		log.debug("{}", smallest);
 		for (int next = smallest; next < n; next++) {
 			picked.add(next);
-			this.pick(n, new ArrayList<Integer>(picked), toPick - 1);
+			pick(n, new ArrayList<Integer>(picked), toPick - 1);
 			picked.remove(picked.size() - 1);
 		}
 	}

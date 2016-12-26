@@ -1,5 +1,8 @@
 package codility.lesson12.euclideanalgorithm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * CommonPrimeDivisors
  * Check whether two numbers have the same prime divisors.
@@ -41,13 +44,14 @@ package codility.lesson12.euclideanalgorithm;
  */
 public class CommonPrimeDivisors {
 
+	private static Logger log = LoggerFactory.getLogger(CommonPrimeDivisors.class);
 	/*
 	 * Check whether two numbers have the same prime divisors.
 	 */
 	public static void main(String[] args) {
 		int[] A = new int[] { 15, 10, 3 };
 		int[] B = new int[] { 75, 30, 5 };
-		System.out.println(solution(A, B));
+		log.debug("{}", solution(A, B));
 
 	}
 

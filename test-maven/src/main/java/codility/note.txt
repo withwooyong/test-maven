@@ -165,3 +165,36 @@ divisor
 
 원둘레공식 "반지름×2×3.14" 2πr
 (π는 3.14 , r은 반지름 2는 2)
+
+* 순열공식 [ permutation formula ] 
+순열의 경우의 수를 구하는 공식이다. Permutation.java 
+순열이란 n개 중 서로다른 r개를 선택하고 순서를 고려하는 것을 말한다.
+nPr = n!/(n-r)!
+
+* 조합공식 [ combination formula ] 
+조합의 경우의 수를 구하는 공식이다. 
+조합은 n개 중 서로 다른 r개를 선택하되 순서를 고려하지 않는 것을 말한다.
+nCr = n!/r!(n-r)!
+nCr = n-1Cr-1 + n-1Cr
+public static int combination(int n, int r) {       
+        log.debug("{} {}", n, r);
+        if(n == r || r == 0) {
+            return 1;
+        } else {
+            return combination(n - 1, r - 1) + combination(n - 1, r); // nCr = n-1Cr-1 + n-1Cr
+        }
+    }
+
+
+
+* 중복조합 공식 [ combination with repetition ]
+중복조합의 경우의 수를 구하는 공식이다. 
+중복조합은 n개 중 r개를 선택하되, 중복을 허용하고 순서를 고려하지 않는 것을 말한다.
+nHk = n+k-1Ck
+
+
+
+
+
+
+

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // http://gorakgarak.tistory.com/522
+// 순열은 순서가 부여된 임의의 집합을 다른 순서로 뒤섞는 연산을 말한다. 
 public class Permutation {
 	
 	private static Logger log = LoggerFactory.getLogger(Permutation.class);

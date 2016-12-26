@@ -76,6 +76,7 @@ public class MaxSliceSum {
 	    return max_so_far;
 	}
 	
+	// 음수로만 구성되어 있을 경우 
 	public static int solution2(int[] A) {
 		int maxEndingHere = A[0];
 		int maxSoFar = A[0];

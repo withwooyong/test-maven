@@ -107,7 +107,7 @@ public class Flags {
 		int position = 0;
 		
 		for (int i = 0; i < peaks.length; i++) {
-			log.debug("i={} {} start={} end={} list={}", i, peaks[i], startPosition, endPosition, list.toString());
+			log.debug("i={} position={} peaks[i]={} start={} end={} list={}", i, position, peaks[i], startPosition, endPosition, list.toString());
 			if (peaks[i] == 1) {
 				if (position == 0) { // 첫번째 깃발
 					list.add(i);

@@ -1,8 +1,10 @@
 package codility.lesson09.maximumsliceproblem;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.http.nio.entity.NFileEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +44,25 @@ public class PermutationExample {
 		String word = "123";
 		permutation2(perm, word);
 		
+		log.debug("{}", permutation3(3, 2));
+		log.debug("{}", permutation4(3, 2));
+		
+		
+		int[] A = { 1, 2, 3 };	
+		
+	}
+	
+	private static void permutation22(String perm, String word) {
+		//log.debug("perm={} word={}", perm, word);
+		if (word.isEmpty()) {
+			log.debug("{} ", perm + word);
+		} else {
+			for (int i = 0; i < word.length(); i++) {
+				String permTemp = perm + word.charAt(i);
+				String wordTemp = word.substring(0, i) + word.substring(i + 1, word.length());
+				permutation2(permTemp, wordTemp);
+			}
+		}
 	}
 	
 	// 순열에 대한 조합 
@@ -59,6 +80,46 @@ public class PermutationExample {
 				permutation2(permTemp, wordTemp);
 			}
 		}
+	}	
+	
+	
+	
+	public static int combination(int n, int r) {       
+        log.debug("{} {}", n, r);
+        if(n == r || r == 0) {
+            return 1;
+        } else {
+            return combination(n - 1, r - 1) + combination(n - 1, r); // nCr = n-1Cr-1 + n-1Cr
+        }
+    }
+	
+	// nPr = n!/(n-r)!
+	private static int permutation4(int n, int r) {
+		return nFactorial(n) / nFactorial(n - r);		
+	}
+	
+	private static int nFactorial(int n) {
+		if (n == 0) {
+			return 1;
+		} else {
+			return n * nFactorial(n - 1);
+		}
+	}
+	
+	// nPr = n!/(n-r)!
+	private static int permutation3(int n, int r) {
+		// nPr = n!/(n-r)!
+		int nSum = 1;
+		for (int i = 1; i <= n; i++) {
+			nSum *= i;
+		}
+		
+		int nrSum = 1;
+		int nr = n - r;
+		for (int i = 1; i <= nr; i++) {
+			nrSum *= i;
+		}
+		return nSum / nrSum;
 	}	
 
 	public static Set<String> permutation(String str) {

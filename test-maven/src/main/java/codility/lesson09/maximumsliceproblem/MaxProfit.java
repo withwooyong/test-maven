@@ -113,14 +113,12 @@ public class MaxProfit {
 		if (A == null || A.length <= 1) {
 			return 0;
 		}
-
-		int min_forward_direction_price = 0;
+		
 		int max_profit = 0;
-
-		min_forward_direction_price = A[0];
+		int min_price = A[0];
 		for (int i = 1; i < A.length; i++) {
-			min_forward_direction_price = Math.min(min_forward_direction_price, A[i]);
-			max_profit = Math.max(max_profit, A[i] - min_forward_direction_price);
+			min_price = Math.min(min_price, A[i]); // 요넘이 max 아니고 min 최소 매수값 
+			max_profit = Math.max(max_profit, A[i] - min_price); // 최고 매수값 
 		}
 		return max_profit;
 	}

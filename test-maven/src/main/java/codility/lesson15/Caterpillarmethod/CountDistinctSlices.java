@@ -1,5 +1,10 @@
 package codility.lesson15.Caterpillarmethod;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +53,64 @@ public class CountDistinctSlices {
 	public static void main(String[] args) {
 		int[] A = new int[] { 3, 4, 5, 5, 2 };
 		int M = 6;
-		log.debug("{}", solution(A, M));
+		log.debug("{}", solution(A, M)); // return 9
+		log.debug("{}", solution2(A, M)); // return 9
+		log.debug("{}", mySolution(A, M)); // return 9	
+	}
+	
+	private static int solution2(int[] A, int M) {
+		long slices = 0;
+		int begin = 0;
+		int end = 0;
+		HashSet<Integer> set = new HashSet<Integer>();
+
+		while (end < A.length) {
+			while (set.contains(A[end]) == false) {
+				set.add(A[end]);
+				end++;
+				log.debug("{} {} {}", set.toString(), end, A.length);
+				if (end == A.length) {
+					break;
+				}				
+			}
+			
+			log.debug("begin={} end={} ", begin, end);
+			// PS: the formula: 1+2+3+4+…+n-1+n = n*(n+1)/2
+			slices += ((end - begin) * (end - begin + 1)) / 2;
+
+			if (slices > 1000000000) {
+				return 1000000000;
+			}
+
+			begin = end;
+			set.clear();
+		}
+		log.debug("slices={}", slices);
+		return (int) slices;
+	}
+	
+	public static int mySolution(int[] A, int M) {
+		// All integers in array A are less than or equal to M.
+		// A pair of integers (P, Q), such that 0 ≤ P ≤ Q < N,
+		// The slice consists of the elements A[P], A[P + 1], ..., A[Q]. 
+		// A distinct slice is a slice consisting of only unique numbers. 
+		// That is, no individual number occurs more than once in the slice.
+		// (0, 0), (0, 1), (0, 2), (1, 1), (1, 2), (2, 2), (3, 3), (3, 4) and (4, 4).
+		// (3, 3), (3, 4), (3, 5), (4, 4), (4, 5), (5, 5), (5, 5), (5, 2) and (2, 2).
+		int count = 0;
+		for (int i = 0; i < A.length; i++) {
+			for (int j = 0; j < A.length; j++) {
+				if (A[i] == A[j]) {
+					continue;
+				} else {
+					count++;
+				}
+			}
+		}
+		return count;
 	}
 
+	// 중복제거된 슬라이스 갯수
 	public static int solution(int[] A, int M) { // caterpillarMethod
 		int res = 0;
 		int front = 0;
@@ -72,4 +132,23 @@ public class CountDistinctSlices {
 		return Math.min(res, 1000000000);
 	}
 	
+	
+	private static void permutation(int[] A, int n) {
+		if (n == 1) {
+			log.debug("{}", Arrays.toString(A));
+			return;
+		}
+		for (int i = 0; i < n; i++) {
+			swap(A, i, n - 1);
+			permutation(A, n - 1);
+			swap(A, i, n - 1);
+		}
+	}
+
+	// swap the characters at indices i and j
+	private static void swap(int[] a, int i, int j) {
+		int c = a[i];
+		a[i] = a[j];
+		a[j] = c;
+	}
 }

@@ -81,11 +81,12 @@ public class ChocolatesByNumbers {
 		int cnt = 0;
 		
 		while (eaten[at] == 0) {
-			log.debug("{}", at);
+			log.debug("at={}", at);
 			eaten[at] = 1;
 			at = (at + M) % N;
 			cnt += 1;
 		}
+		log.debug("cnt={}", cnt);
 		return cnt;
 	}
 

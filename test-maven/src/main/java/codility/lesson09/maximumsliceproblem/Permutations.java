@@ -1,5 +1,7 @@
 package codility.lesson09.maximumsliceproblem;
 
+import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -13,6 +15,8 @@ public class Permutations {
 		String elements = alphabet.substring(0, 3); // abc
 		perm1(elements);
 		perm2(elements);
+		int[] A = { 1, 2, 3 }; 
+		perm3(A, A.length);
 	}
 
 	// print n! permutation of the characters of the string s (in order)
@@ -53,10 +57,28 @@ public class Permutations {
 			swap(a, i, n - 1);
 		}
 	}
+	
+	private static void perm3(int[] A, int n) {
+		if (n == 1) {
+			log.debug("{}", Arrays.toString(A));
+			return;
+		}
+		for (int i = 0; i < n; i++) {
+			swap(A, i, n - 1);
+			perm3(A, n - 1);
+			swap(A, i, n - 1);
+		}
+	}
 
 	// swap the characters at indices i and j
 	private static void swap(char[] a, int i, int j) {
 		char c = a[i];
+		a[i] = a[j];
+		a[j] = c;
+	}
+	
+	private static void swap(int[] a, int i, int j) {
+		int c = a[i];
 		a[i] = a[j];
 		a[j] = c;
 	}

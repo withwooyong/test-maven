@@ -64,8 +64,8 @@ public class MinMaxDivision {
 	
 	public static void main(String[] args) {
 		int[] A = new int[] { 2, 1, 5, 1, 2, 2, 2 };
-		int M = 5;
 		int K = 3;
+		int M = 5;
 		log.debug("{}", solution(K, M, A));
 	}
 
@@ -73,10 +73,11 @@ public class MinMaxDivision {
 		int sum = 0;
 		int largestEl = 0;
 		for (int i = 0; i < A.length; i++) {
-			largestEl = largestEl >= A[i] ? largestEl : A[i];
-			sum += A[i];
+			largestEl = largestEl >= A[i] ? largestEl : A[i]; // 배열의 최고값 5
+			sum += A[i];  // 배열 합 15
 		}
-		int idealMin = Math.max((int) Math.ceil((double) sum / K), largestEl);
+		int idealMin = Math.max((int) Math.ceil((double) sum / K), largestEl); // 15(배열합) / 3(배열갯수) = 5(배열최소값)
+		log.debug("{} {} {}", largestEl, sum, idealMin);
 		return binarySearchIterative(idealMin, sum, A, K);
 	}
 
