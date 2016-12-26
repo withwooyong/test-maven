@@ -58,6 +58,7 @@ public class CountDistinctSlices {
 		log.debug("{}", mySolution(A, M)); // return 9	
 	}
 	
+	// https://codesays.com/2014/solution-to-count-distinct-slices-by-codility/
 	private static int solution2(int[] A, int M) {
 		long slices = 0;
 		int begin = 0;
