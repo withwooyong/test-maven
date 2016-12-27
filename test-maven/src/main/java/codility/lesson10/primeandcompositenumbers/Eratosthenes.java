@@ -27,16 +27,17 @@ public class Eratosthenes {
 
 	// 1과 그 자신 이외의 수를 약수로 가지는 자연수로, 모두 소수의 곱으로 분해할 수 있다.
 	public static void main(String[] args) {
-		int N = 10;
-		getPrime(N);
-		primes(N);
-		fillSieve(N);
-
+		int N = 37;
+		log.debug("{}", getPrime(N));
+		log.debug("{}", primes(N));
+		log.debug("{}", fillSieve(N));
+		
+		log.debug("{}", Integer.MAX_VALUE); // 2147483647
 	}
 	
-	public static void fillSieve(int N) {
+	public static ArrayList<Integer> fillSieve(int N) {
 		ArrayList<Integer> arrPrimes = new ArrayList<>();
-		boolean[] primes = new boolean[N];
+		boolean[] primes = new boolean[N + 1];
 		Arrays.fill(primes,  true);
 		primes[0] = false;
 		primes[1] = false;
@@ -54,56 +55,57 @@ public class Eratosthenes {
 			}
 		}
 		log.debug("{}", arrPrimes.toString());
+		return arrPrimes;
 	}
 	
-	public static void primes(int N) {
-		boolean[] A = new boolean[N];
-		Arrays.fill(A, false);
+	public static ArrayList<Integer> primes(int N) {
+		boolean[] A = new boolean[N + 1];
+		Arrays.fill(A, true);
 		ArrayList<Integer> primes = new ArrayList<>();
-		for (int i = 2; i < N; i++) {
-			A[i] = true;
-		}
 		
-		for (int i = 2; i < N; i++) {
+		for (int i = 2; i < A.length; i++) {
 			if (A[i] != false) {
-				for (int j = i; j * i < N; j++) {
+				for (int j = i; j * i < A.length; j++) {
 					A[i * j] = false;
 				}
 			}
 		}
 		
-		for (int i = 2; i < N; i++) {
+		for (int i = 2; i < A.length; i++) {
 			if (A[i] == true) {
 				primes.add(i);
 			}
 		}
 		log.debug("{}", primes.toString());
+		return primes;
 	}
 	
-	public static void getPrime(int N) {
-		boolean[] A = new boolean[N];
+	public static ArrayList<Integer> getPrime(int N) {
+		boolean[] A = new boolean[N + 1];
 		Arrays.fill(A, true);
 		A[0] = false;
 		A[1] = false;
+		
+		ArrayList<Integer> primes = new ArrayList<>();
 
 		int sqrt = (int) Math.sqrt(N); // 지정된 숫자의 제곱근을 계산하고 반환
 
 		log.debug("{}", sqrt);
 		
-		for (int i = 2; i < sqrt; i++) {
+		for (int i = 2; i <= sqrt; i++) {
 			if (A[i]) {
-				for (int j = i; j * i < N; j++) {
+				for (int j = i; j * i < A.length; j++) {
 					A[i * j] = false;
 				}
 			}
 		}
 		
-		for (int i = 2; i < N; i++) {
+		for (int i = 2; i < A.length; i++) {
 			if (A[i]) {
-				System.out.print(" " + i);
+				primes.add(i);
 			}
 		}
-
-		System.out.println();
+		log.debug("{}", primes.toString());
+		return primes;
 	}
 }

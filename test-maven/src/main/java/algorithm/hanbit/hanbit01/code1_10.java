@@ -1,44 +1,48 @@
-#include <stdio.h>
+package algorithm.hanbit.hanbit01;
 
-int MaxSum(int);
-void Init(void);
-int Array[100];
+import java.util.Arrays;
 
-int MaxSum(int N)
-{
-	int Sum, Max, i, j, k;
-	Sum = Max = 0;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-	for (i = 0; i < N; i++) {
-		for (j = i; j < N; j++) {
-			Sum = 0;
+public class code1_10 {
 
-			for (k = i; k < j + 1; k++)
-				Sum += Array[k];
+	private static Logger log = LoggerFactory.getLogger(code1_10.class);
 
-			if (Sum > Max)
-				Max = Sum;
-		}
+	private static int[] Array = new int[100];
+
+	public static void main(String[] args) {
+		int ret;
+		Init();
+		ret = MaxSum(10);
+		log.debug("ret : {}", ret);
 	}
 
-	return Max;
-}
+	private static void Init() {
+		for (int i = 0; i < 100; i++) {
+			Array[i] = 100 - i;
+		}
+		log.debug("{}", Arrays.toString(Array));
+	}
 
-void Init()
-{
-	int i;
+	private static int MaxSum(int N) {
+		int Sum = 0;
+		int Max = 0;
 
-	for (i = 0; i < 100; i++)
-		Array[i] = 100 - i;
-}
+		for (int i = 0; i < N; i++) {
+			for (int j = i; j < N; j++) {
+				Sum = 0;
 
-int main(int argc, char *argv[])
-{
-	int ret;
-	Init();
-	ret = MaxSum(10);
+				for (int k = i; k < j + 1; k++) {
+					Sum += Array[k];
+				}
 
-	printf("ret : %d\n", ret);
+				if (Sum > Max) {
+					Max = Sum;
+				}
+			}
+		}
+		return Max;
+	}
 
-	return 0;
 }
