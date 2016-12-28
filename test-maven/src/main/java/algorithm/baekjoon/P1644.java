@@ -2,7 +2,6 @@ package algorithm.baekjoon;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,124 +31,103 @@ public class P1644 {
 		//int N = 41; //  [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37] 11+13+17=41 
 		//int N = 53; // [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47]
 		//int N = 20; // [2, 3, 5, 7, 11, 13, 17, 19]
-		int N = 3;
-		
-//		int N;
-//		String message;
-//        Scanner scan = new Scanner(System.in);      // 문자 입력을 인자로 Scanner 생성
-//        message = scan.nextLine();
-//        N = Integer.parseInt(message);
-        
-		
-		ArrayList<Integer> primes = getPrime(N);
-		log.debug("{}", primes.toString());
-		int count = 0; // 자기자신 포함.
-		for (int i = 0; i < primes.size(); i++) { // 하나이상은 하나포함.
-			int sum = primes.get(i);
-			if (N == sum) {
-				count++;
+		int N = 41;
+		log.debug("{}", solution(N));
+		log.debug("{}", solution2(N));
+	}
+	
+	// 소수는 1과 그 자신 이외의 수를 약수로 가지는 자연수로, 모두 소수의 곱으로 분해할 수 있다.
+	private static int solution2(int N) {
+		int K = N;
+		boolean[] A = new boolean[K + 1];
+		Arrays.fill(A, true);
+		A[0] = false;
+		A[1] = false;
+
+		ArrayList<Integer> primes = new ArrayList<>();
+		int sqrt = (int) Math.sqrt(K); // 지정된 숫자의 제곱근을 계산하고 반환
+		log.debug("sqrt={}", sqrt);
+		for (int i = 2; i <= sqrt; i++) {
+			if (A[i]) {
+				for (int j = i; j * i < K; j++) {
+					A[i * j] = false;
+				}
+			}
+		}
+		log.debug("A={}", A);
+		for (int i = 2; i <= K; i++) {
+			if (A[i]) {
+				primes.add(i);
+			}
+		}
+		log.debug("primes={} size={}", primes.toString(), primes.size());
+
+		// 결과 구하기
+		int result = 0;
+		int sum = 0;
+
+		for (int j = 0; j < primes.size(); j++) {
+			sum = primes.get(j);
+			if (sum == N) {
+				result++;
+				log.debug("result={}", result);
+				break;
 			} else {
-				for (int j = i + 1; j < primes.size(); j++) {
-					sum += primes.get(j);
-					if (N == sum) {
-						count++;
+				for (int j2 = j+1; j2 < primes.size(); j2++) {
+					sum += primes.get(j2);
+					if (sum == N) {
+						result++;
+						log.debug("result={}", result);
 						break;
 					}
 				}
 			}
 		}
-		
-		log.debug("{}", count);		
-		//log.debug("{}", solution(N));
-	}
-	
-	// 소수는 1과 그 자신 이외의 수를 약수로 가지는 자연수로, 모두 소수의 곱으로 분해할 수 있다.
-	public static ArrayList<Integer> primes(int N) {
-		boolean[] A = new boolean[N + 1];
-		Arrays.fill(A, true);
-		ArrayList<Integer> primes = new ArrayList<>();
-		
-		for (int i = 2; i < A.length; i++) {
-			if (A[i] != false) {
-				for (int j = i; j * i < A.length; j++) {
-					A[i * j] = false;
-				}
-			}
-		}
-		
-		for (int i = 2; i < A.length; i++) { // 소수 1포함 안됨
-			if (A[i] == true) {
-				primes.add(i);
-			}
-		}
-		log.debug("{}", primes.toString());
-		return primes;
-	}
-	
-	public static ArrayList<Integer> getPrime(int N) {
-		boolean[] A = new boolean[N + 1];
-		Arrays.fill(A, true);
-		A[0] = false;
-		A[1] = false;
-		
-		ArrayList<Integer> primes = new ArrayList<>();
-		int sqrt = (int) Math.sqrt(N); // 지정된 숫자의 제곱근을 계산하고 반환
-		log.debug("sqrt={}", sqrt);
-		
-		for (int i = 3; i <= sqrt; i++) {
-			if (A[i]) {
-				for (int j = i; j * i < A.length; j++) {
-					A[i * j] = false;
-				}
-			}
-		}
-		
-		for (int i = 3; i < A.length; i++) {
-			if (A[i]) {
-				primes.add(i);
-			}
-		}
-		log.debug("{}", primes.toString());
-		return primes;
+		return result;
 	}
 	
 	private static int solution(int N) {
-		
-		boolean[] A = new boolean[4000000];
+		int K = N;
+		boolean[] A = new boolean[K+1];
 		Arrays.fill(A, true);
 		A[0] = false;
 		A[1] = false;
 		
 		ArrayList<Integer> primes = new ArrayList<>();
-		int sqrt = (int) Math.sqrt(4000000); // 지정된 숫자의 제곱근을 계산하고 반환
-		
+		int sqrt = (int) Math.sqrt(K); // 지정된 숫자의 제곱근을 계산하고 반환
+		log.debug("sqrt={}", sqrt);
 		for (int i = 2; i <= sqrt; i++) {
 			if (A[i]) {
-				for (int j = i; j * i < 4000000; j++) {
+				for (int j = i; j * i < K; j++) {
 					A[i * j] = false;
 				}
 			}
 		}
-		
-		for (int i = 2; i < 4000000; i++) {
+		log.debug("A={}", A);
+		for (int i = 2; i <= K; i++) {
 			if (A[i]) {
 				primes.add(i);
 			}
 		}		
+		log.debug("primes={} size={}", primes.toString(), primes.size());
 
 		// 결과 구하기
-		int result = 0, sum = 0, lo = 0, hi = 0;
+		int result = 0;
+		int sum = 0;
+		int lo = 0;
+		int hi = 0;
 		while (true) {
 			if (sum >= N) {
 				sum -= primes.get(lo++);
-			} else if (hi == primes.size()) {
-				break;
+			} else if (hi == primes.size()) {  
+				break; // 소수 갯수와 동일하면 종료 
 			} else {
 				sum += primes.get(hi++);
 			}
 			if (sum == N) {
 				result++;
 			}
+			log.debug("lo={} hi={} sum={}", lo, hi, sum);
 		}
 		return result;
 	}
