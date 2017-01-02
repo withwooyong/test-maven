@@ -1,7 +1,6 @@
 package algorithm.baekjoon;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Scanner;
 
@@ -27,15 +26,18 @@ public class P1158 {
 		solution();
 	}
 
+	// 7 3 
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
 		Deque<Integer> deque = new ArrayDeque<Integer>();
 		StringBuilder sb = new StringBuilder("<");
 //		int n = sc.nextInt();
 //		int m = sc.nextInt();
+		
 		int n = 7;
 		int m = 3;
 
+		log.debug("{} {}", n, m);
 		for (int i = 1; i <= n; i++) {
 			deque.add(i);
 		}
@@ -45,6 +47,7 @@ public class P1158 {
 				deque.addLast(deque.removeFirst());
 			}
 			sb.append(deque.removeFirst() + ", ");
+			log.debug("{}", deque.toString());
 		}
 		System.out.println(sb.toString().substring(0, sb.length() - 2) + ">");
 	}

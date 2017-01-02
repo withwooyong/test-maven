@@ -257,3 +257,7 @@ https://www.acmicpc.net/problem/1504 (특정한 최단 경로)
 https://www.acmicpc.net/problem/9466 (텀 프로젝트)
 https://www.acmicpc.net/problem/10819 (차이를 최대로)
 
+BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+int n = Integer.parseInt(in.readLine());
+
+Scanner sc = new Scanner(System.in);
