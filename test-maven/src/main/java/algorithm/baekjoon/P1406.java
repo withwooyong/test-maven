@@ -2,6 +2,7 @@ package algorithm.baekjoon;
 
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.Stack;
 import java.util.StringTokenizer;
 
 import org.slf4j.Logger;
@@ -12,7 +13,7 @@ public class P1406 {
 	private static Logger log = LoggerFactory.getLogger(P1406.class);
 
 	/*
-	 * 
+	 * 에디터
 	 */
 	public static void main(String[] args) throws Exception {
 		
@@ -59,6 +60,8 @@ public class P1406 {
 	}
 
 	private static void solution(String A, int N) {
+		Stack<Character> left1 = new Stack<>();
+		Stack<Character> left2 = new Stack<>();
 		
 		    
 	}

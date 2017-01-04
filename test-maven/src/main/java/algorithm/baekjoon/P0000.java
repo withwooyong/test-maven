@@ -14,10 +14,12 @@ public class P0000 {
 	 */
 	public static void main(String[] args) throws Exception {
 		solution();
+		log.debug("{}", "");
 	}
 
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
 		    
+		sc.close();
 	}
 }
