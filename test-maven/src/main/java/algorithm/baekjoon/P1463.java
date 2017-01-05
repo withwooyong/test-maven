@@ -21,38 +21,33 @@ public class P1463 {
 	 * 첫째 줄에 연산을 하는 횟수의 최소값을 출력한다.
 	 * 2
 	 * 1
+	 * 
+	 * D[N] = N을 1로 만드는데 필요한 연산의 최소값
 	 */
 	public static void main(String[] args) throws Exception {
 		//solution();
 		
 		int N = 10;
-		int[] arr = new int[N + 1];
-		log.debug("solution={}", solution(arr, N));
+		int[] A = new int[N + 1];
+		log.debug("solution={}", solution(A, N));
 		solution2(N);
 	}
 
-	private static int solution(int[] arr, int n) {
-		if (n == 1) {
+	private static int solution(int[] A, int N) {
+		if (N == 1) {
 			return 0;
+		}		
+		if (A[N] > 0) {
+			return A[N];
+		}		
+		A[N] = solution(A, N - 1) + 1;
+		if (N % 2 == 0) {
+			A[N] = Math.min(A[N], solution(A, N / 2) + 1);
 		}
-		if (arr[n] > 0) {
-			return arr[n];
+		if (N % 3 == 0) {
+			A[N] = Math.min(A[N], solution(A, N / 3) + 1);
 		}
-		arr[n] = solution(arr, n - 1) + 1;
-
-		if (n % 2 == 0) {
-			int temp = solution(arr, n / 2) + 1;
-			if (arr[n] > temp) {
-				arr[n] = temp;
-			}
-		}
-		if (n % 3 == 0) {
-			int temp = solution(arr, n / 3) + 1;
-			if (arr[n] > temp) {
-				arr[n] = temp;
-			}
-		}
-		return arr[n];
+		return A[N];
 	}
 	
 	/*
@@ -60,9 +55,14 @@ public class P1463 {
 	 * 2. Dp[i]값에 최소값이 들어갈 경우는 Dp[i-1] +1, Dp[i/2] +1, Dp[i/3] +1 값을 비교해서 최소값을 넣어 주면 된다.
 	 * 3. 쭉 진행해서 Dp[N]에 우리가 구하고자 하는 최소값이 들어오게 된다.
 	 */
-	private static void solution2(int N) {
-		
-		int[] A = new int[N];
+	private static int[] A = new int[100];
+	private static int solution2(int N) {
+		if (N == 1) {
+			return 0;
+		}
+		if (A[N] > 0) {
+			return A[N];
+		}
 		for (int i = 1; i < N; i++) {
 			A[i] = A[i - 1] + 1;
 	        if (i % 2 == 0) {
@@ -73,6 +73,7 @@ public class P1463 {
 	        }
 	    }
 		log.debug("{} {}", Arrays.toString(A), A[N-1]);
+		return A[N-1];
 	}
 
 	private static void solution3() {

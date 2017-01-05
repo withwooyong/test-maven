@@ -15,6 +15,9 @@ public class P11727 {
 	 * 아래 그림은 2×17 직사각형을 채운 한가지 예이다.
 	 * 첫째 줄에 n이 주어진다. (1 ≤ n ≤ 1,000)
 	 * 첫째 줄에 2×n 크기의 직사각형을 채우는 방법의 수를 10,007로 나눈 나머지를 출력한다.
+	 * 8
+	 * 
+	 * 171
 	 */
 	public static void main(String[] args) throws Exception {
 		solution();

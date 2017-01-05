@@ -7,6 +7,7 @@ public class LCM {
 
 	private static Logger log = LoggerFactory.getLogger(LCM.class);
 
+	// LCM(least common multiple)
 	public static void main(String[] args) {
 
 		long[] C = { 12, 8 };

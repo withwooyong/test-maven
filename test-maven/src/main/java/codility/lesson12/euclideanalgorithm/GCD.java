@@ -22,7 +22,17 @@ public class GCD {
 		log.debug("{}", BigInteger.valueOf(a).gcd(BigInteger.valueOf(b)));
 	}
 	
-	private static long gcd(long a, long b) {
+	// 최대공약수 Greatest Common Divisor
+	// https://ko.wikipedia.org/wiki/%EC%B5%9C%EB%8C%80%EA%B3%B5%EC%95%BD%EC%88%98
+	private static long gcd(long A, long B) {
+		// 10,000이하의 자연수
+		if (B == 0) {
+			return A;
+		}
+		return gcd(B, A % B);
+	}
+	
+	private static long gcd2(long a, long b) {
 		while (b > 0) {
 			long temp = b;
 			b = a % b; // % is remainder
@@ -30,7 +40,8 @@ public class GCD {
 		}
 		return a;
 	}
-
+	
+	// 
 	private static long gcd(long[] input) {
 		long result = input[0];
 		for (int i = 1; i < input.length; i++) {
@@ -38,5 +49,19 @@ public class GCD {
 		}
 		return result;
 	}
+	
+	//LCM(least common multiple)
+	private static long lcm(long a, long b)
+	{
+	    return a * (b / gcd(a, b));
+	}
 
+	private static long lcm(long[] input)
+	{
+	    long result = input[0];
+	    for(int i = 1; i < input.length; i++) result = lcm(result, input[i]);
+	    return result;
+	}
+	
+	
 }

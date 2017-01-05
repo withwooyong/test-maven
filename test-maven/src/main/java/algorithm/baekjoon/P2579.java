@@ -31,10 +31,30 @@ public class P2579 {
 	 * 
 	 * 첫째 줄에 계단 오르기 게임에서 얻을 수 있는 총 점수의 최대값을 출력한다.
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) throws Exception {	
+		solution();
+	}
 	
-		//solution();
-		solution2();
+	private static void solution() {
+		Scanner sc = new Scanner(System.in);
+		int N = sc.nextInt();
+		int[] stair = new int[N + 1];
+		int[] Dp = new int[N + 1];
+
+		for (int i = 1; i <= N; i++)
+			stair[i] = sc.nextInt();
+
+		for (int i = 1; i <= 3 && i <= N; i++)
+			if (i != 3)
+				Dp[i] = Dp[i - 1] + stair[i];
+			else
+				Dp[i] = Math.max(stair[i] + Dp[i - 2], stair[i] + stair[i - 1]);
+
+		for (int i = 4; i <= N; i++)
+			Dp[i] = Math.max(stair[i] + Dp[i - 2], stair[i] + stair[i - 1] + Dp[i - 3]);
+
+		System.out.println(Dp[N]);
+		sc.close();
 	}
 	
 	private static void solution1() throws Exception {
@@ -69,7 +89,7 @@ public class P2579 {
 	 * D[N,1]은 2계단 전까지 왔던 값에 현재값을 더한 값이다. 
 	 * 즉, 그 두 값 중 max값을 계속 갱신해가면 마지막엔 최대값이 담겨있게 된다.
 	 */
-	private static void solution() {		
+	private static void solution2() {		
 		int[] A = { 6, 10, 20, 15, 25, 10, 20 };
 		
 		log.debug("{}", Arrays.toString(A));
@@ -99,7 +119,7 @@ public class P2579 {
 	 * 3. 즉 B[i] = Math.max(A[i] + B[i - 2], A[i] + A[i - 1] + B[i - 3]) 
 	 * 값을 계속 비교해나가면서 더하면 N 번째에 원하는 정답을 구할 수 있다.
 	 */
-	private static void solution2() {
+	private static void solution3() {
 		
 		int[] A = { 6, 10, 20, 15, 25, 10, 20 };
 		int[] B = new int[A.length]; // sum
@@ -121,7 +141,7 @@ public class P2579 {
 	}
 	
 	// http://m.blog.naver.com/occidere/220788947949
-	private static void solution3() {
+	private static void solution4() {
 		Scanner sc = new Scanner(System.in);
 		int i;
 		int n = sc.nextInt();

@@ -41,6 +41,11 @@ public class P11052 {
 	 * 2. 즉 A[j] = A[[j-i] + Pi[i] 란 현재 i 값어치의 붕어빵을 넣었다고 가정했을때 이전의 값어치의 최대값에서 더하는 값이다.  
 	 * 즉 이전의 저장된 값이랑 이 값을 비교해서 최대값을 저장하다보면 마지막에 최대값만 남게 될 것이다.
 	 * 출처: http://wootool.tistory.com/89 [우투리와툴툴]
+	 * 점화식 : D[N] = N개 팔아서 얻을수 있는 수익
+	 * D[N-1] + P[1]
+	 * D[N-2] + P[2]
+	 * D[0]   + P[N]
+	 * D[N-i] + P[i]
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);

@@ -54,11 +54,14 @@ public class P2193 {
 	 * 점화식을 세울 때 D[N]은 n자리 수의 이친수 개수이다.
 	 * 즉 마지막 수는 0 또는 1이 올 수 있는데, 0이 오는 경우는 D[N-1]이지만 1이 오는 경우는 그 이전에 1이 올수 없으므로 강제로 0이 오게된다. 즉 D[N-2]이다.
 	 * 따라서 점화식은 D[N] = D[N-1]+D[N-2] 인 것을 알 수 있는데, 이는 피보나치 수열의 점화식과 똑같은 것을 알 수 있다.
+	 * 3
+	 * 
+	 * 2
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
 		int N = 3;
-		int[][] A = new int[95][2];
+		int[][] A = new int[N + 1][2];
 
 		A[1][0] = 1;
 		A[1][1] = 1;
