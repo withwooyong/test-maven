@@ -30,7 +30,7 @@ public class P11726 {
 		Scanner sc = new Scanner(System.in);
 		int N = 9;
 		int[] A = new int[N + 1];	    
-	    A[0] = 1; 
+	    A[0] = 1; // 
 	    A[1] = 1;  
 	 
 		for (int i = 2; i <= N; i++) {
