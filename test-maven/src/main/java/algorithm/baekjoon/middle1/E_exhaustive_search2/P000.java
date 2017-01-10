@@ -1,13 +1,13 @@
-package algorithm.baekjoon;
+package algorithm.baekjoon.middle1.E_exhaustive_search2;
 
 import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class P1107 {	
+public class P000 {	
 	
-	private static Logger log = LoggerFactory.getLogger(P1107.class); 
+	private static Logger log = LoggerFactory.getLogger(P000.class); 
 
 	/*
 	 * 
@@ -17,6 +17,9 @@ public class P1107 {
 		log.debug("{}", "");
 	}
 
+	/*
+	 * 
+	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
 		
