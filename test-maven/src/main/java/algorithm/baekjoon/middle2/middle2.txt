@@ -1,0 +1,101 @@
+4시간 47분 53초
+1. 다이나믹 프로그래밍 2
+https://www.acmicpc.net/problem/11048 이동하기
+https://www.acmicpc.net/problem/1890 점프
+https://www.acmicpc.net/problem/10942 팰린드롬?
+https://www.acmicpc.net/problem/1509 팰린드롬 분할
+https://www.acmicpc.net/problem/2293 동전 1
+https://www.acmicpc.net/problem/2294 동전 2
+https://www.acmicpc.net/problem/1520 내리막 길
+https://www.acmicpc.net/problem/11066 파일 합치기
+https://www.acmicpc.net/problem/11049 행렬 곱셈 순서
+https://www.acmicpc.net/problem/2228 구간 나누기
+https://www.acmicpc.net/problem/2240 자두나무
+https://www.acmicpc.net/problem/1328 고층 빌딩
+https://www.acmicpc.net/problem/1720 타일 코드
+https://www.acmicpc.net/problem/1495 기타리스트
+https://www.acmicpc.net/problem/5557 1학년
+https://www.acmicpc.net/problem/3012 올바른 괄호 문자열
+https://www.acmicpc.net/problem/1126 같은 탑 
+
+2. 수학 2
+https://www.acmicpc.net/problem/1629 곱셈
+https://www.acmicpc.net/problem/1016 제곱 ㄴㄴ 수
+https://www.acmicpc.net/problem/2738 행렬 덧셈
+https://www.acmicpc.net/problem/2470 두 용액
+https://www.acmicpc.net/problem/10830 행렬 제곱
+https://www.acmicpc.net/problem/2747 피보나치 수
+https://www.acmicpc.net/problem/2748 피보나치 수 2
+https://www.acmicpc.net/problem/2749 피보나치 수 3
+https://www.acmicpc.net/problem/11444 피보나치 수 6
+https://www.acmicpc.net/problem/10826 피보나치 수 4
+https://www.acmicpc.net/problem/10870 피보나치 수 5
+https://www.acmicpc.net/problem/1788 피보나치 수의 확장
+https://www.acmicpc.net/problem/9471 피사노 주기
+https://www.acmicpc.net/problem/2086 피보나치 수의 합
+https://www.acmicpc.net/problem/11440 피보나치 수의 제곱의 합
+https://www.acmicpc.net/problem/11442 홀수번째 피보나치 수의 합
+https://www.acmicpc.net/problem/11443 짝수번째 피보나치 수의 합
+https://www.acmicpc.net/problem/11778 피보나치 수와 최대공약수
+https://www.acmicpc.net/problem/11050 이항 계수 1
+https://www.acmicpc.net/problem/11051 이항 계수 2
+https://www.acmicpc.net/problem/11402 이항 계수 4
+https://www.acmicpc.net/problem/11439 이항 계수 5
+https://www.acmicpc.net/problem/10422 괄호
+https://www.acmicpc.net/problem/11689 GCD(n, k) = 1
+https://www.acmicpc.net/problem/11661 해의 개수
+https://www.acmicpc.net/problem/11401 이항 계수 3
+ 
+3. 그래프 알고리즘 2
+https://www.acmicpc.net/problem/2252 줄 세우기
+https://www.acmicpc.net/problem/1766 문제집
+https://www.acmicpc.net/problem/2056 작업
+https://www.acmicpc.net/problem/1516 게임 개발
+https://www.acmicpc.net/problem/1948 임계경로
+https://www.acmicpc.net/problem/1922 네트워크 연결
+https://www.acmicpc.net/problem/1197 최소 스패닝 트리
+https://www.acmicpc.net/problem/11657 타임머신
+https://www.acmicpc.net/problem/1865 웜홀
+https://www.acmicpc.net/problem/1916 최소비용 구하기
+https://www.acmicpc.net/problem/11779 최소비용 구하기 2
+https://www.acmicpc.net/problem/1504 특정한 최단 경로
+https://www.acmicpc.net/problem/1753 최단경로
+https://www.acmicpc.net/problem/11403 경로 찾기
+https://www.acmicpc.net/problem/11404 플로이드
+https://www.acmicpc.net/problem/11780 플로이드 2
+https://www.acmicpc.net/problem/1389 케빈 베이컨의 6단계 법칙
+https://www.acmicpc.net/problem/1507 궁금한 민호
+https://www.acmicpc.net/problem/1956 운동
+https://www.acmicpc.net/problem/11657 타임머신
+ 
+4. 트리 2
+https://www.acmicpc.net/problem/11437 LCA
+https://www.acmicpc.net/problem/1761 정점들의 거리
+https://www.acmicpc.net/problem/11438 LCA 2
+https://www.acmicpc.net/problem/3176 도로 네트워크
+https://www.acmicpc.net/problem/11438 LCA 2
+ 
+5. 완전 탐색 2
+https://www.acmicpc.net/problem/2003 수들의 합 2
+https://www.acmicpc.net/problem/1806 부분합
+https://www.acmicpc.net/problem/1644 소수의 연속합
+https://www.acmicpc.net/problem/1261 알고스팟
+https://www.acmicpc.net/problem/1208 부분집합의 합 2
+https://www.acmicpc.net/problem/7453 합이 0인 네 정수
+https://www.acmicpc.net/problem/2632 피자판매
+https://www.acmicpc.net/problem/2143 두 배열의 합
+ 
+6. 구간의 최소값 구하기
+https://www.acmicpc.net/problem/2357 최소값과 최대값
+https://www.acmicpc.net/problem/11003 최소값 찾기
+ 
+7. 구간의 합 구하기
+https://www.acmicpc.net/problem/11659 구간 합 구하기 4
+https://www.acmicpc.net/problem/10986 나머지 합
+https://www.acmicpc.net/problem/11660 구간 합 구하기 5
+https://www.acmicpc.net/problem/2042 구간 합 구하기
+https://www.acmicpc.net/problem/10999 구간 합 구하기 2
+https://www.acmicpc.net/problem/1395 스위치
+https://www.acmicpc.net/problem/2042 구간 합 구하기
+https://www.acmicpc.net/problem/11658 구간 합 구하기 3
+ 

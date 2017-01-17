@@ -38,6 +38,17 @@ public class P9095 {
 		solution();
 	}
 	
+	private static int go(int count, int sum, int goal) {
+		if (count > 10) {
+			return 0;
+		}
+		if (sum > goal) {
+			return 0;
+		}
+		
+		return 0;
+	}
+	
 	/*
 	 * https://gist.github.com/Baekjoon/e019984a7c7f1ac6bd32
 	 */

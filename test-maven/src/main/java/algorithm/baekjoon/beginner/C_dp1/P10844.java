@@ -31,32 +31,33 @@ public class P10844 {
 	 * https://gist.github.com/Baekjoon/7e4e12ce1b0aa740d5d1
 	 */
 	private static long mod = 1000000000L;
+
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        long[][] d = new long[n+1][10];
-        for (int i=1; i<=9; i++) {
-            d[1][i] = 1;
-        }
-        for (int i=2; i<=n; i++) {
-            for (int j=0; j<=9; j++) {
-                d[i][j] = 0;
-                if (j-1 >= 0) {
-                    d[i][j] += d[i-1][j-1];
-                }
-                if (j+1 <= 9) {
-                    d[i][j] += d[i-1][j+1];
-                }
-                d[i][j] %= mod;
-            }
-        }
-        long ans = 0;
-        for (int i=0; i<=9; i++) {
-            ans += d[n][i];
-        }
-        ans %= mod;
-        System.out.println(ans);
-        sc.close();
+		int n = sc.nextInt();
+		long[][] d = new long[n + 1][10];
+		for (int i = 1; i <= 9; i++) {
+			d[1][i] = 1;
+		}
+		for (int i = 2; i <= n; i++) {
+			for (int j = 0; j <= 9; j++) {
+				d[i][j] = 0;
+				if (j - 1 >= 0) {
+					d[i][j] += d[i - 1][j - 1];
+				}
+				if (j + 1 <= 9) {
+					d[i][j] += d[i - 1][j + 1];
+				}
+				d[i][j] %= mod;
+			}
+		}
+		long ans = 0;
+		for (int i = 0; i <= 9; i++) {
+			ans += d[n][i];
+		}
+		ans %= mod;
+		System.out.println(ans);
+		sc.close();
 	}
 	
 	private static void bottom_up() {

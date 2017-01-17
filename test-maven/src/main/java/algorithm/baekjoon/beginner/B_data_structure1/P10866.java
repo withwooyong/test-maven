@@ -66,6 +66,16 @@ front
 		log.debug("{}", "");
 	}
 
+	/*
+	 * ArrayDeque를 이용하면 앞부분이나 뒤부분으로 객체를 추가할 수 있습니다.
+	 * ArrayDeque에 add 메소드를 사용하면 뒤로 객체가 추가 됩니다.
+	 * ArrayDeque에 push 메소드를 사용하면 앞으로 객체가 추가 됩니다.
+	 * ArrayDeque에 getFirst 메소드를 사용하면 앞쪽에서 객체를 가져 옵니다.
+	 * ArrayDeque에 element 메소드를 사용하면 앞쪽에서 객체를 가져 옵니다.
+	 * ArrayDeque에 getLast 메소드를 사용하면 뒤쪽에서 객체를 가져 옵니다.
+	 * ArrayDeque에 pop 메소드를 사용하면 앞쪽에서 객체를 가져 오고 ArrayDeque에서 제거 합니다.
+	 * ArrayDeque에 poll 메소드를 사용하면 앞쪽에서 객체를 가져 오고 ArrayDeque에서 제거 합니다.
+	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
         int n = sc.nextInt();
