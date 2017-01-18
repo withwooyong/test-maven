@@ -38,16 +38,160 @@ public class P11048 {
 31
 	 */
 	public static void main(String[] args) throws Exception {
-		solution();
+		solution1();
 		log.debug("{}", "");
 	}
 
 	/*
-	 * 
+	 * Bottom Up (for문)
+	 * https://gist.github.com/Baekjoon/51fc0cd6a1b2db1a4d48
 	 */
-	private static void solution() {
+	private static void solution1() {
 		Scanner sc = new Scanner(System.in);
-		
+		int n = sc.nextInt();
+		int m = sc.nextInt();
+		int[][] a = new int[n + 1][m + 1];
+		int[][] d = new int[n + 1][m + 1];
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				a[i][j] = sc.nextInt();
+			}
+		}
+		// (i+1, j) 밑으로 , (i, j+1) 오른쪽, (i+1, j+1) 대각선, 로 이동할 수 있고
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				d[i][j] = Math.max(d[i - 1][j], d[i][j - 1]);
+				d[i][j] = Math.max(d[i - 1][j - 1], d[i][j]);
+				d[i][j] += a[i][j];
+			}
+		}
+		System.out.println(d[n][m]);
+
 		sc.close();
+	}
+
+	/*
+	 * Bottom Up (for문)
+	 * https://gist.github.com/Baekjoon/df34e7d5daf341c8b76a
+	 */
+	private static void solution2() {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int m = sc.nextInt();
+		int[][] a = new int[n + 1][m + 1];
+		int[][] d = new int[n + 1][m + 1];
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				a[i][j] = sc.nextInt();
+			}
+		}
+		d[1][1] = a[1][1];
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				if (j + 1 <= m && d[i][j + 1] < d[i][j] + a[i][j + 1]) {
+					d[i][j + 1] = d[i][j] + a[i][j + 1];
+				}
+				if (i + 1 <= n && d[i + 1][j] < d[i][j] + a[i + 1][j]) {
+					d[i + 1][j] = d[i][j] + a[i + 1][j];
+				}
+				if (i + 1 <= n && j + 1 <= m && d[i + 1][j + 1] < d[i][j] + a[i + 1][j + 1]) {
+					d[i + 1][j + 1] = d[i][j] + a[i + 1][j + 1];
+				}
+			}
+		}
+		System.out.println(d[n][m]);
+		sc.close();
+	}
+
+	/* 
+	 * https://gist.github.com/Baekjoon/6b580f31de918530a7e9
+	 */
+	private static void solution3() {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int m = sc.nextInt();
+		int[][] a = new int[n + 1][m + 1];
+		int[][] d = new int[n + 1][m + 1];
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				a[i][j] = sc.nextInt();
+			}
+		}
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				d[i][j] = Math.max(d[i - 1][j], d[i][j - 1]); // 대각선 이동을 뺀 방법
+				d[i][j] += a[i][j];
+			}
+		}
+		System.out.println(d[n][m]);
+		sc.close();
+	}
+
+	/*
+	 * 재귀 Top Down
+	 * https://gist.github.com/Baekjoon/9cda32c0258dab2ce563
+	 */
+	private static void solution4() {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int m = sc.nextInt();
+		int[][] a = new int[n + 1][m + 1];
+		int[][] d = new int[n + 1][m + 1];
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				a[i][j] = sc.nextInt();
+			}
+		}
+		System.out.println(go4(a, d, n, m));
+	}
+	
+	public static int go4(int[][] a, int[][] d, int x, int y) {
+		if (x == 1 && y == 1) { // Base Value
+			return a[1][1];
+		}
+		if (x < 1 || y < 1) { //  불가능한 경우 
+			return 0;
+		}
+		if (d[x][y] > 0) { // if (d[x][y] >= 0) { // 메모이제이션
+			return d[x][y];
+		}
+		d[x][y] = go4(a, d, x - 1, y) + a[x][y];
+		int temp = go4(a, d, x, y - 1) + a[x][y];
+		if (d[x][y] < temp) {
+			d[x][y] = temp;
+		}
+		return d[x][y];
+	}
+
+	private static void solution5() {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		int m = sc.nextInt();
+		int[][] a = new int[n + 1][m + 1];
+		int[][] d = new int[n + 1][m + 1];
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= m; j++) {
+				a[i][j] = sc.nextInt();
+			}
+		}
+		System.out.println(go5(a, d, 1, 1));
+		sc.close();
+	}
+	
+	public static int go5(int[][] a, int[][] d, int x, int y) {
+		int n = a.length - 1;
+		int m = a[0].length - 1;
+		if (x > n || y > m) {
+			return 0;
+		}
+		if (d[x][y] > 0) { // if (d[x][y] >= 0) { // 메모이제이션
+			return d[x][y];
+		}
+		d[x][y] = go5(a, d, x + 1, y) + a[x][y];
+		int temp = go5(a, d, x, y + 1) + a[x][y];
+		if (d[x][y] < temp) {
+			d[x][y] = temp;
+		}
+		return d[x][y];
 	}
 }

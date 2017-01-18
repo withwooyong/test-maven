@@ -11,28 +11,37 @@ public class P9095 {
 	private static Logger log = LoggerFactory.getLogger(P9095.class);
 
 	/*
-	 * 1, 2, 3 더하기
-	 * 정수 4를 1, 2, 3의 조합으로 나타내는 방법은 총 7가지가 있다.
-	 * 1+1+1+1
-	 * 1+1+2
-	 * 1+2+1
-	 * 2+1+1
-	 * 2+2
-	 * 1+3
-	 * 3+1
-	 * 정수 n이 주어졌을 때, n을 1,2,3의 합으로 나타내는 방법의 수를 구하는 프로그램을 작성하시오.
-	 * 
-	 * 첫쨰 줄에 테스트 케이스의 개수 T가 주어진다. 
-	 * 각 테스트 케이스는 한 줄로 이루어져 있고, 정수 n이 주어진다. n은 양수이며 11보다 작다.
-	 * 각 테스트 케이스마다, n을 1,2,3의 합으로 나타내는 방법의 수를 출력한다.
-	 * 3
-	 * 4
-	 * 7
-	 * 10
-	 * 
-	 * 7
-	 * 44
-	 * 274
+	 * 1, 2, 3 더하기 성공
+한국어 원문 문제집 
+시간 제한	메모리 제한	제출	정답	맞은 사람	정답 비율
+1 초	128 MB	5458	3722	2623	66.154%
+문제
+정수 4를 1, 2, 3의 조합으로 나타내는 방법은 총 7가지가 있다.
+
+1+1+1+1
+1+1+2
+1+2+1
+2+1+1
+2+2
+1+3
+3+1
+정수 n이 주어졌을 때, n을 1,2,3의 합으로 나타내는 방법의 수를 구하는 프로그램을 작성하시오.
+
+입력
+첫쨰 줄에 테스트 케이스의 개수 T가 주어진다. 각 테스트 케이스는 한 줄로 이루어져 있고, 정수 n이 주어진다. n은 양수이며 11보다 작다.
+
+출력
+각 테스트 케이스마다, n을 1,2,3의 합으로 나타내는 방법의 수를 출력한다.
+
+예제 입력  복사
+3
+4
+7
+10
+예제 출력  복사
+7
+44
+274
 	 */
 	public static void main(String[] args) throws Exception {
 		solution();
@@ -51,24 +60,27 @@ public class P9095 {
 	
 	/*
 	 * https://gist.github.com/Baekjoon/e019984a7c7f1ac6bd32
+	 * 정수 4를 1, 2, 3의 조합으로 나타내는 방법은 총 7가지가 있다.
+	 * D[N] = D[N-1] + D[N-2] + D[N-3]
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-        int[] d = new int[11];
-        d[0] = 1;
-        for (int i=1; i<=10; i++) {
-            for (int j=1; j<=3; j++) {
-                if (i-j >= 0) {
-                    d[i] += d[i-j];
-                }
-            }
-        }
-        int t = sc.nextInt();
-        while (t-- > 0) {
-            int n = sc.nextInt();
-            System.out.println(d[n]);
-        }
-        sc.close();
+		int[] d = new int[11];
+		d[0] = 1;
+		for (int i = 1; i <= 10; i++) { // n은 양수이며 11보다 작다
+			for (int j = 1; j <= 3; j++) { // 1, 2, 3
+				if (i - j >= 0) {
+					d[i] += d[i - j];
+				}
+			}
+		}
+		log.debug("{}", Arrays.toString(d));
+		int t = sc.nextInt();
+		while (t-- > 0) {
+			int n = sc.nextInt();
+			System.out.println(d[n]);
+		}
+		sc.close();
 	}
 
 	/*

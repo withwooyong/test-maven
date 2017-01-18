@@ -1,5 +1,6 @@
 package algorithm.baekjoon.middle2.A_dp2;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import org.slf4j.Logger;
@@ -10,7 +11,7 @@ public class P10942 {
 	private static Logger log = LoggerFactory.getLogger(P10942.class); 
 
 	/*
-	 * 팰린드롬?
+	 * 팰린드롬? (앞으로도 뒤로도 같은 문자열)
 문제집 
 시간 제한	메모리 제한	제출	정답	맞은 사람	정답 비율
 1 초	256 MB	3851	1069	685	29.861%
@@ -19,7 +20,8 @@ public class P10942 {
 
 먼저, 홍준이는 자연수 N개를 칠판에 적는다. 그 다음, 명우에게 질문을 총 M번 한다.
 
-각 질문은 두 정수 S와 E로 나타낼 수 있으며, S번째 수부터 E번째 까지 수가 팰린드롬을 이루는지를 물어보며, 명우는 각 질문에 대해 팰린드롬이다 또는 아니다를 말해야 한다.
+각 질문은 두 정수 S와 E로 나타낼 수 있으며, S번째 수부터 E번째 까지 수가 팰린드롬을 이루는지를 물어보며, 
+명우는 각 질문에 대해 팰린드롬이다 또는 아니다를 말해야 한다.
 
 예를 들어, 홍준이가 칠판에 적은 수가 1, 2, 1, 3, 1, 2, 1라고 하자.
 
@@ -56,16 +58,97 @@ S = 5, E = 7인 경우 1, 2, 1은 팰린드롬이다.
 1
 	 */
 	public static void main(String[] args) throws Exception {
-		solution();
+		solution1();
 		log.debug("{}", "");
 	}
 
 	/*
-	 * 
+	 * Bottom Up https://gist.github.com/Baekjoon/f1003fbe8651b961de45
 	 */
-	private static void solution() {
+	private static void solution1() {
 		Scanner sc = new Scanner(System.in);
-		
+		int n = sc.nextInt();
+		int[] a = new int[n];
+		for (int i = 0; i < n; i++) {
+			a[i] = sc.nextInt();
+		}
+		boolean[][] d = new boolean[n][n];
+		for (int i = 0; i < n; i++) {
+			d[i][i] = true;
+		}
+		for (int i = 0; i < n - 1; i++) {
+			if (a[i] == a[i + 1]) {
+				d[i][i + 1] = true;
+			}
+		}
+		for (int k = 2; k < n; k++) {
+			for (int i = 0; i < n - k; i++) {
+				int j = i + k;
+				if (a[i] == a[j] && d[i + 1][j - 1]) {
+					d[i][j] = true;
+				}
+			}
+		}
+		int m = sc.nextInt();
+		StringBuilder sb = new StringBuilder();
+		while (m-- > 0) {
+			int s = sc.nextInt();
+			int e = sc.nextInt();
+			if (d[s - 1][e - 1]) {
+				sb.append(1);
+			} else {
+				sb.append(0);
+			}
+			sb.append('\n');
+		}
+		System.out.println(sb);
 		sc.close();
 	}
+
+	/*
+	 * Top Down https://gist.github.com/Baekjoon/d4c90eb580674a898972
+	 */
+	private static void solution2() {
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		// 0 : ?, 1 : not palin, 2 : palin
+		int[] a = new int[n];
+		int[][] d = new int[n][n];
+		for (int i = 0; i < n; i++) {
+			a[i] = sc.nextInt();
+			Arrays.fill(d[i], -1);
+		}
+		int m = sc.nextInt();
+		StringBuilder sb = new StringBuilder();
+		while (m-- > 0) {
+			int x = sc.nextInt();
+			int y = sc.nextInt();
+			sb.append(go(a, d, x - 1, y - 1));
+			sb.append('\n');
+		}
+		System.out.println(sb);
+
+		sc.close();
+	}
+
+	public static int go(int[] a, int[][] d, int x, int y) {
+		if (x == y) {
+			return 1;
+		} else if (x + 1 == y) {
+			if (a[x] == a[y]) {
+				return 1;
+			} else {
+				return 0;
+			}
+		}
+		if (d[x][y] != -1) {
+			return d[x][y];
+		}
+		if (a[x] != a[y]) {
+			return d[x][y] = 0;
+		} else {
+			return d[x][y] = go(a, d, x + 1, y - 1);
+		}
+	}
+
 }
