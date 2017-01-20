@@ -1,4 +1,4 @@
-package algorithm.baekjoon;
+package algorithm.baekjoon.middle1.A_greedy;
 
 import java.util.Scanner;
 
