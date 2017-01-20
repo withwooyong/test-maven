@@ -16,7 +16,7 @@ public class P000 {
 		solution();
 		log.debug("{}", "");
 	}
-
+	
 	/*
 	 * 
 	 */
