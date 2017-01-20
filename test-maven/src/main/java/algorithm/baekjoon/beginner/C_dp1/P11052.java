@@ -42,17 +42,18 @@ public class P11052 {
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
+		int n = sc.nextInt(); // 4
 		int[] a = new int[n + 1];
 		for (int i = 1; i <= n; i++) {
-			a[i] = sc.nextInt();
+			a[i] = sc.nextInt(); // 1 5 6 7
 		}
 		int[] d = new int[n + 1];
 		for (int i = 1; i <= n; i++) {
 			for (int j = 1; j <= i; j++) {
-				if (d[i] < d[i - j] + a[j]) {
-					d[i] = d[i - j] + a[j];
-				}
+				d[i] = Math.max(d[i], d[i - j] + a[j]); // 최대 수익
+//				if (d[i] < d[i - j] + a[j]) {
+//					d[i] = d[i - j] + a[j];
+//				}
 			}
 		}
 		System.out.println(d[n]);

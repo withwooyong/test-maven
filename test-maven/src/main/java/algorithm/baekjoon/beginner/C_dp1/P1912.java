@@ -31,29 +31,31 @@ public class P1912 {
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] a = new int[n];
-        for (int i=0; i<n; i++) {
-            a[i] = sc.nextInt();
-        }
-        int[] d = new int[n];
-        for (int i=0; i<n; i++) {
-            d[i] = a[i];
-            if (i == 0) {
-                continue;
-            }
-            if (d[i] < d[i-1] + a[i]) {
-                d[i] = d[i-1] + a[i];
-            }
-        }
-        int ans = d[0];
-        for (int i=0; i<n; i++) {
-            if (ans < d[i]) {
-                ans = d[i];
-            }
-        }
-        System.out.println(ans);
-        sc.close();
+		int n = sc.nextInt();
+		int[] a = new int[n];
+		for (int i = 0; i < n; i++) {
+			a[i] = sc.nextInt();
+		}
+		int[] d = new int[n];
+		for (int i = 0; i < n; i++) {
+			d[i] = a[i];
+			if (i == 0) {
+				continue;
+			}
+			d[i] = Math.max(d[i], d[i - 1] + a[i]);
+//			if (d[i] < d[i - 1] + a[i]) {
+//				d[i] = d[i - 1] + a[i];
+//			}
+		}
+		int ans = d[0]; //음수가 들어오기 때문에 d[0] 으로 초기화
+		for (int i = 0; i < n; i++) {
+			ans = Math.min(ans, d[i]);
+//			if (ans < d[i]) {
+//				ans = d[i];
+//			}
+		}
+		System.out.println(ans);
+		sc.close();
 	}
 
 	/*

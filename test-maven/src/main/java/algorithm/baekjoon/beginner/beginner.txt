@@ -48,7 +48,7 @@ https://www.acmicpc.net/problem/11054 가장 긴 바이토닉 부분 수열
 https://www.acmicpc.net/problem/1912 연속합
 https://www.acmicpc.net/problem/2579 계단 오르기
 https://www.acmicpc.net/problem/1699 제곱수의 합
-https://www.acmicpc.net/problem/2133 타일 채우기
+https://www.acmicpc.net/problem/2133 타일 채우기(3×N 크기의 벽을 2×1, 1×2 크기의 타일로 채우는 경우의 수)
 https://www.acmicpc.net/problem/9461 파도반 수열
 https://www.acmicpc.net/problem/2225 합분해
 https://www.acmicpc.net/problem/2011 암호코드

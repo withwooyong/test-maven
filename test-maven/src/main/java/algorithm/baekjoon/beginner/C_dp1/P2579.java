@@ -37,25 +37,28 @@ public class P2579 {
 	
 	/*
 	 * https://gist.github.com/Baekjoon/5823d80d59a9ff24ef80
+	 * 0개 연속 불가능
+	 * 1개 연속 Math.max(d[i - 2][1], d[i - 2][2]) + a[i];
+	 * 2개 연속 d[i - 1][1] + a[i];
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] a = new int[n+1];
-        for (int i=1; i<=n; i++) {
-            a[i] = sc.nextInt();
-        }
-        int[][] d = new int[n+1][3];
-        d[1][1] = a[1];
-        for (int i=2; i<=n; i++) {
-            d[i][2] = d[i-1][1] + a[i];
-            d[i][1] = Math.max(d[i-2][1], d[i-2][2]) + a[i];
-        }
-        System.out.println(Math.max(d[n][1], d[n][2]));
-        sc.close();
+		int n = sc.nextInt();
+		int[] a = new int[n + 1];
+		for (int i = 1; i <= n; i++) {
+			a[i] = sc.nextInt();
+		}
+		int[][] d = new int[n + 1][3];
+		d[1][1] = a[1];
+		for (int i = 2; i <= n; i++) {
+			d[i][2] = d[i - 1][1] + a[i];
+			d[i][1] = Math.max(d[i - 2][1], d[i - 2][2]) + a[i];
+		}
+		System.out.println(Math.max(d[n][1], d[n][2]));
+		sc.close();
 	}
 	
-	private static void solution2() {
+	private static void solution1() {
 		Scanner sc = new Scanner(System.in);
 		int N = sc.nextInt();
 		int[] stair = new int[N + 1];
@@ -77,7 +80,7 @@ public class P2579 {
 		sc.close();
 	}
 	
-	private static void solution1() throws Exception {
+	private static void solution2() throws Exception {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		int k;
 		int n = Integer.parseInt(in.readLine());
@@ -109,7 +112,7 @@ public class P2579 {
 	 * D[N,1]은 2계단 전까지 왔던 값에 현재값을 더한 값이다. 
 	 * 즉, 그 두 값 중 max값을 계속 갱신해가면 마지막엔 최대값이 담겨있게 된다.
 	 */
-	private static void solution2() {		
+	private static void solution3() {		
 		int[] A = { 6, 10, 20, 15, 25, 10, 20 };
 		
 		log.debug("{}", Arrays.toString(A));
@@ -139,7 +142,7 @@ public class P2579 {
 	 * 3. 즉 B[i] = Math.max(A[i] + B[i - 2], A[i] + A[i - 1] + B[i - 3]) 
 	 * 값을 계속 비교해나가면서 더하면 N 번째에 원하는 정답을 구할 수 있다.
 	 */
-	private static void solution3() {
+	private static void solution4() {
 		
 		int[] A = { 6, 10, 20, 15, 25, 10, 20 };
 		int[] B = new int[A.length]; // sum
@@ -161,7 +164,7 @@ public class P2579 {
 	}
 	
 	// http://m.blog.naver.com/occidere/220788947949
-	private static void solution4() {
+	private static void solution5() {
 		Scanner sc = new Scanner(System.in);
 		int i;
 		int n = sc.nextInt();

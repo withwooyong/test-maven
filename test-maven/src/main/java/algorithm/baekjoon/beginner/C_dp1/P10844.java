@@ -34,12 +34,14 @@ public class P10844 {
 
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
+		int n = sc.nextInt(); // 1
 		long[][] d = new long[n + 1][10];
 		for (int i = 1; i <= 9; i++) {
 			d[1][i] = 1;
 		}
 		for (int i = 2; i <= n; i++) {
+			// 1 <= L <= 8
+			// D[N][L] = D[N-1][L-1] + D[N-1][L+1] 
 			for (int j = 0; j <= 9; j++) {
 				d[i][j] = 0;
 				if (j - 1 >= 0) {

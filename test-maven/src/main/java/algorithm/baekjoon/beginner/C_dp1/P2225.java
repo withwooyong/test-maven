@@ -28,22 +28,23 @@ public class P2225 {
 	 * https://gist.github.com/Baekjoon/354ed0a3657ecbf00c67
 	 */
 	public static long mod = 1000000000L;
+
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int k = sc.nextInt();
-        long[][] d = new long[k+1][n+1];
-        d[0][0] = 1;
-        for (int i=1; i<=k; i++) {
-            for (int j=0; j<=n; j++) {
-                for (int l=0; l<=j; l++) {
-                    d[i][j] += d[i-1][j-l];
-                    d[i][j] %= mod;
-                }
-            }
-        }
-        System.out.println(d[k][n]);
-        sc.close();
+		int n = sc.nextInt();
+		int k = sc.nextInt();
+		long[][] d = new long[k + 1][n + 1];
+		d[0][0] = 1;
+		for (int i = 1; i <= k; i++) {
+			for (int j = 0; j <= n; j++) {
+				for (int l = 0; l <= j; l++) {
+					d[i][j] += d[i - 1][j - l];
+					d[i][j] %= mod;
+				}
+			}
+		}
+		System.out.println(d[k][n]);
+		sc.close();
 	}
 
 	/*

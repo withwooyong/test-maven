@@ -45,7 +45,7 @@ public class P11005 {
 			}
 			n /= b;
 		}
-		System.out.println(ans.reverse());
+		System.out.println(ans.reverse()); // 뒤집어야 한다.
 		sc.close();
 	}
 }

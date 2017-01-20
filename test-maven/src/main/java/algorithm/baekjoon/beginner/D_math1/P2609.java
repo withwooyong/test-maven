@@ -29,13 +29,13 @@ public class P2609 {
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-        int a = sc.nextInt();
-        int b = sc.nextInt();
-        int g = gcd(a, b);
-        int l = a * b / g;
-        System.out.println(g);
-        System.out.println(l);
-        sc.close();
+		int a = sc.nextInt();
+		int b = sc.nextInt();
+		int g = gcd(a, b); // 최대공약수
+		int l = a * b / g; // 최소공배수
+		System.out.println(g);
+		System.out.println(l);
+		sc.close();
 	}
 	
 	private static int gcd(int x, int y) {

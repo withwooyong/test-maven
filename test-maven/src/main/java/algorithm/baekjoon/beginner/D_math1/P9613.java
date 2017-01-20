@@ -1,7 +1,9 @@
 package algorithm.baekjoon.beginner.D_math1;
 
+import java.math.BigInteger;
 import java.util.Scanner;
 
+import org.hibernate.type.BigIntegerType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,9 +46,10 @@ public class P9613 {
 			for (int i = 0; i < n; i++) {
 				a[i] = sc.nextInt();
 			}
+			// BigInteger.valueOf(a).gcd(BigInteger.valueOf(b)));
 			int ans = 0;
 			for (int i = 0; i < n - 1; i++) {
-				for (int j = i + 1; j < n; j++) {
+				for (int j = i + 1; j < n; j++) {					
 					ans += gcd(a[i], a[j]);
 				}
 			}
@@ -84,7 +87,7 @@ public class P9613 {
 
 			for (i = 0; i < n - 1; i++) {
 				for (j = i + 1; j < n; j++) {
-					sum += gcd(num[i], num[j]);
+					sum += gcd2(num[i], num[j]);
 				}
 			}
 			System.out.println(sum);
@@ -93,7 +96,7 @@ public class P9613 {
 		sc.close();
 	}
 
-	private static int gcd(int n, int m) {
+	private static int gcd2(int n, int m) {
 		if (m == 0)
 			return n;
 		return gcd(m, n % m);

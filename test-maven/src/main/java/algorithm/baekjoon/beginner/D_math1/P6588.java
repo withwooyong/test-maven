@@ -36,8 +36,6 @@ public class P6588 {
 	 * 8 = 3 + 5
 	 * 20 = 3 + 17
 	 * 42 = 5 + 37
-	 * 
-	 * 
 	 */
 	public static void main(String[] args) throws Exception {
 		solution();

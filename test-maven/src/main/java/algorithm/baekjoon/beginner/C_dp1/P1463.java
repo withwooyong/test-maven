@@ -34,36 +34,37 @@ public class P1463 {
 	 * https://gist.github.com/Baekjoon/7b675fe68d3c2abfef40
 	 */
 	private static int[] d;
+
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        d = new int[n+1];
-        System.out.println(go(n));
-        sc.close();
+		int n = sc.nextInt();
+		d = new int[n + 1];
+		System.out.println(go(n));
+		sc.close();
 	}
 	
 	private static int go(int n) {
-        if (n == 1) {
-            return 0;
-        }
-        if (d[n] > 0) {
-            return d[n];
-        }
-        d[n] = go(n-1) + 1;
-        if (n%2 == 0) {
-            int temp = go(n/2)+1;
-            if (d[n] > temp) {
-                d[n] = temp;
-            }
-        }
-        if (n%3 == 0) {
-            int temp = go(n/3)+1;
-            if (d[n] > temp) {
-                d[n] = temp;
-            }
-        }
-        return d[n];
-    }
+		if (n == 1) {
+			return 0;
+		}
+		if (d[n] > 0) {
+			return d[n];
+		}
+		d[n] = go(n - 1) + 1;
+		if (n % 2 == 0) {
+			int temp = go(n / 2) + 1;
+			if (d[n] > temp) {
+				d[n] = temp;
+			}
+		}
+		if (n % 3 == 0) {
+			int temp = go(n / 3) + 1;
+			if (d[n] > temp) {
+				d[n] = temp;
+			}
+		}
+		return d[n];
+	}
 
 	private static int solution1(int[] Dp, int N) {
 		if (N == 1) {
@@ -72,12 +73,12 @@ public class P1463 {
 		if (Dp[N] > 0) {
 			return Dp[N];
 		}		
-		Dp[N] = solution(Dp, N - 1) + 1;
+		Dp[N] = solution1(Dp, N - 1) + 1;
 		if (N % 2 == 0) {
-			Dp[N] = Math.min(Dp[N], solution(Dp, N / 2) + 1);
+			Dp[N] = Math.min(Dp[N], solution1(Dp, N / 2) + 1);
 		}
 		if (N % 3 == 0) {
-			Dp[N] = Math.min(Dp[N], solution(Dp, N / 3) + 1);
+			Dp[N] = Math.min(Dp[N], solution1(Dp, N / 3) + 1);
 		}
 		return Dp[N];
 	}

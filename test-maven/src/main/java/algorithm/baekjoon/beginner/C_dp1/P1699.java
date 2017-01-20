@@ -35,18 +35,19 @@ public class P1699 {
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] d = new int[n+1];
-        for (int i=1; i<=n; i++) {
-            d[i] = i;
-            for (int j=1; j*j <= i; j++) {
-                if (d[i] > d[i-j*j] + 1) {
-                    d[i] = d[i-j*j] + 1;
-                }
-            }
-        }
-        System.out.println(d[n]);
-        sc.close();
+		int n = sc.nextInt();
+		int[] d = new int[n + 1];
+		for (int i = 1; i <= n; i++) {
+			d[i] = i;
+			for (int j = 1; j * j <= i; j++) {
+				d[i] = Math.max(d[i], d[i - j * j] + 1);
+//				if (d[i] > d[i - j * j] + 1) {
+//					d[i] = d[i - j * j] + 1;
+//				}
+			}
+		}
+		System.out.println(d[n]);
+		sc.close();
 	}
 	/*
 	 * 1. 이 문제는 제곱수를 만드는 건데 현재의 제곱수의 최소값을 위해서 이전의 최소값을 이용하여서 최소값을 만든다.

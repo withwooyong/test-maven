@@ -62,10 +62,6 @@ baekjoon
 		for (int i = 0; i < A.length; i++) {
 			System.out.print(A[i] + " ");
 		}
-		System.out.println();
-		
-		
-		
-		    
+		System.out.println();    
 	}
 }
