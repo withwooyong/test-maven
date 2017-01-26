@@ -38,8 +38,27 @@ public class P11048 {
 31
 	 */
 	public static void main(String[] args) throws Exception {
-		solution1();
+		//solution1();
+		mySolution();
 		log.debug("{}", "");
+	}
+	
+	private static void mySolution() {
+		int[][] a = { 
+				{ 1, 2, 3, 4 }, 
+				{ 0, 0, 0, 5 }, 
+				{ 9, 8, 7, 6 } };
+		log.debug("{} {}", a.length, a[0].length);
+		log.debug("{}", a[0][0]);
+		int[][] d = new int[a.length][a[0].length];
+		// Row (행) Column(열)
+		for (int row = 0; row < a.length; row++) {
+			for (int column = 0; column < a[0].length; column++) {
+				log.debug("row={} column={}", row, column);
+				d[row][column] = Math.max(Math.max(a[row][column + 1], a[row + 1][column]), a[row + 1][column + 1]) + a[row][column];
+			}
+		}
+		//log.debug("{}", d[a.length][a[0].length]);
 	}
 
 	/*
@@ -60,9 +79,10 @@ public class P11048 {
 		// (i+1, j) 밑으로 , (i, j+1) 오른쪽, (i+1, j+1) 대각선, 로 이동할 수 있고
 		for (int i = 1; i <= n; i++) {
 			for (int j = 1; j <= m; j++) {
-				d[i][j] = Math.max(d[i - 1][j], d[i][j - 1]);
-				d[i][j] = Math.max(d[i - 1][j - 1], d[i][j]);
-				d[i][j] += a[i][j];
+				d[i][j] = Math.max(Math.max(d[i - 1][j], d[i][j - 1]), d[i - 1][j - 1]) + a[i][j];
+//				d[i][j] = Math.max(d[i - 1][j], d[i][j - 1]);
+//				d[i][j] = Math.max(d[i - 1][j - 1], d[i][j]);
+//				d[i][j] += a[i][j];
 			}
 		}
 		System.out.println(d[n][m]);

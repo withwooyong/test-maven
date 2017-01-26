@@ -1,5 +1,6 @@
 package algorithm.baekjoon.middle1.F_data_structure2;
 
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 import org.slf4j.Logger;

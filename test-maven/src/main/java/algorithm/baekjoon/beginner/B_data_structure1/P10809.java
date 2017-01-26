@@ -26,7 +26,25 @@ public class P10809 {
 	 * 1 0 -1 -1 2 -1 -1 -1 -1 4 3 -1 -1 7 5 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 	 */
 	public static void main(String[] args) throws Exception {
-		solution();
+		solution1();
+	}
+	
+	private static void solution1() {
+		String s = "baekjoon";
+		int[] position = new int[26];
+		for (int i = 0; i < 26; i++) {
+			position[i] = -1;
+		}
+		for (int i = 0; i < s.length(); i++) {
+			int c = s.charAt(i) - 'a';
+			if (position[c] == -1) {
+				position[c] = i;
+			}
+		}
+		for (int i = 0; i < 26; i++) {
+			System.out.print(position[i] + " ");
+		}
+		System.out.println();
 	}
 	
 	/*
@@ -50,25 +68,5 @@ public class P10809 {
 		}
 		System.out.println();
 		sc.close();
-	}
-
-	private static void solution1() {
-		Scanner sc = new Scanner(System.in);
-		int[] A = new int[26];
-		String str = "baekjoon";
-		Arrays.fill(A, -1);
-		
-		for (int i = 0; i < str.length(); i++) {
-			if (A[str.charAt(i) - 97] == -1) {
-				A[str.charAt(i) - 97] = i;
-			}
-		}
-		log.debug("{}", Arrays.toString(A));
-		
-		for (int i = 0; i < A.length; i++) {
-			System.out.print(A[i] + " ");
-		}
-		System.out.println();
-		    
-	}
+	}	
 }

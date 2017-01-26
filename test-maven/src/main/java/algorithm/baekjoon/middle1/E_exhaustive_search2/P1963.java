@@ -46,13 +46,13 @@ public class P1963 {
 	 * 0
 	 */
 	public static void main(String[] args) throws Exception {
-		solution();
+		//solution();
 		log.debug("{}", "");
 	}
 
 	/*
 	 * https://gist.github.com/Baekjoon/d815d8eae0b586537a02
-	 */
+	 
 	private static void solution() {
 		public static int change(int num, int index, int digit) {
 	        if (index == 0 && digit == 0) {
@@ -107,4 +107,5 @@ public class P1963 {
 		
 		sc.close();
 	}
+	*/
 }

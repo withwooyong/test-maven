@@ -13,10 +13,11 @@ public class NumberOfCase2 {
 	private static Logger log = LoggerFactory.getLogger(NumberOfCase2.class);
 
 	public static void main(String[] args) {
-		int n = 10;
-		int r = 2;
-		log.debug("permutation={}", permutation(n, r));
-		log.debug("combination={}", combination(n, r));
+		//int n = 10; int r = 2;
+		int n = 4; int r = 3;
+		log.debug("permutation={}", permutation(n, r)); // 순열
+		log.debug("combination={}", combination(n, r)); // 조합
+		log.debug("factorial={}", factorial(n));
 	}
 
 	/*

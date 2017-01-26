@@ -7,14 +7,13 @@ import codility.lesson05.prefixsums.NumberOfCase;
 public class NumberOfCases {
 	
 	public static void main(String[] args) {
-		NumberOfCases case = new NumberOfCase()
 		
 		
 	}
 
-	private ArrayList<CaseElement> cases;
+	private static ArrayList<CaseElement> cases;
 	
-	public NumberOfCases(int numberCount) {
+	private static void NumberOfCases(int numberCount) {
 		cases = new ArrayList<>();
 		if(numberCount == 0){
 			System.out.println("Number Count is 0");
@@ -29,7 +28,7 @@ public class NumberOfCases {
 	    permute(numbers, 0);
 	}
 	
-	public void permute(int[] numbers, int startIndex) {
+	private static void permute(int[] numbers, int startIndex) {
 
 	    if (numbers.length == startIndex) {
 	    	cases.add(new CaseElement(numbers));

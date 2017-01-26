@@ -27,7 +27,19 @@ baekjoon
 1 1 0 0 1 0 0 0 0 1 1 0 0 1 2 0 0 0 0 0 0 0 0 0 0 0
 	 */
 	public static void main(String[] args) throws Exception {
-		solution();
+		solution1();
+	}
+	
+	private static void solution1() {
+		String s = "baekjoon";
+		int[] cnt = new int[26];
+		for (int i = 0; i < s.length(); i++) {
+			cnt[s.charAt(i) - 'a'] += 1; // 소문자로만 이루어져 있다.
+		}
+		for (int i = 0; i < 26; i++) {
+			System.out.print(cnt[i] + " ");
+		}
+		System.out.println();
 	}
 	
 	/*
@@ -45,23 +57,5 @@ baekjoon
 		}
 		System.out.println();
 		sc.close();
-	}
-
-	private static void solution1() {
-		Scanner sc = new Scanner(System.in);
-		//String str = "baekjoon";
-		String str = sc.nextLine();
-		log.debug("{}",  'b' -97);
-		int[] A = new int[26];
-		for (int i = 0; i < str.length(); i++) {
-			A[str.charAt(i)-97]++;
-		}
-		log.debug("{}", Arrays.toString(A));
-		System.out.println(Arrays.toString(A));
-		
-		for (int i = 0; i < A.length; i++) {
-			System.out.print(A[i] + " ");
-		}
-		System.out.println();    
-	}
+	}	
 }

@@ -43,7 +43,7 @@ public class P10799 {
 	 */
 	// http://hsp1116.tistory.com/29
 	public static void main(String[] args) throws Exception {
-		solution();
+		log.debug("{}", solution1()); // 17
 	}
 	
 	/*
@@ -75,25 +75,19 @@ public class P10799 {
 
 	private static int solution1() {
 		String A = "()(((()())(())()))(())";
-//		Scanner sc = new Scanner(System.in);
-//		String A = sc.nextLine();
 		Stack<Character> stack = new Stack<>();
 		int result = 0;
 
 		for (int i = 0; i < A.length(); i++) {
-			// 여는 괄호이면 스택에 넣는다.
-			if (A.charAt(i) == '(') {
+			if (A.charAt(i) == '(') { // 여는 괄호이면 스택에 넣는다.
 				stack.push(A.charAt(i));
-			} else { // )
-				// 닫는 괄호면 이 괄호가 레이저인지, 파이프 끝인지 알아본다.
+			} else { // 닫는 괄호면 이 괄호가 레이저인지, 파이프 끝인지 알아본다.
 				stack.pop();
 				// 레이저면
 				if (A.charAt(i - 1) == '(') {
 					result += stack.size(); // 잘린 갯수 추가
-					log.debug("{}", result);
 				} else { // 파이프 끝이면
 					result++; // 닫혀서 잘려진 갯수 추가
-					log.debug("{}", result);
 				}
 			}
 		}

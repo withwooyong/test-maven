@@ -101,3 +101,142 @@ https://www.acmicpc.net/problem/1991 트리 순회
 https://www.acmicpc.net/problem/11725 트리의 부모 찾기
 https://www.acmicpc.net/problem/1167 트리의 지름
 https://www.acmicpc.net/problem/1967 트리의 지름
+
+A sequence of numbers is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same.
+For example, these are arithmetic sequence:
+1, 3, 5, 7, 9
+7, 7, 7, 7
+3, -1, -5, -9
+
+The sequence [1, 1, 2, 5, 7] is not arithmetic.
+
+A zero-indexed array A consisting of N numbers is given.
+A slice of that array is any pair of integers(P, Q) suth that 0 <= P < Q < N.
+A slice (P, Q) of array A is called arithmetic if the sequence.
+A[P], A[P+1], ..., A[Q-1], A[Q]
+is arthmetic. In particular, this means that P + 1 < Q.
+Write a function:
+class Solution { public int solution(int[] A); }
+
+that, given array A consisting of N numbers, returns the number of arithmetic slices in A.
+
+For example, given array A suth that:
+A[0] = -1
+A[1] = 1
+A[2] = 3
+A[3] = 3
+A[4] = 3
+A[5] = 2
+A[6] = 1
+A[7] = 0
+
+the function should return 5 because there are fice arithmetic slices of that array, namely
+(0, 2), (2, 4), (4, 6), (4, 7), (5, 7)
+
+################################################################################
+
+In this problem we consider binary trees, represented by pointer data structures.
+A binary tree is either an empty tree or a node(called the root)
+consisting of a single integer value and two further binary trees, called the left subtree and the right subtree.
+For example, the figure below shows a binary tree consisting of six nodes.
+Its root contains the value 5, and the roots of its left and right subtrees have the values 3 and 10, respectively.
+The right subtree of the node containing the value 10, as well as the left and right subtrees of the nodes containing the values 1, 20 and 21, are empty trees.
+5
+3,      10
+21, 21, 1
+A binary tree can be given using a pointer data structure.
+Assume that the following declarations are given:
+
+class Tree {
+    public int x;
+    public Tree l;
+    public Tree r;
+}
+
+An empty tree is represented by an empty pointer(denoted by null).
+A non-empty tree is represented by a pointer to an object representing its root.
+The attribute x holds the integer containte in the root, whereas attributes l and r hold the left and right subtrees of the binary tree, respectively
+
+A path in a binary tree is a non-empty sequence of nodes that one can traverse by following the pointers.
+The length of a path is the number of pointers it traverses.
+More formally, a path of length K is a sequence of node P[0], P[1], ...,P[K], such that node P[l + 1] is the root of the left or right subtree of P[l], for 0 <= l < k.
+For example, the sequence of nodes with values 5, 3, 21 is a path of length 2 in the tree from the above figure.
+The sequence of nodes with values 10, 1, is a path of length 1.
+The sequence of nodes with values 20, 2, 21 is not a valid path.
+The height of a binary tree is defined as the length of the longest possible path in the tree.
+In particular, a tree consisting of only one node has height 0 and, conventionally, an empty tree has height -1.
+For example, the tree shown in the above figure is of height 2.
+
+A binary tree T is given.
+A node of tree T containing value V is described as visible if the path from the root of the tree to that node does not contain a node with any value exceding V.
+In particular, the root is always visible and nodes with values lower than that of the root are never visible.
+
+For example, the tree shown in the above figure has four visible nodes:
+namely, those with values, 5, 10, 20 and 21. 
+The node with value 1 is not visible because there is a node with value 10 on the path from the root to that node.
+The node with value 3 is not visible because its value is lower than that of the root, which has value 5.
+
+Write function:
+class Solution { public int solution(Tree T); }
+
+that, given a binary tree T consisting of N nodes, returns its number of visible nodes, 
+For example, given the tree shown in the figure above, the function should return 4, as explained above.
+
+Given tree T with the following structure:
+8
+2, 6
+8, 7
+the function should return 2, because the only visible nodes are those with value 8.
+
+For the purpose of entering your own test cases, you can denote a tree recursively in the following way.
+An empty binary tree is denoted by None.
+A non-empty tree is denoted as (X, L, R), where X is the value contained in the root and L and R denote the left and right subtrees, respectively.
+The trees from the above two figures can be denoted as:
+(5, (3, (20, None, None), (21, None, None)), (10, (1, None, None), None))
+and :
+(8, (2, (8, None, None), (7, None, None)), (6, None, None))
+
+################################################################################
+
+People are waiting for an elevator in a hotel.
+The elevator has limited capacity and you would like to analyse its movement.
+The hotel has floors numbered from 0(ground floor) to M.
+The elevator has a maximum capacity of X people and a weight limit of Y.
+There are N people gathered at the ground floor, standing in a queue for the elevator.
+You are given every person's weight A[K] and target floor B[K]. (That is, A[0] and B[0] represent the first person in the queue.)
+
+People continue to enter the elevator, in the order of their position in.
+the queue(and push the buttons for their target floors), for as long as there is room for them. 
+(The queue order cannot be changed even if thereis room in the elevator for a particular person from the middle of the queue.)
+Then elevator goes up and stops at every selected floor, and finally returns to the ground floor.
+This process is repeated until there are no more people in the queue.
+The goal is to count the total number of times that the elevator stops.
+
+For example, consider a hotel with floors numbered from 0 to M = 5, with an elevator with a maximum capacity of X = 2 people and a weight limit of Y = 200.
+the weights A and target floors B are:
+A[0] = 60    B[0] = 2
+A[1] = 80    B[1] = 3
+A[2] = 40    B[2] = 5
+
+The elevator will take the first two passengers together, stop at the 2nd and 3rd floors, then return to the ground floor.
+Then, it will take the last passenger, stop at the 5th floor and return to the ground floor.
+In total, the elevator will stop five times.
+Note that this number includes the last stop at the ground floor.
+
+Write a function:
+class Solution { public int solution(int[] A, int[] B, int M, int X, int Y); }
+that, given zero-indexed arrays A and B consisting of N integers, and numbers X, Y and M as described above, returns the total number of times the elevator stops.
+
+For example, given the above data, the function should return 5, as explained above.
+
+For example, given M = 3, X = 5, Y = 200 and the following arrays:
+A[0] = 40    B[0] = 3
+A[1] = 40    B[1] = 3 
+A[2] = 100   B[2] = 2
+A[3] = 80    B[3] = 2
+A[4] = 20    B[4] = 3
+
+the function should return 6, as the elevator will move in two stages:
+with the first three people and then with the two remaining people.
+
+ 
