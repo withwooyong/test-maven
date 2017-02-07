@@ -32,7 +32,7 @@ public class P1783 {
 	 * 48
 	 */
 	public static void main(String[] args) throws Exception {
-		solution();
+		solution(); 
 		log.debug("{}", "");
 	}
 

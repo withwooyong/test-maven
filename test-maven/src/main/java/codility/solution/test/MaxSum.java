@@ -3,6 +3,9 @@ package codility.solution.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/*
+ * http://jungmonster.tistory.com/126
+ */
 public class MaxSum {
 	
 	private static Logger log = LoggerFactory.getLogger(MaxSum.class);
@@ -15,7 +18,6 @@ public class MaxSum {
 		log.debug("{}", fastestMaxSum(A));
 		
 	}
-	
 	
 	private static int inefficientMaxSum(int[] A) {
 		int N = A.length;

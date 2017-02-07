@@ -107,5 +107,6 @@ public class P9466 {
 			}
 			System.out.println(n - ans);
 		}
+		sc.close();
 	}
 }

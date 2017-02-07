@@ -3,21 +3,26 @@ package algorithm;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
+import java.util.Stack;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import codingdojang.Tree;
 
 public class exam {
 	
+	private static Logger log = LoggerFactory.getLogger(exam.class);
 	public static void main(String[] args) throws MalformedURLException, UnsupportedEncodingException {
 		//System.out.println(largestNumber());
-		//exam04();
-		exam06();
-
+		exam17();
+		//maxMultiply();
 	}
 	
 	public static String largestNumber() {
@@ -51,49 +56,54 @@ public class exam {
 	 * 예)
 	 * 3.4, 0.1, 2.0, 0.34 가 있으면
 	 * 3.4 * 0.1
-	 * 3.4 * 0.1 * 0.2
-	 * 3.4 * 0.1 * 0.2 * 0.34
+	 * 3.4 * 0.1 * 2.0
+	 * 3.4 * 0.1 * 2.0 * 0.34
 	 * 0.1 * 2.0
 	 * 0.1 * 2.0 * 0.34
+	 * 2.0 * 0.34
 	 * 중에서 제일 큰 수는?
+	 * http://jungmonster.tistory.com/126
 	 */
 	private static void exam01() {
 		
-		double[] multiply = { 3.4, 0.1, 2.0, 0.34 };
+		double[] arr = { 3.4, 0.1, 2.0, 0.34 };
+		double max = Double.MIN_VALUE;
+		double temp = 1.0;
+		for (int i = 0; i < arr.length; i++) {
+			temp = Math.max(temp, 0) * arr[i];
+			max = Math.max(temp, max);
+			log.debug("temp={}, max={}", temp, max);
+		}
+        log.debug("max={}", max);
+        log.debug("3.4 * 0.1 ={}", 3.4 * 0.1);
+        log.debug("3.4 * 0.1 * 2.0 ={}", 3.4 * 0.1 * 2.0);
+        log.debug("3.4 * 0.1 * 2.0 * 0.34 ={}", 3.4 * 0.1 * 2.0 * 0.34);
+        log.debug("0.1 * 2.0 ={}", 0.1 * 2.0);
+        log.debug("0.1 * 2.0 * 0.34 ={}", 0.1 * 2.0 * 0.34);
+        log.debug("2.0 * 0.34 ={}", 2.0 * 0.34);
+	}
+	
+	private static void maxMultiply() {
+		double[] A = { 3.4, 0.1, 2.0, 0.34 };
+		int N = A.length;
+		double ret = Double.MIN_VALUE;
+		log.debug(Arrays.toString(A));
 		
-        ArrayList<Double> plus = new ArrayList<Double>();
-        ArrayList<Double> minus = new ArrayList<Double>();
-        double zero = 0;
-        double one = 0;
-        for (int i=0; i<multiply.length; i++) {
-            double x = multiply[i];
-            if (x == 1) {
-                one += 1;
-            } else if (x > 0) {
-                plus.add(x);
-            } else if (x < 0) {
-                minus.add(x);
-            } else {
-                zero += 1;
-            }
-        }
-        Collections.sort(plus);
-        Collections.sort(minus);
-        Collections.reverse(plus);
-        if (plus.size() % 2 == 1) {
-            plus.add((double)1);
-        }
-        if (minus.size() % 2 == 1) {
-            minus.add(zero > 0 ? (double)0 : (double)1);
-        }
-        double ans = one;
-        for (int i=0; i<plus.size(); i+=2) {
-            ans += plus.get(i) * plus.get(i+1);
-        }
-        for (int i=0; i<minus.size(); i+=2) {
-            ans += minus.get(i) * minus.get(i+1);
-        }
-        System.out.println(ans);
+		for (int i = 0; i < N; i++) {
+			double multiply = 1.0;
+			for (int j = i; j < N; j++) {
+				multiply *= A[j];
+				ret = Math.max(ret,  multiply);
+				log.debug("{}, {}", multiply, ret);
+			}
+		}
+		log.debug("ret={}", ret);
+		log.debug("3.4 * 0.1 ={}", 3.4 * 0.1);
+        log.debug("3.4 * 0.1 * 2.0 ={}", 3.4 * 0.1 * 2.0);
+        log.debug("3.4 * 0.1 * 2.0 * 0.34 ={}", 3.4 * 0.1 * 2.0 * 0.34);
+        log.debug("0.1 * 2.0 ={}", 0.1 * 2.0);
+        log.debug("0.1 * 2.0 * 0.34 ={}", 0.1 * 2.0 * 0.34);
+        log.debug("2.0 * 0.34 ={}", 2.0 * 0.34);
 	}
 	
 	/*
@@ -152,7 +162,17 @@ public class exam {
 	 */
 	private static void exam04() {
 		int n = 324;
+		char[] a = ("" + n).toCharArray();		
+		Arrays.sort(a);
+		System.out.println(Arrays.toString(a));
 		
+		for (int i = 0; i < a.length; i++) {
+			System.out.print(a[i]);
+		}
+		System.out.println();
+		for (int i = a.length-1; i >= 0; i--) {
+			System.out.print(a[i]);
+		}
 	}
 	
 	/*
@@ -179,14 +199,17 @@ public class exam {
 	 */
 	private static void exam06() throws MalformedURLException, UnsupportedEncodingException {
 		URL url = new URL("http://mysite.siteaddr.com/site1?key1=value1&key2=value2&key3=value3");
+		//Map<String, String> query_pairs = new HashMap<String, String>();
 		Map<String, String> query_pairs = new LinkedHashMap<String, String>();
 		String query = url.getQuery();
+		log.debug("query={}", query);
 		String[] pairs = query.split("&");
 		for (String pair : pairs) {
 			int idx = pair.indexOf("=");
-			query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
+			query_pairs.put(pair.substring(0, idx), pair.substring(idx + 1));
+			//query_pairs.put(URLDecoder.decode(pair.substring(0, idx), "UTF-8"), URLDecoder.decode(pair.substring(idx + 1), "UTF-8"));
 		}
-		System.out.println(query_pairs);
+		log.debug("query_pairs={}", query_pairs);
 	}
 	
 	/*
@@ -204,16 +227,44 @@ public class exam {
 	 * 404 1
 	 * 502 1
 	 * 400 1
+	 * http://gmyou.egloos.com/10578477
 	 */
 	private static void exam07() {
-		
+		ArrayList<String> arr = new ArrayList<String>();
+		arr.add("11:22:31 404 url");
+		arr.add("13:35:47 503 abc");
+		arr.add("14:23:39 502 ddd");
+		arr.add("14:36:22 503 abd");
+		arr.add("20:34:21 400 bad");
 	}
 	
 	/*
 	 * noon을 거꾸로 해도 noon이 되는데 이걸 스택을 이용해서 확인하는 프로그램
 	 */
 	private static void exam08() {
+		String str = "noon";
+		Stack<Character> stack = new Stack<Character>();
+		for (int i = 0; i < str.length(); i++) {
+			if (stack.isEmpty()) {
+				stack.push(str.charAt(i));
+			} else {
+				if (stack.peek().equals(str.charAt(i))) {
+					stack.pop();
+				} else {
+					stack.push(str.charAt(i));
+				}
+			}
+		}
+		log.debug("{}", stack.size());
 		
+		
+//		for (int i = 0; i < str.length(); i++) {
+//			stack.push(str.charAt(i));
+//		}
+//		log.debug("{}", stack.toString());
+//		while (!stack.isEmpty()) {
+//			log.debug("{}", stack.pop());
+//		}
 	}
 	
 	/*
@@ -226,7 +277,33 @@ public class exam {
 	 * 3
 	 */
 	private static void exam09() {
+		String str = "adb12c";
 		
+		int digit = 0;
+		char[] ch = new char[str.length()];
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z')) {
+				char temp;
+				for (int j = 0; j < ch.length; j++) {
+					if (ch[j] > c) {
+						ch[j] = c;
+						
+					} 
+				}				
+			} else if ('0' <= c && c <= '9') {
+				digit += c;
+			} 
+		}
+	}
+	
+	public static void reverseArrayString(String[] array) {
+		String temp;
+		for (int i = 0; i < array.length / 2; i++) {
+			temp = array[i];
+			array[i] = array[(array.length - 1) - i];
+			array[(array.length - 1) - i] = temp;
+		}
 	}
 	
 	/*
@@ -234,23 +311,59 @@ public class exam {
 	 * * 결과값은 s1이 작을 경우 -1, 같을 경우 0, 클 경우 1을 리턴
 	 */
 	private static void exam10() {
-		
+		String s1 = "bbb";
+		String s2 = "bbb";
+		System.out.println(s1.compareToIgnoreCase(s2));
 	}
 	
 	/*
 	 * 0부터 n까지 무작위 정수를 나열하는 메소드 작성
 	 * * 단, 중복되는 숫자는 없어야 함
 	 * * 작성을 잘 할 경우 n부터 m사이의 무작위 숫자를 나열하는 메소드 작성
+	 * http://itpangpang.xyz/50
+	 * https://androidkr.blogspot.kr/2012/08/java-nm-random.html
+	 * http://stackoverflow.com/questions/363681/generating-random-integers-in-a-specific-range?newsletter=1&nlcode=66478%7c80bd
 	 */
 	private static void exam11() {
-		
+		Random random = new Random(); // 객체생성
+		int min = 5;
+		int max = 10;
+		int a[] = new int[max - min]; // int형 배열 선언
+		for (int i = 0; i < max - min; i++) {
+			a[i] = random.nextInt(max - min + 1) + min;
+			for (int j = 0; j < i; j++) { // 중복제거를 위한 for문
+				if (a[i] == a[j]) {
+					i--;
+				}
+			}
+		}
+		log.debug("{}", Arrays.toString(a));
 	}
 	
 	/*
 	 * Binary Search Tree 구현 (High)
 	 */
 	private static void exam12() {
+		int intArr[] = { 30, 20, 5, 12, 55 };
+		int searchVal = 12;
+		int retVal = Arrays.binarySearch(intArr, searchVal);
+		System.out.println("The index of element 12 is : " + retVal);
 		
+		Tree tree = new Tree();
+		tree.addNode(24);
+		tree.addNode(15);
+		tree.addNode(19);
+		tree.addNode(2);
+		tree.addNode(28);
+		tree.addNode(27);
+		tree.addNode(30);
+		
+		System.out.print("PreOrder : ");
+		tree.preOrder(tree.root);
+		System.out.print("InOrder : ");
+		tree.inOrder(tree.root);
+		System.out.print("PostOrder : ");
+		tree.postOrder(tree.root);
 	}
 	
 	/*
@@ -266,9 +379,16 @@ public class exam {
 	 * * 단, 문자열은 사용 불가
 	 * 예)
 	 * 12345 -> 54321
+	 * http://pli3452.tistory.com/27
 	 */
 	private static void exam14() {
-		
+		int num = 123450;
+		int sum = 0;
+		while (num > 0) {
+			sum = num % 10;
+			num /= 10;
+			log.debug("sum = {} num = {}", sum, num);
+		}	
 	}
 	
 	/*
@@ -290,6 +410,7 @@ public class exam {
 	 * 6 단어: English
 	 * 7 단어: Happy
 	 * 결과 : Asgrd,Dragon,New York,Korea,Apple,English,Happy
+	 * http://dhkdehdud.tistory.com/entry/java-%EC%97%B0%EC%8A%B5-%EB%81%9D%EB%A7%90%EC%9E%87%EA%B8%B0-%EA%B2%8C%EC%9E%84
 	 */
 	private static void exam15() {
 		
@@ -303,9 +424,18 @@ public class exam {
 	 * 분자: 51
 	 * 분모: 82
 	 * 51/82, 21951
+	 * 
+	 * https://www.acmicpc.net/problem/1978 소수 찾기
+https://www.acmicpc.net/problem/1929 소수 구하기
 	 */
 	private static void exam16() {
-		
+		// 분모 : denominator
+		// 분자 : numerator
+		int denominator = 51;
+		int numerator = 82;
+		log.debug("{}", 51 / 82);
+		float temp = 51 / 82;
+		System.out.println(temp);
 	}
 	
 	/*
@@ -323,8 +453,22 @@ public class exam {
 	 * 'A': 0x41
 	 * 'a': 0x61
 	 */
-	private static void exam17() {
-		
+	private static void exam17() throws UnsupportedEncodingException {
+		String d = "안녕 親9"; // 자바는 내부 문자열을 모두 유니코드 처리한다
+		  
+		// 유니코드 문자열을 UTF-8 캐릭터 바이트배열로 변환하여 반환
+		byte [] utf8 = d.getBytes("UTF-8");
+
+		// 유니코드 문자열을 EUC-KR 캐릭터 바이트배열로 변환하여 반환
+		byte [] euckr = d.getBytes("EUC-KR");
+		  
+		// 당연히 다른 바이트 배열이므로 사이즈가 다르다.
+		System.out.println("byte length > " + utf8.length); // byte length > 11
+		System.out.println("byte length > " + euckr.length); // byte length > 8
+		  
+		// 실수 코드.
+		// UTF-8 캐릭터셋으로 배열된 바이트배열을 EUC-KR로 해석할 수 없다.
+		System.out.println(new String(utf8, "EUC-KR"));
 	}
 
 	/*
@@ -340,6 +484,7 @@ public class exam {
 	 * 예)
 	 * time, emit은 anagram O
 	 * time, tine은 anagram X
+	 * AnagramsTest
 	 */
 	private static void exam19() {
 		
