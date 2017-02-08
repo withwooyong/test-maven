@@ -1,16 +1,28 @@
 package algorithm;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Scanner;
 import java.util.Stack;
 
+import org.apache.commons.lang.WordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,10 +31,86 @@ import codingdojang.Tree;
 public class exam {
 	
 	private static Logger log = LoggerFactory.getLogger(exam.class);
-	public static void main(String[] args) throws MalformedURLException, UnsupportedEncodingException {
+	
+	public static void main(String[] args) throws IOException {
 		//System.out.println(largestNumber());
-		exam17();
+		//exam09();
 		//maxMultiply();
+//		double[] A = { 3.4, 0.1, 2.0, 0.34 };
+//		System.out.println(fastestMaxSum(A));
+		//reverseArrayString();
+		//reverseArraysChar();
+		//exam15();
+		
+		double a = 51.0;
+		double b = 82.0;
+		System.out.println(a/b);
+		System.out.println(b);
+		System.out.println(cyclicNumber(a, b));
+		test();
+	}
+	
+	private static void test() {
+		Scanner sc = new Scanner(System.in);
+		System.out.print("Input a number: ");
+		String strnum = sc.nextLine().trim();
+		BigInteger n = new BigInteger(strnum);
+		int len = strnum.length() + 1;
+		String str = String.valueOf(len);
+		BigInteger n1 = new BigInteger(str);
+		StringBuilder buf = new StringBuilder();
+		for (int i = 0; i < (len - 1); i++) {
+			buf.append('9');
+		}
+		BigInteger total = new BigInteger(buf.toString());
+		if (n.multiply(n1).equals(total)) {
+			System.out.println("It is a cyclic number.");
+		} else {
+			System.out.println("Not a cyclic number.");
+		}
+		sc.close();
+	}
+ 	
+	/*
+	 * * 분자: 51
+	 * * 분모: 82
+	 * * 51/82, 21951
+	 */
+	private static boolean cyclicNumber(double a, double b) {
+		
+		String x = "" + a;
+		String y = "" + b;
+		int i;
+		int j;
+		int flag;
+		if (x.length() != y.length()) {
+			return false;
+		}
+
+		for (i = 0; i < x.length(); i++) {
+			flag = 0;
+			for (j = 0; j < y.length(); j++) {
+				if (x.charAt(i) == y.charAt(j)) {
+					flag = 1;
+					break;
+				}
+			}
+			if (flag == 0)
+				return false;
+		}
+		return true;
+	}
+	
+	// 연속된 부분 구간 중 그 합이 최대인 구간을 찾는 문제
+	private static double fastestMaxSum(double[] A) {
+		int N = A.length;
+		double ret = Integer.MIN_VALUE;
+		double psum = 1;
+		for (int i = 0; i < N; i++) {
+			psum = Math.max(psum, 0) * A[i];
+			ret = Math.max(psum, ret);
+		}
+		return ret;
 	}
 	
 	public static String largestNumber() {
@@ -68,11 +156,13 @@ public class exam {
 		
 		double[] arr = { 3.4, 0.1, 2.0, 0.34 };
 		double max = Double.MIN_VALUE;
-		double temp = 1.0;
-		for (int i = 0; i < arr.length; i++) {
-			temp = Math.max(temp, 0) * arr[i];
-			max = Math.max(temp, max);
-			log.debug("temp={}, max={}", temp, max);
+		double temp;
+		for (int i = 0; i < arr.length-1; i++) {			
+			temp = arr[i];
+			for (int j = 1; j < arr.length; j++) {
+				temp *= arr[j];
+				max = Math.max(max, temp);
+			}
 		}
         log.debug("max={}", max);
         log.debug("3.4 * 0.1 ={}", 3.4 * 0.1);
@@ -113,7 +203,11 @@ public class exam {
 	 * * 텝, 스패이스는 패스
 	 */
 	private static void exam02() {
-		
+		String str = "hello1?hello2.hello3!hello4";
+		char[] delimiters = { '?', '.', '!' };
+		System.out.println(str);
+		new WordUtils(); // import org.apache.commons.lang.WordUtils;
+		System.out.println(WordUtils.capitalize(str, delimiters));
 	}
 	
 	/*
@@ -147,8 +241,7 @@ public class exam {
 			}
 			n /= b;// 알고리즘 
 		}
-		System.out.println(ans.reverse()); // 뒤집어야 한다.
-		
+		System.out.println(ans.reverse()); // 뒤집어야 한다.		
 	}
 	
 	/*
@@ -162,19 +255,20 @@ public class exam {
 	 */
 	private static void exam04() {
 		int n = 324;
-		char[] a = ("" + n).toCharArray();		
+		char[] a = ("" + n).toCharArray();
 		Arrays.sort(a);
 		System.out.println(Arrays.toString(a));
-		
+
 		for (int i = 0; i < a.length; i++) {
 			System.out.print(a[i]);
 		}
 		System.out.println();
-		for (int i = a.length-1; i >= 0; i--) {
+		for (int i = a.length - 1; i >= 0; i--) {
 			System.out.print(a[i]);
 		}
+		System.out.println();
 	}
-	
+
 	/*
 	 * 출/퇴근시간을 기록하는 문자열이 있고, 특정시간을 주었을때 해당시간에 일 하는 사람 수 출력
 	 * * 앞의 시간은 출근시간, 뒤의 시간은 퇴근시간
@@ -184,8 +278,26 @@ public class exam {
 	 * 출력 결과 : 2
 	 */
 	private static void exam05() {
-		String[] times = {"09:03:22 11:24:33", "10:43:22 13:34:22", "11:45:22 16:42:35"};
-		
+		String[] times = { "09:03:22 11:24:33", "10:43:22 13:34:22", "11:45:22 16:42:35" };
+		String time = "11:04:23"; 
+		int cntPerson = 0;
+		for (int i = 0; i < times.length; i++) {
+			String temp = times[i];
+			String startTime = temp.substring(0, temp.indexOf(" "));
+			String endTime = temp.substring(temp.indexOf(" ")+1, temp.length());
+			log.debug("{} {}", startTime, startTime.length());
+			log.debug("{} {}", endTime, endTime.length());
+			/*
+			 * The result is a negative integer if this String object lexicographically precedes the argument string.
+			 * The result is zero if the strings are equal 
+			 * The result is a positive integer if this String object lexicographically follows the argument string. 
+			 * 음수, 0, 양수
+			 */
+			if (time.compareTo(startTime) > 0 && time.compareTo(endTime) < 0) {
+				cntPerson++;
+			}
+		}
+		log.debug("cntPerson={}", cntPerson);
 	}
 	
 	/*
@@ -228,14 +340,34 @@ public class exam {
 	 * 502 1
 	 * 400 1
 	 * http://gmyou.egloos.com/10578477
+	 * http://blog.daum.net/_blog/BlogTypeView.do?blogid=0XrpC&articleno=170&categoryId=0&regdt=20131124203647
 	 */
-	private static void exam07() {
-		ArrayList<String> arr = new ArrayList<String>();
-		arr.add("11:22:31 404 url");
-		arr.add("13:35:47 503 abc");
-		arr.add("14:23:39 502 ddd");
-		arr.add("14:36:22 503 abd");
-		arr.add("20:34:21 400 bad");
+	private static void exam07() throws IOException {
+		long current = System.currentTimeMillis();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		String datetime = sdf.format(new Date(current));
+		System.out.println(datetime);
+		File logFile = new File("C:\\Users\\user\\git\\test-maven\\test-maven\\src\\main\\java\\algorithm\\file_" + datetime + ".log");
+		
+		if (logFile.exists() && logFile.canRead()) {
+			String temp;
+			BufferedReader bufReader = new BufferedReader( new FileReader( logFile ) );;
+			Map<String, Integer> map = new HashMap<>();
+			String[] array;
+			while ((temp = bufReader.readLine()) != null) {
+				if (!temp.isEmpty()) {
+					array = temp.split(" ");
+					log.debug("{}", Arrays.toString(array));
+					if (map.containsKey(array[1])) {					;
+						map.put(array[1], map.get(array[1]) + 1);					
+					} else {
+						map.put(array[1], 1);
+					}
+				}
+			}
+			bufReader.close();
+			log.debug("{}", map.toString());
+		}
 	}
 	
 	/*
@@ -255,8 +387,7 @@ public class exam {
 				}
 			}
 		}
-		log.debug("{}", stack.size());
-		
+		log.debug("{}", stack.size());		
 		
 //		for (int i = 0; i < str.length(); i++) {
 //			stack.push(str.charAt(i));
@@ -278,32 +409,69 @@ public class exam {
 	 */
 	private static void exam09() {
 		String str = "adb12c";
-		
-		int digit = 0;
-		char[] ch = new char[str.length()];
+		int sum = 0;
+		List<Character> mList = new ArrayList<Character>();
+		StringBuilder build = new StringBuilder();
 		for (int i = 0; i < str.length(); i++) {
-			char c = str.charAt(i);
-			if (('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z')) {
-				char temp;
-				for (int j = 0; j < ch.length; j++) {
-					if (ch[j] > c) {
-						ch[j] = c;
-						
-					} 
-				}				
-			} else if ('0' <= c && c <= '9') {
-				digit += c;
+			Character c = str.charAt(i);			
+			if (Character.isDigit(c)) {
+				sum += Character.getNumericValue(c);
+			} else {
+				mList.add(c);
+				build.append(c);
 			} 
 		}
+		log.debug("{}", sum);
+		char[] cArrays = build.toString().toCharArray();
+				
+		log.debug("{}", Arrays.toString(cArrays));
+		
+		for (int i = 0; i < cArrays.length - 1; i++) {
+			for (int j = i + 1; j < cArrays.length; j++) {
+				if (cArrays[i] > cArrays[j]) {
+					char temp = cArrays[i];
+					cArrays[i] = cArrays[j];
+					cArrays[j] = temp;
+				}
+			}
+		}
+		log.debug("{}", Arrays.toString(cArrays));
+		
+//		Character[] cArrays = mList.toArray(new Character[mList.size()]);		
+//		log.debug("{}", Arrays.toString(cArrays));
+//		
+//		for (int i = 0; i < cArrays.length - 1; i++) {
+//			for (int j = i + 1; j < cArrays.length; j++) {
+//				if (cArrays[i] >= cArrays[j]) {
+//					char temp = cArrays[i];
+//					cArrays[i] = cArrays[j];
+//					cArrays[j] = temp;
+//				}
+//			}
+//		}
+//		log.debug("{}", Arrays.toString(cArrays));
 	}
 	
-	public static void reverseArrayString(String[] array) {
+	public static void reverseArrayString() {
+		String[] array = { "test1", "test2", "test3" };
 		String temp;
 		for (int i = 0; i < array.length / 2; i++) {
 			temp = array[i];
 			array[i] = array[(array.length - 1) - i];
 			array[(array.length - 1) - i] = temp;
 		}
+		log.debug("{}", Arrays.toString(array));
+	}
+	
+	public static void reverseArraysChar() {
+		char[] array = { 'a', 'b', 'c', 'd' };
+		char temp;
+		for (int i = 0; i < array.length / 2; i++) {
+			temp = array[i];
+			array[i] = array[(array.length - 1) - i];
+			array[(array.length - 1) - i] = temp;
+		}
+		log.debug("{}", Arrays.toString(array));
 	}
 	
 	/*
@@ -311,9 +479,12 @@ public class exam {
 	 * * 결과값은 s1이 작을 경우 -1, 같을 경우 0, 클 경우 1을 리턴
 	 */
 	private static void exam10() {
-		String s1 = "bbb";
+		String s1 = "aaa";
 		String s2 = "bbb";
-		System.out.println(s1.compareToIgnoreCase(s2));
+		String s3 = "aaa";
+		log.debug("{}", s1.compareToIgnoreCase(s2));
+		log.debug("{}", s2.compareToIgnoreCase(s3));
+		log.debug("{}", s1.compareToIgnoreCase(s3));
 	}
 	
 	/*
@@ -330,6 +501,7 @@ public class exam {
 		int max = 10;
 		int a[] = new int[max - min]; // int형 배열 선언
 		for (int i = 0; i < max - min; i++) {
+			
 			a[i] = random.nextInt(max - min + 1) + min;
 			for (int j = 0; j < i; j++) { // 중복제거를 위한 for문
 				if (a[i] == a[j]) {
@@ -338,6 +510,61 @@ public class exam {
 			}
 		}
 		log.debug("{}", Arrays.toString(a));
+	}
+	
+	private static void randomTest() {
+		// 0 이상에서, 지정 숫자 미만의 범위
+		Random random = new Random();
+		int test = random.nextInt(10); // (10을 입력하면 0~9 까지 나옴)
+	    System.out.println(test);
+	}
+	
+	/*
+	 * 1~10까지의 숫자중 랜덤으로 숫자 하나뽑기
+	 * http://itpangpang.xyz/50
+	 */
+	private static void randomTest1() {
+		int a;
+		Random r = new Random(); 
+		a = r.nextInt(10) + 1; // nextInt(9) = 0~9까지 10개의 숫자중 랜덤으로 하나를 뽑아 변수 a에 넣는다는 의미로 1~10의 숫자에서 하나를 뽑기위해 추출된 값에서 +1을 해준다
+		System.out.println("랜덤으로 뽑힌 숫자는 " + a + "입니다."); // a에 저장된 값을 화면에 출력
+	}
+	
+	/*
+	 * 11~100까지의 숫자중 랜덤으로 숫자 5개 뽑기
+	 * http://itpangpang.xyz/50
+	 */
+	private static void randomTest2() {
+		int a;
+		Random r = new Random();
+		for (int i = 1; i <= 5; i++) {
+			a = r.nextInt(90) + 11; // nextInt(90)은 0~89까지 숫자중 랜덤함수 발생이므로 +11을
+									// 더해줘서 11~100까지의 숫자중 하나를 뽑아 변수 a에 값을 저장한다
+			System.out.print(a);
+		}
+	}
+	
+	/*
+	 * (중복없이)1~10까지의 숫자중 랜덤으로 숫자 6개 뽑기
+	 * http://itpangpang.xyz/50
+	 */
+	private static void randomTest3() {
+		int a[] = new int[6];
+		Random r = new Random();
+		for (int i = 0; i <= 5; i++) {
+			a[i] = r.nextInt(10) + 1; // 1~10숫자중 랜덤으로 하나를 뽑아 a[0]~a[5]에 저장
+			for (int j = 0; j < i; j++) { // 중복제거를 위한 for문
+				/*
+				 * 현재 a[]에 저장된 랜덤숫자와 이전에 a[]에 들어간 숫자 비교 ※예를 들어 배열 a[3]에 숫자 6이
+				 * 들어갔을때 이전에 완성된 배열 a[0],a[1],a[2]와 비교하여 숫자 6이 중복되지 않을시 다음
+				 * a[4]으로 넘어가고, 중복된다면 다시 a[3]에 중복되지 않는 숫자를 넣기 위하여 i를 한번 감소한후 처음
+				 * for문으로 돌아가 다시 a[3]을 채운다
+				 */
+				if (a[i] == a[j]) {
+					i--;
+				}
+			}
+		}
 	}
 	
 	/*
@@ -382,13 +609,15 @@ public class exam {
 	 * http://pli3452.tistory.com/27
 	 */
 	private static void exam14() {
-		int num = 123450;
-		int sum = 0;
+		int num = 12345;
+		int i = 0;
+		StringBuilder build = new StringBuilder();
 		while (num > 0) {
-			sum = num % 10;
+			i = num % 10;
 			num /= 10;
-			log.debug("sum = {} num = {}", sum, num);
+			build.append(i);
 		}	
+		log.debug("{}", build.toString());
 	}
 	
 	/*
@@ -413,7 +642,41 @@ public class exam {
 	 * http://dhkdehdud.tistory.com/entry/java-%EC%97%B0%EC%8A%B5-%EB%81%9D%EB%A7%90%EC%9E%87%EA%B8%B0-%EA%B2%8C%EC%9E%84
 	 */
 	private static void exam15() {
+		Scanner sc = new Scanner(System.in);
+		HashSet<String> set = new HashSet<>();
+		int cnt = Integer.parseInt(sc.nextLine());
+		char lastChar = 0;
+		char firstChar = 0;
 		
+		for (int i = 0; i < cnt; i++) {
+			String str = sc.nextLine();
+			log.debug("{} 단어 : {}", i, str);
+			if (str.length() < 1 || str.length() > 20) {
+				log.debug("{}", "입력한 단어의 길이는 1~20 사이로 전제");
+				i--;
+				return;
+			}
+			if (set.size() == 0) {
+				set.add(str);
+				lastChar = str.charAt(str.length() - 1);
+			} else {
+				firstChar = str.charAt(0);
+				log.debug("{} {}", lastChar, firstChar);
+				if (Character.toLowerCase(lastChar) == Character.toLowerCase(firstChar)) {
+					if (set.add(str)) {
+						lastChar = str.charAt(str.length() - 1);
+					} else {
+						log.debug("{}", "에러: 이미 나온 단어입니다.");
+						i--;						
+					}
+				} else {
+					log.debug("에러: {} 로 시작하는 단어이어야 합니다.", lastChar);
+					i--;
+				}
+			}
+		}
+		sc.close();
+		log.debug("{}", set.toString());
 	}
 	
 	/*
@@ -426,7 +689,11 @@ public class exam {
 	 * 51/82, 21951
 	 * 
 	 * https://www.acmicpc.net/problem/1978 소수 찾기
-https://www.acmicpc.net/problem/1929 소수 구하기
+	 * https://www.acmicpc.net/problem/1929 소수 구하기
+	 * 
+	 * http://pyukcho.tistory.com/entry/100017283242
+	 * 1/n을 소수로 나타낼 때 순환마디의 길이가 n-1이 되는 수라면 이런 성질을 갖게 되는데, 이런 수들은 순환 수(cyclic number)로 불리며
+	 * http://www.anilspersonal.com/2016/01/write-java-program-to-check-if-given_31.html
 	 */
 	private static void exam16() {
 		// 분모 : denominator
