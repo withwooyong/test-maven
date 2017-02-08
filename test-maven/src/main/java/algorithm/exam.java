@@ -703,6 +703,7 @@ public class exam {
 		log.debug("{}", 51 / 82);
 		float temp = 51 / 82;
 		System.out.println(temp);
+		
 	}
 	
 	/*
