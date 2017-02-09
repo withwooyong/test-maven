@@ -39,6 +39,8 @@ public class P11052 {
 
 	/*
 	 * https://gist.github.com/Baekjoon/efaf5dee617b4ee9d305
+	 * 
+	 * max(P[i] + D[N-i])
 	 */
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);

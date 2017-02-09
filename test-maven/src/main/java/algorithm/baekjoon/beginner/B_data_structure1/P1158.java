@@ -25,7 +25,7 @@ public class P1158 {
 	 * <3, 6, 2, 7, 5, 1, 4>
 	 */
 	public static void main(String[] args) throws Exception {
-		solution();
+		solution(); 
 	}
 	
 	/*
@@ -34,7 +34,7 @@ public class P1158 {
 	private static void solution() {
 		Scanner sc = new Scanner(System.in);
 		int n = sc.nextInt();
-		int m = sc.nextInt();
+		int m = sc.nextInt(); 
 		StringBuilder sb = new StringBuilder();
 		sb.append('<');
 		Queue<Integer> queue = new LinkedList<Integer>();

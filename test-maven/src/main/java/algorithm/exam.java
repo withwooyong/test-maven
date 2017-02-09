@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.math.BigInteger;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -33,76 +32,33 @@ public class exam {
 	private static Logger log = LoggerFactory.getLogger(exam.class);
 	
 	public static void main(String[] args) throws IOException {
-		//System.out.println(largestNumber());
-		//exam09();
 		//maxMultiply();
-//		double[] A = { 3.4, 0.1, 2.0, 0.34 };
-//		System.out.println(fastestMaxSum(A));
+		//fastestMaxSum();
 		//reverseArrayString();
 		//reverseArraysChar();
-		//exam15();
-		
 		double a = 51.0;
-		double b = 82.0;
-		System.out.println(a/b);
-		System.out.println(b);
-		System.out.println(cyclicNumber(a, b));
-		test();
-	}
-	
-	private static void test() {
-		Scanner sc = new Scanner(System.in);
-		System.out.print("Input a number: ");
-		String strnum = sc.nextLine().trim();
-		BigInteger n = new BigInteger(strnum);
-		int len = strnum.length() + 1;
-		String str = String.valueOf(len);
-		BigInteger n1 = new BigInteger(str);
-		StringBuilder buf = new StringBuilder();
-		for (int i = 0; i < (len - 1); i++) {
-			buf.append('9');
-		}
-		BigInteger total = new BigInteger(buf.toString());
-		if (n.multiply(n1).equals(total)) {
-			System.out.println("It is a cyclic number.");
-		} else {
-			System.out.println("Not a cyclic number.");
-		}
-		sc.close();
-	}
- 	
-	/*
-	 * * 분자: 51
-	 * * 분모: 82
-	 * * 51/82, 21951
-	 */
-	private static boolean cyclicNumber(double a, double b) {
+		double c = 82.0;
+		//System.out.println(a/b);
+		//exam04();
 		
-		String x = "" + a;
-		String y = "" + b;
-		int i;
-		int j;
-		int flag;
-		if (x.length() != y.length()) {
-			return false;
-		}
-
-		for (i = 0; i < x.length(); i++) {
-			flag = 0;
-			for (j = 0; j < y.length(); j++) {
-				if (x.charAt(i) == y.charAt(j)) {
-					flag = 1;
-					break;
-				}
+		int n = 25;
+		int b = 2;
+		StringBuilder ans = new StringBuilder();
+		while (n > 0) {
+			int r = n % b;
+			if (r < 10) {
+				ans.append((char) (r + '0'));
+			} else {
+				ans.append((char) (r - 10 + 'A'));
 			}
-			if (flag == 0)
-				return false;
+			n /= b;// 알고리즘 
 		}
-		return true;
+		log.debug(ans.toString());
 	}
 	
 	// 연속된 부분 구간 중 그 합이 최대인 구간을 찾는 문제
-	private static double fastestMaxSum(double[] A) {
+	private static void fastestMaxSum() {
+		double[] A = { 3.4, 0.1, 2.0, 0.34 };
 		int N = A.length;
 		double ret = Integer.MIN_VALUE;
 		double psum = 1;
@@ -110,33 +66,35 @@ public class exam {
 			psum = Math.max(psum, 0) * A[i];
 			ret = Math.max(psum, ret);
 		}
-		return ret;
+		log.debug("{}", ret);
+		
 	}
 	
-	public static String largestNumber() {
+	public static void largestNumber() {
 		int[] nums = { 3, 30, 34, 5, 9 };
 		String[] arr = new String[nums.length];
 		for (int i = 0; i < nums.length; i++) {
 			arr[i] = String.valueOf(nums[i]);
 		}
 
-		System.out.println(Arrays.toString(arr));
+		log.debug("{}", Arrays.toString(arr));
 		Arrays.sort(arr, new Comparator<String>() {
 			public int compare(String a, String b) {
 				return (b + a).compareTo(a + b);
 			}
 		});
-		System.out.println(Arrays.toString(arr));
+		log.debug("{}", Arrays.toString(arr));
 
 		StringBuilder sb = new StringBuilder();
 		for (String s : arr) {
 			sb.append(s);
 		}
 
-		while (sb.charAt(0) == '0' && sb.length() > 1)
+		while (sb.charAt(0) == '0' && sb.length() > 1) {
 			sb.deleteCharAt(0);
+		}
 
-		return sb.toString();
+		log.debug("{}", sb.toString()); 
 	}
 	
 	/*
@@ -153,47 +111,24 @@ public class exam {
 	 * http://jungmonster.tistory.com/126
 	 */
 	private static void exam01() {
-		
-		double[] arr = { 3.4, 0.1, 2.0, 0.34 };
+
+		double[] A = { 3.4, 0.1, 2.0, 0.34 };
 		double max = Double.MIN_VALUE;
 		double temp;
-		for (int i = 0; i < arr.length-1; i++) {			
-			temp = arr[i];
-			for (int j = 1; j < arr.length; j++) {
-				temp *= arr[j];
+		for (int i = 0; i < A.length - 1; i++) {
+			temp = A[i];
+			for (int j = 1; j < A.length; j++) {
+				temp *= A[j];
 				max = Math.max(max, temp);
 			}
 		}
-        log.debug("max={}", max);
-        log.debug("3.4 * 0.1 ={}", 3.4 * 0.1);
-        log.debug("3.4 * 0.1 * 2.0 ={}", 3.4 * 0.1 * 2.0);
-        log.debug("3.4 * 0.1 * 2.0 * 0.34 ={}", 3.4 * 0.1 * 2.0 * 0.34);
-        log.debug("0.1 * 2.0 ={}", 0.1 * 2.0);
-        log.debug("0.1 * 2.0 * 0.34 ={}", 0.1 * 2.0 * 0.34);
-        log.debug("2.0 * 0.34 ={}", 2.0 * 0.34);
-	}
-	
-	private static void maxMultiply() {
-		double[] A = { 3.4, 0.1, 2.0, 0.34 };
-		int N = A.length;
-		double ret = Double.MIN_VALUE;
-		log.debug(Arrays.toString(A));
-		
-		for (int i = 0; i < N; i++) {
-			double multiply = 1.0;
-			for (int j = i; j < N; j++) {
-				multiply *= A[j];
-				ret = Math.max(ret,  multiply);
-				log.debug("{}, {}", multiply, ret);
-			}
-		}
-		log.debug("ret={}", ret);
+		log.debug("max={}", max);
 		log.debug("3.4 * 0.1 ={}", 3.4 * 0.1);
-        log.debug("3.4 * 0.1 * 2.0 ={}", 3.4 * 0.1 * 2.0);
-        log.debug("3.4 * 0.1 * 2.0 * 0.34 ={}", 3.4 * 0.1 * 2.0 * 0.34);
-        log.debug("0.1 * 2.0 ={}", 0.1 * 2.0);
-        log.debug("0.1 * 2.0 * 0.34 ={}", 0.1 * 2.0 * 0.34);
-        log.debug("2.0 * 0.34 ={}", 2.0 * 0.34);
+		log.debug("3.4 * 0.1 * 2.0 ={}", 3.4 * 0.1 * 2.0);
+		log.debug("3.4 * 0.1 * 2.0 * 0.34 ={}", 3.4 * 0.1 * 2.0 * 0.34);
+		log.debug("0.1 * 2.0 ={}", 0.1 * 2.0);
+		log.debug("0.1 * 2.0 * 0.34 ={}", 0.1 * 2.0 * 0.34);
+		log.debug("2.0 * 0.34 ={}", 2.0 * 0.34);
 	}
 	
 	/*
@@ -205,9 +140,8 @@ public class exam {
 	private static void exam02() {
 		String str = "hello1?hello2.hello3!hello4";
 		char[] delimiters = { '?', '.', '!' };
-		System.out.println(str);
 		new WordUtils(); // import org.apache.commons.lang.WordUtils;
-		System.out.println(WordUtils.capitalize(str, delimiters));
+		log.debug("{}", WordUtils.capitalize(str, delimiters));
 	}
 	
 	/*
@@ -254,10 +188,17 @@ public class exam {
 	 * 가장 큰수 : 432
 	 */
 	private static void exam04() {
+		
 		int n = 324;
-		char[] a = ("" + n).toCharArray();
+		char[] a = String.valueOf(n).toCharArray();
 		Arrays.sort(a);
-		System.out.println(Arrays.toString(a));
+		//Arrays.sort(ArrayUtils.toObject(a), Collections.reverseOrder());
+		
+//		String str = "testString";
+//		char[] charArray = str.toCharArray();
+//		Character[] charObjectArray = ArrayUtils.toObject(charArray);
+		
+		log.debug("{}", Arrays.toString(a));		
 
 		for (int i = 0; i < a.length; i++) {
 			System.out.print(a[i]);
@@ -753,8 +694,24 @@ public class exam {
 	 * time, emit은 anagram O
 	 * time, tine은 anagram X
 	 * AnagramsTest
+	 * 문자열 대소문자 구분없이 정렬하여 동일하면 됨. 
 	 */
 	private static void exam19() {
-		
+		System.out.println(isAnagram("!@", "@!"));
+	}
+	
+	public static boolean isAnagram(String word1, String word2) { 
+		 
+		char[] charWord1 = word1.toUpperCase().toCharArray(); 
+		char[] charWord2 = word2.toUpperCase().toCharArray(); //정렬 
+		Arrays.sort(charWord1); 
+		Arrays.sort(charWord2); //char[] -> String으로 변환하여 문자열 비교
+		log.debug("{}", Arrays.equals(charWord1, charWord2));
+		String sortWord1 = new String(charWord1); 
+		String sortWord2 = new String(charWord2); 
+		if (sortWord1.equals(sortWord2)) {
+			return true;	
+		}
+		return false; 
 	}
 }

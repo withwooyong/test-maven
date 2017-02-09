@@ -42,6 +42,8 @@ public class P9095 {
 7
 44
 274
+
+점화식 D[N] = D[N-1] + D[N-2] + D[N-3]
 	 */
 	public static void main(String[] args) throws Exception {
 		solution();
@@ -97,22 +99,22 @@ public class P9095 {
 	 */
 	private static void solution1() {
 		int K = 7;
-		int[] A = new int[K + 1];
-		A[0] = 1;
+		int[] D = new int[K + 1];
+		D[0] = 1;
 		// 1, 2, 3
-		for (int i = 1; i <= K; i++) {
-			if (i - 1 >= 0) {
-				A[i] += A[i - 1];
+		for (int N = 1; N <= K; N++) {
+			if (N - 1 >= 0) {
+				D[N] += D[N - 1];
 			}
-			if (i - 2 >= 0) {
-				A[i] += A[i - 2];
+			if (N - 2 >= 0) {
+				D[N] += D[N - 2];
 			}
-			if (i - 3 >= 0) {
-				A[i] += A[i - 3];
+			if (N - 3 >= 0) {
+				D[N] += D[N - 3];
 			}
 		}
-		log.debug("{}", Arrays.toString(A));
-		log.debug("{}", A[K]);
+		log.debug("{}", Arrays.toString(D));
+		log.debug("{}", D[K]);
 		
 	}
 	

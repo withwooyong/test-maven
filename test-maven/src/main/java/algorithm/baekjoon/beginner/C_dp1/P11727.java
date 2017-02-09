@@ -1,5 +1,6 @@
-package algorithm.baekjoon.beginner.C_dp1;
+ package algorithm.baekjoon.beginner.C_dp1;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -19,6 +20,8 @@ public class P11727 {
 	 * 8
 	 * 
 	 * 171
+	 * 
+	 * 점화식 D[i] = 2 * D[i - 2] + D[i -1]
 	 */
 	public static void main(String[] args) throws Exception {
 		solution();
@@ -54,5 +57,6 @@ public class P11727 {
 
 		log.debug("{}", Arrays.toString(A));
 		log.debug("{}", A[N] % 10007);
+		sc.close();
 	}
 }
