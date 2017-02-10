@@ -1,0 +1,55 @@
+<!ELEMENT program (media+, ucastInfo?, mcastInfo?, schedule*, attribute?)>
+<!ATTLIST program
+	version CDATA "1.0"
+	name CDATA #REQUIRED
+	serviceType (wmt | movieStreamer ) "wmt"
+	description CDATA #IMPLIED
+	playTime CDATA #IMPLIED
+	lastModificationTime CDATA #IMPLIED
+	gracefulExit (false | true) "false"
+	shuffle (false | true) "false"
+	autoDelete (false | true | default) "default"
+	live (false | true) "false"
+>
+<!ELEMENT media EMPTY>
+<!ATTLIST media
+	index CDATA #IMPLIED
+	src CDATA #REQUIRED
+	id CDATA #IMPLIED
+	playTime CDATA #IMPLIED
+>
+<!ELEMENT ucastInfo EMPTY>
+<!ATTLIST ucastInfo
+	referenceUrl CDATA #REQUIRED
+>
+<!ELEMENT mcastInfo (addrPort*)>
+<!ATTLIST mcastInfo
+	referenceUrl CDATA #REQUIRED
+	TTL CDATA #IMPLIED
+>
+<!ELEMENT addrPort EMPTY>
+<!ATTLIST addrPort
+	addrVal CDATA #REQUIRED
+	portVal CDATA #REQUIRED
+	id CDATA #IMPLIED
+>
+<!ELEMENT schedule (repeats?)>
+<!ATTLIST schedule
+	timeSpec (local | gmt) "local"
+	startTime CDATA #IMPLIED
+	activeDuration CDATA #IMPLIED
+>
+<!ELEMENT repeats (dayOffset*)>
+<!ATTLIST repeats
+	type (timeInterval | days) "timeInterval"
+	interval CDATA #IMPLIED
+	endTime CDATA #IMPLIED
+>
+<!ELEMENT dayOffset EMPTY>
+<!ATTLIST dayOffset
+	value (0 | 1 | 2 | 3 | 4 | 5 | 6) "0"
+>
+<!ELEMENT attribute EMPTY>
+<!ATTLIST attribute
+	value CDATA #REQUIRED
+>

@@ -436,6 +436,7 @@ public class exam {
 	 * https://androidkr.blogspot.kr/2012/08/java-nm-random.html
 	 * http://stackoverflow.com/questions/363681/generating-random-integers-in-a-specific-range?newsletter=1&nlcode=66478%7c80bd
 	 */
+	
 	private static void exam11() {
 		Random random = new Random(); // 객체생성
 		int min = 5;

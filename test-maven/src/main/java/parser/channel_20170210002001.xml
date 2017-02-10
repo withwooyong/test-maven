@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataList>
+    <data>
+        <table korName="epg_channel">
+            <field korName="chid"><![CDATA[19]]></field>
+            <field korName="chno"><![CDATA[904]]></field>
+            <field korName="chname"><![CDATA[채널CGV]]></field>
+            <field korName="chgroup"><![CDATA[100]]></field>
+            <field korName="chkind"><![CDATA[케이블]]></field>
+            <field korName="chadultyn"><![CDATA[N]]></field>
+        </table>
+    </data>
+    <data>
+        <table korName="epg_channel">
+            <field korName="chid"><![CDATA[53]]></field>
+            <field korName="chno"><![CDATA[72]]></field>
+            <field korName="chname"><![CDATA[PLAYY 프리미엄 영화]]></field>
+            <field korName="chgroup"><![CDATA[100]]></field>
+            <field korName="chkind"><![CDATA[케이블]]></field>
+            <field korName="chadultyn"><![CDATA[N]]></field>
+        </table>
+    </data>
+</dataList>
+
