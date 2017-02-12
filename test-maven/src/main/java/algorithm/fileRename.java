@@ -1,4 +1,4 @@
-package algorithm.hanbit;
+package algorithm;
 
 import java.io.File;
 import java.io.IOException;

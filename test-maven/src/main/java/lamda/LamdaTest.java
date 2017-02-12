@@ -39,7 +39,7 @@ public class LamdaTest {
 	public static void threadTest() {
 		// Thread - traditional
 		new Thread(new Runnable() {
-			@Override0
+			@Override
 			public void run() {
 				System.out.println("test");
 			}

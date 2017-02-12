@@ -59,54 +59,54 @@ public class DOMTest {
 </TABLEDATA>
 	 */
 	public static void main(String[] args) {
-		parseTest1();
+		//parseTest1();
 	}
 	
-	private static void parseTest() {
-		try {
-			File fXmlFile = new File("C:\\Users\\user\\git\\test-maven\\test-maven\\src\\main\\java\\parser\\channel_20170210002001.xml"); 
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); 
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder(); 
-			Document doc = dBuilder.parse(fXmlFile); 
-			//optional, but recommended 
-			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work 
-			doc.getDocumentElement().normalize(); 
-			log.debug("Root element :{}", doc.getDocumentElement().getNodeName());
-			
-			NodeList nList = doc.getElementsByTagName("table");
-			log.debug("{}", nList.item(0).getChildNodes().item(0).getNodeName());
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	private static void parseTest1() {
-		try {
-			File fXmlFile = new File("C:\\Users\\user\\git\\test-maven\\test-maven\\src\\main\\java\\parser\\channel_20170210002001.xml"); 
-			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); 
-			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder(); 
-			Document doc = dBuilder.parse(fXmlFile); 
-			//optional, but recommended 
-			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work 
-			doc.getDocumentElement().normalize(); 
-			log.debug("Root element :{}", doc.getDocumentElement().getNodeName()); 
-			
-			NodeList nList = doc.getElementsByTagName("table");
-			log.debug("---------------------------- {} ", nList.getLength()); 
-			
-			for (int temp = 0; temp < nList.getLength(); temp++) { 
-				Node nNode = nList.item(temp);
-				 
-				if (nNode.getNodeType() == Node.ELEMENT_NODE) { 
-					Element eElement = (Element) nNode; 
-					log.debug("Staff id : {}", eElement.getAttribute("chid")); 
-					log.debug("First Name : {}", eElement.getElementsByTagName("chid").item(0).getTextContent()); 
-				}
-				log.debug("-------------------");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-	}
+//	private static void parseTest() {
+//		try {
+//			File fXmlFile = new File("C:\\Users\\user\\git\\test-maven\\test-maven\\src\\main\\java\\parser\\channel_20170210002001.xml"); 
+//			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); 
+//			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder(); 
+//			Document doc = dBuilder.parse(fXmlFile); 
+//			//optional, but recommended 
+//			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work 
+//			doc.getDocumentElement().normalize(); 
+//			log.debug("Root element :{}", doc.getDocumentElement().getNodeName());
+//			
+//			NodeList nList = doc.getElementsByTagName("table");
+//			log.debug("{}", nList.item(0).getChildNodes().item(0).getNodeName());
+//			
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
+//	
+//	private static void parseTest1() {
+//		try {
+//			File fXmlFile = new File("C:\\Users\\user\\git\\test-maven\\test-maven\\src\\main\\java\\parser\\channel_20170210002001.xml"); 
+//			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance(); 
+//			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder(); 
+//			Document doc = dBuilder.parse(fXmlFile); 
+//			//optional, but recommended 
+//			//read this - http://stackoverflow.com/questions/13786607/normalization-in-dom-parsing-with-java-how-does-it-work 
+//			doc.getDocumentElement().normalize(); 
+//			log.debug("Root element :{}", doc.getDocumentElement().getNodeName()); 
+//			
+//			NodeList nList = doc.getElementsByTagName("table");
+//			log.debug("---------------------------- {} ", nList.getLength()); 
+//			
+//			for (int temp = 0; temp < nList.getLength(); temp++) { 
+//				Node nNode = nList.item(temp);
+//				 
+//				if (nNode.getNodeType() == Node.ELEMENT_NODE) { 
+//					Element eElement = (Element) nNode; 
+//					log.debug("Staff id : {}", eElement.getAttribute("chid")); 
+//					log.debug("First Name : {}", eElement.getElementsByTagName("chid").item(0).getTextContent()); 
+//				}
+//				log.debug("-------------------");
+//			}
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} 
+//	}
 }
