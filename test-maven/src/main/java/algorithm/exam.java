@@ -1,5 +1,7 @@
 package algorithm;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -22,6 +24,7 @@ import java.util.Scanner;
 import java.util.Stack;
 
 import org.apache.commons.lang.WordUtils;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

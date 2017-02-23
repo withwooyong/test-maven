@@ -1,0 +1,21 @@
+[tvingadmin@im-db01 ~]$ ps -ef | grep mongo
+500       6849     1  8  2015 ?        59-06:23:12 /home/tvingadmin/server/mongodb/bin/mongod --keyFile /home/tvingadmin/server/mongodb/conf/ironKey --config /home/tvingadmin/server/mongodb/conf/mongodb.conf
+500      23264  4603  0 17:20 pts/3    00:00:00 grep mongo
+[tvingadmin@im-db01 ~]$ cat /home/tvingadmin/server/mongodb/conf/mongodb.conf
+replSet=ironCluster3
+dbpath=/dbdata
+logpath=/home/tvingadmin/server/mongodb/logs/mongodb.log
+logappend=true
+verbose=true
+
+port=25017
+fork=true
+
+rest=true
+auth=true
+oplogSize=136314
+quiet=true
+slowms=100
+profile=1
+nohttpinterface = true
+ 

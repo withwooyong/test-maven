@@ -1,0 +1,23 @@
+#! /bin/sh
+#
+# NGINX WEB SERVER를 자동으로 설치 합니다.
+#
+
+INSTALL_TOMCAT_DIR="/home/tvingadmin/server/tomcat"
+echo "\n========== Install TOMCAT Configuration ==========\n"
+read -p "TOMCAT을 설치할 절대경로를 입력해 주세요. (default: /home/tvingadmin/server/tomcat) : " IMSI
+
+if [ ! -z "$IMSI" ]; then
+        INSTALL_TOMCAT_DIR=$IMSI
+fi
+if [ ! -e $INSTALL_TOMCAT_DIR ]; then
+        mkdir -p $INSTALL_TOMCAT_DIR
+fi
+
+cd $INSTALL_TOMCAT_DIR
+
+echo "\n========== Download & Install NGINX ==========\n"
+wget http://mirror.apache-kr.org/tomcat/tomcat-7/v7.0.32/bin/apache-tomcat-7.0.32.tar.gz
+tar xvfzp apache-tomcat-7.0.32.tar.gz
+
+rm -rf apache-tomcat-7.0.32.tar.gz

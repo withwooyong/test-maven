@@ -1,0 +1,27 @@
+#! /bin/sh
+#
+# MONGO SERVER를 자동으로 설치 합니다.
+#
+
+INSTALL_MONGO_DIR="/home/tvingadmin/server/mongodb"
+echo "\n========== Install MONGO Configuration ==========\n"
+read -p "MONGODB을(를) 설치할 절대경로를 입력해 주세요. (default: /home/tvingadmin/server/mongodb) : " IMSI
+
+if [ ! -z "$IMSI" ]; then
+        INSTALL_MONGO_DIR=$IMSI
+fi
+if [ ! -e $INSTALL_MONGO_DIR ]; then
+        mkdir -p $INSTALL_MONGO_DIR
+fi
+
+#cd $INSTALL_MONGO_DIR
+
+
+echo "\n========== Download & Install MONGODB ==========\n"
+wget http://www.mongodb.org/dr/fastdl.mongodb.org/linux/mongodb-linux-x86_64-2.2.3.tgz/download
+tar xvfz mongodb-linux-x86_64-2.2.3.tgz
+
+#cd mongodb-linux-x86_64-2.2.3
+mv  mongodb-linux-x86_64-2.2.3/* $INSTALL_MONGO_DIR
+rm -rf mongodb-linux-x86_64-2.2.3*
+#rm -rf mongodb-linux-x86_64-2.2.3.tgz

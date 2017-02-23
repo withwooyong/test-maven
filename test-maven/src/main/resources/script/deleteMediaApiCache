@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]; then
+        echo "사용법: "$0 "캐시타입 캐시이름"
+        exit 0
+else
+        echo "/bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache"
+        # REAL
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.197 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.198 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.199 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.200 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.228 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.206 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.207 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.208 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.43.93 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.43.94 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.43.95 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.43.96 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.43.97 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        /usr/bin/rsh -l tvingadmin XXX.XXX.43.98 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        # QC
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.236 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+        # STAGE
+        /usr/bin/rsh -l tvingadmin XXX.XXX.188.237 /bin/rm -vf /home/tvingadmin/www/file_cache/$1/$2_*.cache
+fi

@@ -21,6 +21,7 @@ public class SAXTest {
 		saxChannel();
 		saxProgram();
 		saxSchedule();
+		
 	}
 
 	// http://stackoverflow.com/questions/9705244/parse-xml-in-java-when-there-are-duplicate-tags

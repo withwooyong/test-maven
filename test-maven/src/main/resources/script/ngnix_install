@@ -1,0 +1,28 @@
+#! /bin/sh
+#
+# NGINX WEB SERVER를 자동으로 설치 합니다.
+#
+
+INSTALL_NGINX_DIR="/home/tvingadmin/server/nginx"
+echo "\n========== Install NGINX Configuration ==========\n"
+read -p "NGINX를 설치할 절대경로를 입력해 주세요. (default: /home/tvingadmin/server/nginx) : " IMSI
+
+if [ ! -z "$IMSI" ]; then
+        INSTALL_NGINX_DIR=$IMSI
+fi
+if [ ! -e $INSTALL_NGINX_DIR ]; then
+        mkdir -p $INSTALL_NGINX_DIR
+fi
+
+cd $INSTALL_NGINX_DIR
+
+echo "\n========== Download & Install NGINX ==========\n"
+wget http://nginx.org/download/nginx-1.2.6.tar.gz 
+tar xvfzp nginx-1.2.6.tar.gz
+cd nginx-1.2.6
+
+./configure --prefix=$INSTALL_NGINX_DIR --with-http_ssl_module
+make
+make install
+
+rm -rf $INSTALL_NGINX_DIR/nginx-1.2.6*
