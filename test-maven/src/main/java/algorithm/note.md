@@ -847,10 +847,10 @@ CRUD 네가지 상황 외에 컨트롤러를 실행하는데 POST 메서드가 �
 또한, 최근에는 PATCH라는 메서드를 많이 사용하고 있다. PUT이 해당 자원의 전체를 수정하는 의미하며, PATCH는 해당 자원의 일부를 수정한다는 의미로 인해 update 이벤트에서 PUT보다는 PATCH가 더 적합하다고 평가받고 있다.
 
 
-_ _ _ 
+_ _ _
 
 [IPTV의 전체적인 시스템](https://www.slideshare.net/yhjrookie/ss-29149718)
-콘텐츠 
+콘텐츠
 헤드앤드(플랫폼)
 네트워크
 셋톱박스(STB)
@@ -860,3 +860,22 @@ _ _ _
 파일관리
 수급(영상/이미지)->인제스트->인코딩->DRM(영상)->동기화(CDN)
 콘텐츠
+
+
+
+@cv00400004945-1:~$ ps -ef | grep tomcat
+   9281  9005  0 16:47 pts/4    00:00:00 grep tomcat
+@cv00400004945-1:~$ ps -ef | grep java
+   9900  9005  0 16:47 pts/4    00:00:00 grep java
+  15501     1  2  2016 ?        2-01:44:49 java -Dserver.port=9991 -jar /home/hellotv/app/api_tcp-1.0.jar
+  15533     1  2  2016 ?        2-01:34:16 java -Dserver.port=9992 -jar /home/hellotv/app/api_tcp-1.0.jar
+  15568     1  2  2016 ?        2-01:24:05 java -Dserver.port=9993 -jar /home/hellotv/app/api_tcp-1.0.jar
+  16246     1  5  2016 ?        4-07:24:00 /home/hellotv/src/jdk1.8.0_45/bin/java -Djava.util.logging.config.file=/home/hellotv/src/vert.x-2.1.6/conf/logging.properties -Dvertx.home=/home/hellotv/src/vert.x-2.1.6 -Dvertx.clusterManagerFactory=org.vertx.java.spi.cluster.impl.hazelcast.HazelcastClusterManagerFactory -classpath :/home/hellotv/src/vert.x-2.1.6/conf:/home/hellotv/src/vert.x-2.1.6/lib/* org.vertx.java.platform.impl.cli.Starter run com.hellotv.udp.app.ServerStart -cp /home/hellotv/app/api_udp-1.0.jar -instances 1
+push     28506     1  0 02:00 ?        00:02:01 java -jar -Xms5120m -Xmx5120m /home/push/pushsvr/pushSvr.jar
+
+빌더패턴
+스트레티지패턴
+템플릿메서드패턴
+테커레이터패턴
+플라이웨이트패턴
+싱글턴패턴
