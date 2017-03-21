@@ -211,7 +211,33 @@
 		    <groupId>com.google.gcm</groupId>
 		    <artifactId>gcm-server</artifactId>
 		    <version>1.0.0</version>
-		</dependency>				
+		</dependency>	
+		
+		<dependency>
+	        <groupId>org.apache.hadoop</groupId>
+	        <artifactId>hadoop-core</artifactId>
+	        <version>1.0.4</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.mongodb</groupId>
+	        <artifactId>mongo-hadoop-core</artifactId>
+	        <version>1.0.0</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.mongodb</groupId>
+	        <artifactId>mongo-hadoop-pig</artifactId>
+	        <version>1.0.0</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.mongodb</groupId>
+	        <artifactId>mongo-java-driver</artifactId>
+	        <version>2.12.3</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.apache.pig</groupId>
+	        <artifactId>pig</artifactId>
+	        <version>0.12.1</version>
+	    </dependency>   			
 			
 		<!-- Test Artifacts -->
 		<dependency>
@@ -226,6 +252,15 @@
 			<version>${junit.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework/spring-web -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-web</artifactId>
+    <version>3.1.0.RELEASE</version>
+</dependency>
+		
+		
 
 	</dependencies>	
 </project>

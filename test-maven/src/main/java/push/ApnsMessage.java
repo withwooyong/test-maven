@@ -1,6 +1,4 @@
-package com.tving.manager.operation.domain;
-
-import com.tving.manager.common.domain.BaseObject;
+package push;
 
 /**
  * GCM 발송 전문
