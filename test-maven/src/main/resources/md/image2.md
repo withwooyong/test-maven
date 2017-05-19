@@ -25,39 +25,72 @@
 ~~~~
 
  - nginx download & copy
-cd /home/image/server/
+cd /home/manager/server/
 wget http://nginx.org/download/nginx-1.12.0.tar.gz
-cp -R nginx-[version] nginx-1.12.0_master  
-cp -R nginx-[version] nginx-1.12.0_slave01  
-cp -R nginx-[version] nginx-1.12.0_slave02  
+tar -xvzf nginx-1.12.0.tar.gz
+cp -R nginx-1.12.0 nginx_master
+cp -R nginx-1.12.0 nginx_slave01
+cp -R nginx-1.12.0 nginx_slave02
 
- - nginx configure
-/home/image/server/nginx-[version]_master/configure --prefix=/home/image/server/nginx-1.12.0_master --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module  
+yum install pcre
+yum install pcre-devel
+yum install openssl-devel
 
-/home/image/server/nginx-[version]_slave01/configure --prefix=/home/image/server/nginx-1.12.0_slave01 --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module  
+ - nginx configure make install
+cd /home/manager/server/nginx-1.12.0/
+./configure --prefix=/home/manager/server/nginx_master --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module
+make && make installl
 
-/home/image/server/nginx-[version]_slave02/configure --prefix=/home/image/server/nginx-1.12.0_slave02 --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module  
+#####################################
+yum install pcre
+yum install pcre-devel
+yum install openssl-devel
+yum install zlib
+yum install zlib-devel
+yum install gd gd-devel php-gd
 
- - nginx make install
-cd /home/image/server/nginx-1.12.0_master/  
-make && make installl  
+the HTTP rewrite module requires the PCRE library.
+yum install pcre
+yum install pcre-devel
+./configure --prefix=/home/manager/server/nginx_master --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_image_filter_module --with-http_secure_link_module
 
-cd /home/image/server/nginx-1.12.0_slave01/  
-make && make install  
+./configure --prefix=/home/manager/server/nginx_slave01 --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_image_filter_module --with-http_secure_link_module
 
-cd /home/image/server/nginx-1.12.0_slave02/  
-make && make install  
+./configure --prefix=/home/manager/server/nginx_slave02 --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_image_filter_module --with-http_secure_link_module
 
- - resize server  
-cd /home/image/server/
-wget http://kr1.php.net/get/php-7.1.4.tar.gz/from/this/mirror  
-tar xvfz php-7.1.4.tar.gz  
+#####################################
 
-cd php-[version]  
+./configure --prefix=/home/manager/server/nginx_slave01 --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module
+make && make installl
+
+./configure --prefix=/home/manager/server/nginx_slave02 --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module
+make && make installl
+
+ - resize server
+yum -y install libxml2 libxml2-devel
+yum -y install bzip2 bzip2-devel
+yum -y install curl-devel
+yum -y install libjpeg libjpeg-devel
+yum -y install libpng libpng-devel
+yum -y install freetype freetype-devel
+yum -y install libicu libicu-devel
+yum -y install openldap openldap-devel
+LDAP Lib
+PHP 설치시 –with-ldap 옵션을 사용하기위해 아래와 같이 심볼릭 링크를 추가시켜 줍니다.
+ln -s /usr/lib64/libldap.so /usr/lib/libldap.so
+ln -s /usr/lib64/libldap_r.so /usr/lib/libldap_r.so
+yum -y install libmcrypt libmcrypt-devel
+
+configure: WARNING: unrecognized options: --enable-mod-charset, --with-mysql
+
+cd /home/manager/server/
+wget http://kr1.php.net/distributions/php-7.1.5.tar.gz
+tar xvfz php-7.1.5.tar.gz
+cd php-7.1.5
 ./configure \
---prefix=/home/image/server/php-7.1.4 \
---with-config-file-path=/home/image/server/php-7.1.4/etc \
---with-config-file-scan-dir=/home/image/server/php-7.1.4/etc/conf.d \
+--prefix=/home/manager/server/php-7.1.5 \
+--with-config-file-path=/home/manager/server/php-7.1.5/etc \
+--with-config-file-scan-dir=/home/manager/server/php-7.1.5/etc/conf.d \
 --disable-debug \
 --enable-fpm \
 --enable-bcmath \
@@ -68,7 +101,6 @@ cd php-[version]
 --enable-intl \
 --enable-mbregex \
 --enable-mbstring \
---enable-mod-charset \
 --enable-sigchild \
 --enable-soap \
 --enable-sockets \
@@ -82,20 +114,19 @@ cd php-[version]
 --with-zlib \
 --with-gd \
 --with-gettext \
---with-ldap \
 --with-mcrypt \
 --with-mhash \
---with-mysql \
 --with-mysqli \
 --with-openssl \
+--with-openssl-dir=/usr/local/bin \
 --with-xmlrpc \
 --with-freetype-dir=/usr/include/freetype2 \
 --with-jpeg-dir=/usr/lib \
 --with-libxml-dir=/usr/lib \
 --with-png-dir=/usr/lib \
 --with-zlib-dir=/usr/lib \
---with-fpm-user=image \
---with-fpm-group=image
+--with-fpm-user=manager \
+--with-fpm-group=manager
 
 make && make install
 ~~~~
@@ -141,10 +172,10 @@ mv nginx nginx_slave02
 # Check that networking is up.
 [ "$NETWORKING" = "no" ] && exit 0
 
-nginx="/home/image/server/nginx_image_master/sbin/nginx_master" 
+nginx="/home/manager/server/nginx_master/sbin/nginx_master"
 prog=$(basename $nginx)
 
-NGINX_CONF_FILE="/home/image/server/nginx_image_master/conf/nginx.conf" 
+NGINX_CONF_FILE="/home/manager/server/nginx_master/conf/nginx.conf"
 
 [ -f /etc/sysconfig/nginx ] && . /etc/sysconfig/nginx
 
@@ -248,6 +279,8 @@ case "$1" in
 esac
 
 ~~~~
+sudo chmod +x /etc/init.d/nginx_master
+
 
 [nginx_slave01]
 ~~~~
@@ -272,10 +305,10 @@ esac
 # Check that networking is up.
 [ "$NETWORKING" = "no" ] && exit 0
 
-nginx="/home/image/server/nginx_image_slave01/sbin/nginx_slave01" 
+nginx="/home/manager/server/nginx_slave01/sbin/nginx_slave01" 
 prog=$(basename $nginx)
 
-NGINX_CONF_FILE="/home/image/server/nginx_image_slave01/conf/nginx.conf" 
+NGINX_CONF_FILE="/home/manager/server/nginx_slave01/conf/nginx.conf" 
 
 [ -f /etc/sysconfig/nginx ] && . /etc/sysconfig/nginx
 
@@ -391,7 +424,7 @@ esac
 # Description:       starts the PHP FastCGI Process Manager daemon
 ### END INIT INFO
 
-prefix=/home/image/server/php-7.1.4
+prefix=/home/manager/server/php-7.1.5
 exec_prefix=${prefix}
 
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm
@@ -516,6 +549,12 @@ case "$1" in
 esac
 
 ~~~~
+[root@DEV-VM-IRCS-01 init.d]# chmod 755 nginx_master
+[root@DEV-VM-IRCS-01 init.d]# chmod 755 nginx_slave01
+[root@DEV-VM-IRCS-01 init.d]# chmod 755 nginx_slave02
+[root@DEV-VM-IRCS-01 init.d]# chmod 755 php-fpm
+
+
 [서비스 등록]
 ~~~~
 chkconfig --add nginx_master
@@ -532,12 +571,12 @@ chkconfig --level 2345 nginx_slave02 on
 ~~~~
 
 #### 설정파일
-이미지 서버는 4개의 nginx 인스턴스로 구성이 되어 있어 각 설정이 기존의 web 서버설정 파일과는 다르다. 아래와 같이 로드밸러싱 역할을 하는 nginx_master와 실제 요청에 대한 처리를 담당하는 nginx_slave로 크게 나뉘며, nginx_slave는 포트번호를 제외하고 내용이 동일하다.  stillshot-origin의 요청의 경우 404에 대한 에러처리 대신에 400 에러를 리턴해 준다.(차호상님 요청사항) 또한 이미지 리사이징 요청의 경우는 proxy-cache를 적용하여 동일 요청의 경우 cache 처리함.
+이미지 서버는 4개의 nginx 인스턴스로 구성이 되어 있어 각 설정이 기존의 web 서버설정 파일과는 다르다. 아래와 같이 로드밸러싱 역할을 하는 nginx_master와 실제 요청에 대한 처리를 담당하는 nginx_slave로 크게 나뉘며, nginx_slave는 포트번호를 제외하고 내용이 동일하다. 또한 이미지 리사이징 요청의 경우는 proxy-cache를 적용하여 동일 요청의 경우 cache 처리함.
 
 
 [nginx_master/conf/nginx.conf]
 ~~~~
-user  image;
+user  manager;
 worker_processes  8;
 
 error_log  logs/error.log;
@@ -584,7 +623,7 @@ http {
     }
 
     #fastcgi cache path define
-    fastcgi_cache_path /home/image/server/nginx_image_master/cache levels=1:2 keys_zone=one:100m inactive=60m max_size=300M;
+    fastcgi_cache_path /home/manager/server/nginx_master/cache levels=1:2 keys_zone=one:100m inactive=60m max_size=300M;
 
     server {
         listen       80;
@@ -602,14 +641,6 @@ http {
             access_log     off;
             log_not_found  off;
         }
-
-#        location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|doc|xls|exe|pdf|ppt|txt|tar|mid|midi|wav|bmp|rtf|js|mov)$ {
-#               proxy_pass              http://tving_image;
-#                proxy_redirect          off;
-#                proxy_set_header        Host    $host;
-#                proxy_set_header        X-Real-IP       $remote_addr;
-#                proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-#        }
 
         location ~^/thumbnail/{
                 root /images;
@@ -658,7 +689,7 @@ http {
 ~~~~
 [nginx_slave/conf/nginx.conf]
 ~~~~
-user  image;
+user  manager;
 worker_processes  8;
 
 error_log  logs/error.log;

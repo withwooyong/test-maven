@@ -1,0 +1,179 @@
+http://blog.endpoint.com/2016/05/caching-resizing-reverse-proxying-image-server-nginx.html
+http://charlesleifer.com/blog/nginx-a-caching-thumbnailing-reverse-proxying-image-server-/
+https://stumbles.id.au/nginx-dynamic-image-resizing-with-caching.html
+
+master
+[root@DEV-VM-IRCS-04 conf]# cat nginx.conf
+user  manager;
+worker_processes  1;
+
+error_log  logs/error.log;
+
+pid        logs/nginx_master.pid;
+
+worker_rlimit_nofile 40960;
+events {
+    worker_connections 5120;
+    use epoll;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  logs/access.log  main;
+
+    sendfile        on;
+
+    keepalive_timeout  5 5;
+    keepalive_requests 5; 
+    #keepalive_timeout  65;
+    gzip  on;
+    gzip_min_length 1k;
+    gzip_buffers 4 8k;
+    gzip_http_version 1.1;
+    gzip_comp_level 2;
+    gzip_types  text/plain application/x-javascript text/css application/xml;
+    gzip_vary on;
+    gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+
+    upstream btv_image {
+        server 127.0.0.1:8081;
+        keepalive 10;
+    }
+
+    proxy_cache_path /home/manager/server/nginx_master/cache levels=1:2 keys_zone=thumbnail_cache:16M inactive=60d max_size=200M;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        charset UTF-8;
+        rewrite_log on;
+
+        # file size
+        client_max_body_size 100M;
+
+        location = /favicon.ico {
+            return 204;
+            access_log     off;
+            log_not_found  off;
+        }
+
+        location ~^/thumbnail/{
+                root /images;
+                expires      5s;
+                try_files $uri @notfound;
+        }
+
+        location @notfound {
+                return 404;
+        }
+
+        location /images/ {
+                proxy_pass              http://btv_image;
+                proxy_cache             thumbnail_cache;
+                proxy_cache_key         "$host$document_uri$is_args$arg_key";
+                proxy_cache_lock        on;
+                proxy_cache_valid 30d;  # Cache valid thumbnails for 30 days.
+                proxy_cache_valid any 15s;  # Everything else gets 15s.
+                proxy_cache_use_stale error timeout invalid_header updating;
+                proxy_http_version 1.1;
+                expires 30d; 
+        }
+
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+}
+
+[root@DEV-VM-IRCS-04 conf]# 
+
+[root@DEV-VM-IRCS-04 conf]# cat nginx.conf
+user  manager;
+worker_processes  1;
+
+error_log  logs/error.log;
+
+pid        logs/nginx_slave01.pid;
+
+worker_rlimit_nofile 20480;
+
+events {
+    worker_connections 2560;
+    use epoll;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  logs/access.log  main;
+
+    sendfile        on;
+    tcp_nopush     on;
+
+    keepalive_timeout  5 5;
+    keepalive_requests 5;
+
+    gzip  on;
+    gzip_min_length 1k;
+    gzip_buffers 4 8k;
+    gzip_http_version 1.1;
+    gzip_comp_level 2;
+    gzip_types  text/plain application/x-javascript text/css application/xml;
+    #gzip_types  text/plain text/css image/png image/gif image/jpeg application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    #gzip_vary on;
+    gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+
+    server {
+        listen       8081;
+        server_name  localhost;
+        charset UTF-8;
+
+        set $backend "stimage.hanafostv.com:8080";
+
+        resolver 8.8.8.8;  # Use Google for DNS.
+        resolver_timeout 5s;
+
+        proxy_buffering off;
+        proxy_http_version 1.1;
+        proxy_pass_request_body off;  # Not needed by AWS.
+        proxy_pass_request_headers off;
+
+        proxy_hide_header "Set-Cookie";
+        proxy_ignore_headers "Set-Cookie";
+        proxy_set_header Host $backend;
+        proxy_method GET;
+
+
+        location ~ ^/image/([0-9]+)x([0-9]+)/(.+) {
+          image_filter_buffer 20M; # Will return 415 if image is bigger than this
+          image_filter_jpeg_quality 75; # Desired JPG quality
+          image_filter_interlace on; # For progressive JPG
+   
+          image_filter resize $1 $2;
+   
+          proxy_pass http://stimage.hanafostv.com:8080/$3;
+      }
+        
+
+        error_page 400 403 404        /40x.html;
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+    }
+}
+
+[root@DEV-VM-IRCS-04 conf]# 
