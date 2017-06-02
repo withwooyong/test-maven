@@ -1,3 +1,174 @@
+# yum update
+# yum install epel-release
+# rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+# php -v
+# yum install php70w-xml php70w-xmlrpc php70w-soap php70w-mbstring php70w-json php70w-gd php70w-mcrypt php70w-mysql
+# systemctl restart httpd
+
+yum --enablerepo=remi-php71 install -y php php-fpm php-mysql php-gd php-common php-cli php-json php-opcache php-devel php-imagick php-mbstring php-mcrypt php-mysqlnd php-pear php-xml php-xmlrpc php-soap php-dba php-bcmath php-pdo php-ldap
+
+/bin/ld: ext/facedetect/.libs/facedetect.o: undefined reference to symbol 'cvEqualizeHist'
+/usr/local/lib/libopencv_imgproc.so.3.2: error adding symbols: DSO missing from command line
+collect2: error: ld returned 1 exit status
+make: *** [sapi/cli/php] 오류 1
+
+
+http://techieroop.com/install-opencv-in-centos/
+https://github.com/opencv/opencv/archive/2.4.13.2.tar.gz
+
+sudo apt-get install build-essential
+
+[compiler] sudo apt-get install build-essential
+[required] sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev
+[optional] sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+
+# http://techieroop.com/install-opencv-in-centos/
+## 2) Installing Opencv from Source:
+To install opencv from we need to install require and optional dependencies.
+
+CMake : For configure the opencv installation.
+Python-devel and Numpy : For Creating python extension.
+GCC: For compilation.
+$ yum install cmake
+$ yum install python-devel numpy
+$ yum install gcc gcc-c++
+
+## Install GTK To support GUI features, Camera support (libdc1394, libv4l), Media Support (ffmpeg, gstreamer) etc.
+$ yum install gtk2-devel
+$ yum install libdc1394-devel
+$ yum install libv4l-devel
+$ yum install ffmpeg-devel
+$ yum install gstreamer-plugins-base-devel
+
+# apt-get install pkg-config python libjpeg62-dev libpng12-dev libtiff4-dev
+sudo apt-get install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+
+## Optional Dependencies:
+Install below pakcages if you need latest libraries of PNG, JPEG, JPEG2000, TIFF, WebP.
+$ yum install libpng-devel libjpeg-turbo-devel jasper-devel openexr-devel libtiff-devel libwebp-devel
+
+## Now we have finish the first step of opencv installation. In next step download the opencv source from https://github.com/opencv/opencv/archive/3.2.0.zip
+wget https://github.com/opencv/opencv/archive/3.2.0.zip
+unzip 3.2.0.zip
+cd opencv-3.2.0
+
+## Create a new directory build to compile opencv from source.
+$ mkdir build
+-- $ cd build
+$ cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local ..
+$ make
+$ sudo make install
+
+
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D OPENCV_EXTRA_MODULES_PATH=/home/manager/opencv_contrib/modules \
+    -D INSTALL_C_EXAMPLES=OFF \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D BUILD_EXAMPLES=ON \
+    -D BUILD_OPENCV_PYTHON2=ON ..
+
+
+yum --enablerepo=remi-php71 install -y php php-fpm php-mysql php-gd php-common php-cli php-json php-opcache php-devel php-imagick php-mbstring php-mcrypt php-mysqlnd php-pear php-xml php-xmlrpc php-soap php-dba php-bcmath php-pdo php-ldap
+
+./configure \
+--prefix=/home/manager/server/php-7.1.5 \
+--with-config-file-path=/home/manager/server/php-7.1.5/etc \
+--with-config-file-scan-dir=/home/manager/server/php-7.1.5/etc/conf.d \
+--disable-debug \
+--enable-fpm \
+--enable-bcmath \
+--enable-exif \
+--enable-ftp \
+--enable-gd-native-ttf \
+--enable-inline-optimization \
+--enable-intl \
+--enable-mbregex \
+--enable-mbstring \
+--enable-sigchild \
+--enable-soap \
+--enable-sockets \
+--enable-sysvsem=yes \
+--enable-sysvshm=yes \
+--enable-xml \
+--enable-zip \
+--with-bz2 \
+--with-iconv \
+--with-curl \
+--with-zlib \
+--with-gd \
+--with-gettext \
+--with-mcrypt \
+--with-mhash \
+--with-mysqli \
+--with-xmlrpc \
+--with-freetype-dir=/usr/include/freetype2 \
+--with-jpeg-dir=/usr/lib \
+--with-libxml-dir=/usr/lib \
+--with-png-dir=/usr/lib \
+--with-zlib-dir=/usr/lib \
+--with-fpm-user=manager \
+--with-fpm-group=manager
+
+
+Wrote PEAR system config file at: /home/manager/server/php-7.1.5/etc/pear.conf
+You may want to add: /home/manager/server/php-7.1.5/lib/php to your php.ini include_path
+/home/manager/php-7.1.5/build/shtool install -c ext/phar/phar.phar /home/manager/server/php-7.1.5/bin
+ln -s -f phar.phar /home/manager/server/php-7.1.5/bin/phar
+Installing PDO headers:           /home/manager/server/php-7.1.5/include/php/ext/pdo/
+
+cd /home/manager/server/
+wget http://kr1.php.net/distributions/php-7.1.5.tar.gz
+tar xvfz php-7.1.5.tar.gz
+cd php-7.1.5
+./configure \
+--prefix=/home/manager/server/php-7.1.5 \
+--with-config-file-path=/home/manager/server/php-7.1.5/etc \
+--with-config-file-scan-dir=/home/manager/server/php-7.1.5/etc/conf.d \
+--disable-debug \
+--enable-fpm \
+--enable-bcmath \
+--enable-exif \
+--enable-ftp \
+--enable-gd-native-ttf \
+--enable-inline-optimization \
+--enable-intl \
+--enable-mbregex \
+--enable-mbstring \
+--enable-sigchild \
+--enable-soap \
+--enable-sockets \
+--enable-sysvsem=yes \
+--enable-sysvshm=yes \
+--enable-xml \
+--enable-zip \
+--with-bz2 \
+--with-iconv \
+--with-curl \
+--with-zlib \
+--with-gd \
+--with-gettext \
+--with-mcrypt \
+--with-mhash \
+--with-mysqli \
+--with-xmlrpc \
+--with-freetype-dir=/usr/include/freetype2 \
+--with-jpeg-dir=/usr/lib \
+--with-libxml-dir=/usr/lib \
+--with-png-dir=/usr/lib \
+--with-zlib-dir=/usr/lib \
+--with-fpm-user=manager \
+--with-fpm-group=manager \
+--with-facedetect
+
+sudo yum install jasper-devel-1.900.1-29.el7 instead of sudo yum install jasper-devel should do the trick
+
+https://zetawiki.com/wiki/CentOS_yum_%ED%8C%A8%ED%82%A4%EC%A7%80_%EC%82%AD%EC%A0%9C
+yum list installed java*jdk
+yum remove java-1.7.0-openjdk.x86_64
+yum -y downgrade jasper*
+
+
 Apache Bench (https://httpd.apache.org/docs/current/programs/ab.html)
 100 requests using 5 concurrent connections:
 ab -n 100 -c 5 http://1.255.144.54/media/768/T30222_src.jpg
@@ -85,6 +256,42 @@ http://1.255.144.54/index2.html
 http://1.255.144.53/resize.php?u=http://stimage.hanafostv.com:8080/ontv/10250/T30222_src.jpg&w=300
 
 http://1.255.144.54/resize/300/stimage.hanafostv.com:8080/ontv/10250/T30222_src.jpg
+
+php --ini | grep php.ini
+
+./configure --prefix=/home/manager/server/php-7.1.5 --with-config-file-path=/home/manager/server/php-7.1.5/etc --with-config-file-scan-dir=/home/manager/server/php-7.1.5/etc/conf.d
+ --disable-debug --enable-fpm --enable-bcmath --enable-exif --enable-ftp --enable-gd-native-ttf --enable-inline-optimization --enable-intl --enable-mbregex --enable-mbstring --enab
+le-sigchild --enable-soap --enable-sockets --enable-sysvsem=yes --enable-sysvshm=yes --enable-xml --enable-zip --with-facedetect --with-bz2 --with-iconv --with-curl --with-zlib --with-gd --with-gett
+ext --with-mcrypt --with-mhash --with-mysqli --with-openssl --with-openssl-dir=/usr/local/bin --with-xmlrpc --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=/usr/lib --wi
+th-libxml-dir=/usr/lib --with-png-dir=/usr/lib --with-zlib-dir=/usr/lib --with-fpm-user=manager --with-fpm-group=manager
+make
+make install
+
+/etc/php.ini
+[facedetect]
+extension=/usr/lib64/php/modules/facedetect.so
+
+
+cp php-fpm.conf.default php-fpm.conf
+cd php-fpm.d
+ls -ltr
+cp www.conf.default www.conf
+cd ../sbin
+service php-fpm restart
+./php-fpm
+
+
+http://stimage.hanafostv.com:8080/ontv/10250/T30222_100x100.jpg
+
+cp /usr/lib64/php/modules/facedetect.so /home/manager/server/php-7.1.5/lib/php/extensions/no-debug-non-zts-20160303
+cp /home/manager/PHP-Facedetect-master/modules /home/manager/server/php-7.1.5/lib/php/extensions/no-debug-non-zts-20160303
+tail -f /home/manager/server/nginx_master/logs/*.log
+
+cp /home/manager/server/OpenCV/opencv-3.2.0/data/haarcascades/haarcascade_frontalface_alt.xml /home/manager/server/app/
+phpize && ./configure && make && make install
+
+- opencv 설치
+http://techieroop.com/install-opencv-in-centos/
 
 /home/manager/server/nginx_master/sbin/nginx -s stop
 /home/manager/server/nginx_master/sbin/nginx -c /home/manager/server/nginx_master/conf/nginx.conf
