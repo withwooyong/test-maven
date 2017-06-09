@@ -49,7 +49,7 @@ yum install zlib
 yum install zlib-devel
 yum install gd gd-devel php-gd
 
-yu
+
 
 the HTTP rewrite module requires the PCRE library.
 yum install pcre

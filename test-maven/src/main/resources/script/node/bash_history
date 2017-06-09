@@ -1,0 +1,1003 @@
+
+[supporter@DEV-VM-MetaCollection-1 ~]$ cat .bash_history 
+scp nsmxpg-mg.war.20161007 svc@1.255.102.181:/svc/nsmxpg-mg/was/app/nsmxpg-mg.war
+scp nsmxpg.war.20161007 svc@1.255.102.182:/svc/nsmxpg/was/app/nsmxpg.war
+ls
+ssh svc@1.255.102.186
+ssh svc@1.255.102.182
+ssh svc@1.255.102.181
+ssh svc@1.255.102.186
+ssh svc@1.255.102.187
+ssh svc@1.255.102.181
+ssh svc@1.255.102.186
+ssh svc@1.255.102.182
+ls
+rm xpg-mtvservice\?m\=getEpgMenu\&IF\=IF-NSMXPG-001\&ver\=2.0\&response_format\=json\&web_os\=web\&web_ver\=9.9.9\&web_vr\=web 
+ls
+ssh svc@1.255.102.186
+ssh svc@1.255.102.145
+ssh svc@1.255.102.182
+exit
+ssh svc@1.255.102.182
+exit
+ssh svc@1.255.102.185
+exit
+ssh svc@1.255.102.185
+exit
+ssh svc@1.255.102.186
+ssh svc@1.255.102.188
+ps -ef | grep mongo
+cls
+;s
+ls
+cd mongodb/
+ls
+cd bin
+ls
+./mongo
+exti
+exit
+cd mcs
+tail -f nohup.out 
+svc@1.255.98.25
+ssh svc@1.255.98.25
+ps -ef | grep metor
+ps -ef | grep node
+pwd
+ssh svc@1.255.98.25
+ssh svc@1.255.98.26
+ssh svc@1.255.98.25
+lftp
+lftp -help
+lftp -u svc -p 22 1.255.98.25
+exit
+ls
+cd mcs
+tail -f nohup.out 
+date
+tail -f nohup.out 
+cd cms
+cd mcs
+tail -n 100 nohup.out 
+exit
+cd mcs
+tail -n 1000 nohup.out 
+cd mcs
+ls
+cat settings.json 
+ping 116.126.69.39
+exit
+cd mcs
+tail -f nohup.out 
+getconf -a | grep libc
+openssl
+openssl version
+ls
+cd mcs_img_viewer/
+ls
+cd node_modules/
+ls
+rpm -qa | grep glibc
+yum install glibc
+su manager
+rpm -qa | grep glibc
+cd ..
+ls
+cd ..
+ls
+cd mcs
+tail -f nohup.out 
+cd ..
+ls
+cd shell/
+ls
+./meteor_stop.sh 
+ps -ef | grep meteor
+./meteor.sh 
+ps -ef | grep meteor
+ㅊㅇ ..
+cd ..
+ls
+tail -f no
+cd mcs
+tail -f nohup.out 
+cd ..
+ls
+cd mcs_img_viewer/
+ls
+forever -help
+forever lists
+forever list
+forever restart 0
+ps -ef | grep server.js 
+forever stopall
+ps -ef | grep server.js
+node server.js 
+forever server.js 
+forever start server.js 
+ps -ef | serv
+ps -ef | grep server.js
+exit
+cd mcs
+tail -f nohup.out 
+exit
+cd mcs
+tail -f nohup.out 
+cd mcs
+ls
+cat settings.json 
+exit
+ls
+cd mcs
+tail -f nohup.out 
+exit
+ls
+orbd 
+cd oracle/
+ls
+cd instantclient
+ls
+exit
+cd mcs
+cat settings.json 
+exit
+ls
+cd oracle/
+ls
+cd instantclient
+ls
+echo $ORACLE_HOME
+sqlplsu
+sqlplus
+nmap 192.168.180.100
+nc -z 192.168.180.100 1521
+exit
+cd mcs
+cat settings.json 
+ls
+tail -f nohup.out 
+exit
+ls
+cd mcs
+tail -f nohup.out 
+exit
+top
+exit
+cd mcs
+ls
+cd se
+cd server
+ls
+cd ..
+cat settings.json 
+exit
+cd mcs
+cat settings.json 
+exit
+ls
+cd
+ls
+ll
+cd mcs
+ls
+ll
+cat settings.json 
+ls
+ll
+cd ..
+ls
+ll
+cd mcs
+ls
+cd server/
+ls
+ll
+cd service/
+ls
+cd movie/
+ls
+cd ..
+ls
+cd episode/
+ls
+cd ..
+ls
+cd movie/
+ls
+cd ..
+ls
+cd ..
+ls
+cd utils/
+ls
+cd ../work/
+ls
+ll
+cat req.js 
+cd ..
+ls
+cd qry/
+ls
+vi movieQry.js 
+ls
+cd ..
+ls
+cd module/
+ls
+cat crawring.js 
+telnet 192.168.180.100 1521
+exit
+top
+telnet
+ping 192.168.180.100
+ping 192.168.180.100 1521
+p
+top
+ls
+cd mcs
+ls
+cd ~
+ls
+cd mcs
+ls
+cat settings.json 
+tail -f nohup.out 
+ls
+cd mcs_img_viewer/
+ls
+ps -ef | grep server.js 
+ps -ef | grep forever
+cd ..
+ls
+cd mcs_img_viewer/
+cd ~/setup/
+ls
+cd ../mcs_img_viewer/
+tar cvzf mcs_img_viewer.tgz .
+ls
+mv mcs_img_viewer.tgz ../
+ls
+cd ..
+ls
+exit
+node -version
+node -v
+ls
+cd mongodb/
+ls
+cd ..
+ls
+exit
+ls
+ls -ltr
+cd shell
+ls
+ls -ltr
+cat mongo.sh
+cat meteor.sh
+ls
+cd ..
+ls
+cd oradiag_supporter/
+ls
+cd diag
+ls
+cd ..
+cd oracle
+ls
+cd ..
+ls
+cd supporter/
+ls
+cd node
+ls
+cd ..
+cd xpg_tmp_data/
+ls
+cd ..
+ls
+cd config
+ls
+ls -ltr
+more dbconfig.js 
+ls
+cd ..
+ls
+cd sheqll
+cd shell
+ls
+cat forever.sh 
+cd ..
+ls
+cd mcs
+ls
+more
+more settings.json 
+cd ..
+ls
+cd node
+ls
+ls -ltr
+cd etc
+ls
+cd ..
+ls
+cd ..
+ls
+cd svc
+ls
+cd mcs_svc
+ls
+cd was
+ls
+cd app
+ls
+cd mcs
+ls
+ls -ltr
+cd resources/
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd config/
+ls
+more mongo.properties 
+ls -ltr
+cd ..
+ls
+cd
+ls
+cd mongodb/
+ls
+cd bin
+ls
+ls -ltr
+mongo
+./mongo
+cd
+ls
+cd mcs
+ls -al
+cd .meteor/
+ls
+ls -ltr
+cd local
+ls
+ls -ltr
+cd db
+ls
+cd ..
+ls
+cd shell
+ls
+more info.json 
+cd ..
+ls
+cd ..
+ls
+cd package
+cd packages
+ls
+ls 0ltr
+ls -ltr
+cd npm-container/
+ls
+ls -ltr
+ls
+ls -ltr
+ls -al
+more .mongorc.js 
+ls
+cd mcs
+ls
+cd ..
+ls -al
+cd shell
+ls
+cd ..
+ls
+cd mongodb/
+,s
+ls
+cd data
+ls
+cd ..
+ls
+cd backups/
+ls
+cd admin
+ls
+cd ..
+cd arb_data_1
+ls
+ls -al
+cd ..
+ls
+cd bin
+ls
+ls -al
+mongodump --out /Users/100sg/Documents/monogdbdump/ --host 127.0.0.1 --port 27017 backuptest.db
+cd dump
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd supporter/
+ls
+cd mongodb/
+ls
+cd backups/
+ls
+cd ..
+ls
+cd ..
+ls
+cd rsynctest/
+ls
+cat aaa.txt
+cd config
+ls
+cd mcstest
+ls
+cd ..
+cd rsynctest/
+ls
+cd ..
+cd mcstest/
+ls
+cd client
+ls
+cd ..
+cd server
+ls
+cat main.js 
+cd ..
+cd mongodb/
+ls
+cd data
+ls
+cd ..
+cd mongodb/
+ls
+cd ..
+cd shell
+ls
+cat mongorsync
+cat mongorsync.sh
+cd ..
+ls
+cd rsynctest
+ls
+cd ..
+cd mongodb/
+ls
+cd data
+ls
+cd ..
+cd ~
+ls
+cat rsync.pid
+cd backup/
+lsa
+ls
+ls -al
+ls
+ll
+cd config
+ls
+cat dbconfig.js 
+ls
+tar -czvf mcs.tar.gz mcs
+ll -h
+cd mcs
+ls
+cd ../
+ls
+rm mcs.tar.gz 
+ls
+exit
+ls
+ll
+ps -ef | grep mongo
+cd logs
+ls
+ll
+vi mcs.log.2017-05-19 
+vi  mcs.log.2017-04-26
+ls
+curl "http://www.kobis.or.kr/kobisopenapi/webservice/rest/skmovie/searchMovieInfo.json?key=2feedaf5fa71c152efa20f7919ff9abd&movieCd=19840018"
+{"movieInfoResult":{"movieInfo":{"movieCd":"19840018","movieNm":"바보선언","movieNmEn":"Declaration Of Idiot","movieNmOg":"","showTm":"97","prdtYear":"1984","openDt":"19840301","prdtStatCd":"220210","prdtStatNm":"개봉","typeCd":"220101","typeNm":"장편","synop":"","audiCnt":"0","scrnCnt":"0","updDt":"2015-12-14 10:51:15","nations":[{"nationCd":"22041011","nationNm":"한국"}],"genres":[{"genreCd":"220507","genreNm":"드라마"}],"directors":[{"peopleCd":"10057180","peopleNm":"이장호","peopleNmEn":"LEE Jang-ho"}],"actors":[{"peopleCd":"10004052","peopleNm":"김명곤","peopleNmEn":"KIM Myung-kon","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10004512","peopleNm":"김선미","peopleNmEn":"KIM Sun-mi","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10058301","peopleNm":"이희성","peopleNmEn":" ","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10055651","peopleNm":"이보희","peopleNmEn":"LEE Bo-hee","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10005840","peopleNm":"김지영","peopleNmEn":"KIM Ji-young","actorGb":"Y","cast":"포주","castEn":""}],"showTypes":[{"showTypeGroupNm":"필름","showTypeCd":"5010N","showTypeNm":"필름","saleCd":"19840018N"},{"showTypeGroupNm":"2D","showTypeCd":"5010D","showTypeNm":"디지털","saleCd":"19840018D"}],"companys":[{"companyCd":"20100479","companyNm":"(주)화천공사","companyNmEn":"","companyPartCd":"260101","companyPartNm":"제작사"}],"audits":[{"auditNo":"","auditDt":"","watchGradeCd":"2302180","watchGradeNm":"연소자관람불가"}],"staffs":[{"peopleCd":"10003510","peopleNm":"김강일","peopleNmEn":"KIM Kang Il","staffRoleCd":"320601","staffRoleNm":"조명"},{"peopleCd":"10057363","peopleNm":"이종구","peopleNmEn":"","staffRoleCd":"320801","staffRoleNm":"음악"},{"peopleCd":"10004280","peopleNm":"김병수","peopleNmEn":"KIM Byung-soo","staffRoleCd":"320701","staffRoleNm":"사운드"},{"peopleCd":"10005510","peopleNm":"김재웅","peopleNmEn":"Kim Jae Woong","staffRoleCd":"321501","staffRoleNm":"기획"}],"festivals":[{"seqTime":"38","openYear":"1988","festivalNm":"베를린 국제영화제","festivalNmEn":"Berlin International Film Festival","sectionNm":"","sectionNmEn":"Forum","awardNm":"","awardNmEn":""}]},"source":"영화진흥위원회"}}
+curl "http://www.kobis.or.kr/kobisopenapi/webservice/rest/skmovie/searchMovieInfo.json?key=2feedaf5fa71c152efa20f7919ff9abd&movieCd=20124079"
+mongo
+ps -ef | grep mongo
+ls
+cd mongodb/
+ls
+ll
+cd data
+ls
+ll
+cd ..
+ls
+cd ..
+ps -ef | grep mongo
+pwd
+ll -h
+netstat -an | grep LISTEN
+ls
+cd mongdb
+cd mongodb/
+ls
+cd bin
+ls
+ll
+./mongo
+{ "_id" : "1000000001", "title" : "영진위 영화상세 정보", "type" : "KOBIS_OPENAPI", "types" : "MOVIE", "url" : "http://www.kobis.or.kr/kobisopenapi/webservice/rest/skmovie/searchMovieInfo.json", "next_id" : "1000000002", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : ISODate("2016-08-18T06:30:12.219Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000002", "title" : "영진위 영화상세 정보 크롤링", "type" : "KOBIS_CRAWRING", "types" : "MOVIE", "url" : "http://www.kobis.or.kr/kobis/business/mast/mvie/searchMovieDtl.do", "next_id" : "1000000003", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : ISODate("2016-06-02T06:32:28.537Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000003", "title" : "TMDB ID 수집", "type" : "TMDB_ID", "types" : "MOVIE", "url" : "http://api.themoviedb.org/3/search/movie", "next_id" : "1000000004", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : null, "udt_usr" : null }; { "_id" : "1000000004", "title" : "TMDB 배역 수집", "type" : "TMDB_CAST", "types" : "MOVIE", "url" : "http://api.themoviedb.org/3/movie/${TMDBID}/credits", "next_id" : "1000000005", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : null, "udt_usr" : null }; { "_id" : "1000000005", "title" : "TMDB 평점, 인기도, 리뷰, 장르", "type" : "TMDB_RATING", "types" : "MOVIE", "url" : "http://api.themoviedb.org/3/movie/${TMDBID}", "next_id" : "1000000006", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : null, "udt_usr" : null }; { "_id" : "1000000006", "title" : "TMDB 히어로 이미지", "type" : "TMDB_HERO_IMG", "types" : "MOVIE", "url" : "https://api.themoviedb.org/3/movie/${TMDBID}/images", "next_id" : "1000000007", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : null, "udt_usr" : null }; { "_id" : "1000000007", "title" : "TMDB 키워드", "type" : "TMDB_KEYWORD", "types" : "MOVIE", "url" : "https://api.themoviedb.org/3/movie/${TMDBID}/keywords", "next_id" : "1000000008", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : null, "udt_usr" : null }; { "_id" : "1000000008", "title" : "TMDB 관련 영화", "type" : "TMDB_SIMILAR", "types" : "MOVIE", "url" : "https://api.themoviedb.org/3/movie/${TMDBID}/similar", "next_id" : "1000000009", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : null, "udt_usr" : null }; { "_id" : "1000000009", "title" : "OMDB 평점", "type" : "OMDB_RATING", "types" : "MOVIE", "url" : "http://www.omdbapi.com/?tomatoes=true&plot=full&i=${IMDBID}", "next_id" : "", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : ISODate("2016-06-08T09:26:03.160Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000010", "title" : "영진위 영화 장르 ", "type" : "KOBIS_CODE", "types" : "MOVIE", "url" : "http://www.kobis.or.kr/kobisopenapi/webservice/rest/code/searchCodeList.json", "next_id" : "", "param" : "", "ins_dt" : "", "ins_usr" : "", "udt_dt" : "", "udt_usr" : "" }; { "_id" : "1000000011", "title" : "테일러컨텐츠 영화 정보 수집", "type" : "TC_FTP", "types" : "MOVIE", "url" : "ftp://tailorcontents.info:21", "next_id" : "", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : null, "udt_usr" : null }; { "_id" : "1000000012", "title" : "TMDB 평점, 인기도, 리뷰, 장르(WEEK)", "type" : "TMDB_RATING", "types" : "MOVIE", "url" : "http://api.themoviedb.org/3/movie/${TMDBID}", "next_id" : "1000000013", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : ISODate("2016-06-10T02:05:54.247Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000013", "title" : "OMDB 평점(WEEK)", "type" : "OMDB_RATING", "types" : "MOVIE", "url" : "http://www.omdbapi.com/?tomatoes=true&plot=full&i=${IMDBID}", "next_id" : "", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : ISODate("2016-06-08T09:26:03.160Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000014", "title" : "TMDB 히어로 이미지(MONTH)", "type" : "TMDB_HERO_IMG", "types" : "MOVIE", "url" : "https://api.themoviedb.org/3/movie/${TMDBID}/images", "next_id" : "1000000015", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : ISODate("2016-06-10T01:31:29.664Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000015", "title" : "TMDB 키워드(MONTH)", "type" : "TMDB_KEYWORD", "types" : "MOVIE", "url" : "https://api.themoviedb.org/3/movie/${TMDBID}/keywords", "next_id" : "1000000016", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : ISODate("2016-06-10T01:31:35.796Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000016", "title" : "TMDB 관련 영화(MONTH)", "type" : "TMDB_SIMILAR", "types" : "MOVIE", "url" : "https://api.themoviedb.org/3/movie/${TMDBID}/similar", "next_id" : "", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : null, "udt_usr" : null }; { "_id" : "1000000017", "title" : "TMDB ID 수집(TEST)", "type" : "TMDB_ID", "types" : "MOVIE", "url" : "http://api.themoviedb.org/3/search/movie", "next_id" : "1000000012", "param" : null, "ins_dt" : null, "ins_usr" : null, "udt_dt" : ISODate("2016-06-10T05:12:24.039Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000018", "type" : "TMDB_ID", "types" : "SERIES", "title" : "TMDB ID 수집 (시리즈)", "url" : "http://api.themoviedb.org/3/search/tv", "next_id" : "1000000019", "param" : "", "ins_dt" : ISODate("2016-06-28T01:24:03.098Z"), "ins_usr" : "admin", "udt_dt" : ISODate("2016-06-30T08:37:38.801Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000019", "type" : "TMDB_CAST", "types" : "SERIES", "title" : "TMDB 배역 수집 (시리즈)", "url" : "http://api.themoviedb.org/3/tv/${TMDBID}/credits", "next_id" : "1000000020", "param" : "", "ins_dt" : ISODate("2016-06-30T08:37:31.033Z"), "ins_usr" : "admin", "udt_dt" : ISODate("2016-07-01T02:00:09.912Z"), "udt_usr" : "admin" }
+{ "_id" : "1000000020", "type" : "TMDB_RATING", "types" : "SERIES", "title" : "TMDB 평점, 인기도, 리뷰, 장르 (시리즈)", "url" : "http://api.themoviedb.org/3/tv/${TMDBID}", "next_id" : "1000000021", "param" : "", "ins_dt" : ISODate("2016-07-01T01:42:11.056Z"), "ins_usr" : "admin", "udt_dt" : ISODate("2016-07-01T02:00:15.344Z"), "udt_usr" : "admin" }
+[supporter@DEV-VM-MetaCollection-1 bin]$ ./mongo
+MongoDB shell version: 2.6.7
+connecting to: test
+Server has startup warnings:
+2017-01-12T10:45:51.440+0900 [initandlisten]
+2017-01-12T10:45:51.440+0900 [initandlisten] ** WARNING: You are running on a NU                                                                                                                                                             MA machine.
+2017-01-12T10:45:51.440+0900 [initandlisten] **          We suggest launching mo                                                                                                                                                             ngod like this to avoid performance problems:
+2017-01-12T10:45:51.440+0900 [initandlisten] **              numactl --interleav                                                                                                                                                             e=all mongod [other options]
+2017-01-12T10:45:51.441+0900 [initandlisten]
+> show dbs;
+admin   (empty)
+local   0.078GB
+meteor  5.951GB
+> use meteor
+switched to db meteor
+> show collections
+MCS_ACCOUNT
+MCS_CODE
+MCS_COMMON_CODE
+MCS_EPI
+MCS_EPI_LINK_HISTORY
+MCS_GROUP_CODE
+MCS_LINK
+MCS_LINK_HISTORY
+MCS_LINK_REFINE
+MCS_LINK_SCHEDULE
+MCS_MENU_AUTH
+MCS_MOVIE
+MCS_MV_CONTENTS
+MCS_PROP
+MCS_SERIES
+MCS_SERIES_LINK_HISTORY
+MCS_STATIC_CODE
+system.indexes
+> db.MCS_LINK.count()
+ls
+ll
+cd dump/
+ls
+ll
+cd meteor/
+ls
+ll -h
+cat MCS_CODE.metadata.json 
+cat MCS_CODE.bson
+df -h
+cd /data
+ls
+cd json/
+ls
+ll
+du -sh
+cd ..
+ls
+du -sh
+ll
+cd img/
+ls
+du -sh *
+cd still/
+ls
+cd 20163324
+ls
+ll
+cd ../20163318
+ls
+exit
+ls
+cd data
+cd xpg_tmp_data/
+ls
+cd ..
+cd backup/
+ls
+cd ..
+cd rsync
+cd rsynctest/
+ls
+cd ..
+cd ora
+cd oracle
+ls
+cd instantclient
+ls
+cd ..
+ls
+cd ..
+ls
+cd mcs
+ls
+cd ..
+ls
+cd ..
+ls
+cd supporter/
+ls
+cd datadefault/
+ls
+cd ..
+cd config
+ls
+cd ..
+;s
+ls
+cd mongodb/
+ls
+cd ..
+cd backup/
+ls
+cd ..
+cd mongodb/
+ls
+cd bin
+ls
+pwd
+ls
+./mongodump -d meteor -c MCS_MOVIE -o /home/supporter/dumptest
+cd ..
+ls
+cd ..
+ls
+cd dumptest/
+ls
+cd meteor
+ls
+pwd
+cd mongodb/
+ls
+cd bin
+cd back
+cd ..
+cd backups/
+ls
+cd ..
+ls
+cd dumptest/
+ls
+cd meteor/
+ls
+cd ..
+cd mongodb/
+cd bin
+./mongodump -d meteor -o /dumptest/
+cd /
+ls -al
+cd svc
+ls
+cd ..
+ls
+cd ~
+ls
+ls -al
+cd dumptest/
+le
+ls
+ls -al
+cd ..
+rm -rf dumptest
+ls
+cd mongodb/bin
+pwd
+./mongodump -d meteor -o /home/supporter/dumptest
+ls
+cd shell/
+ls
+vi mongorsync.sh 
+exit
+ls
+cd mongodb/
+ls
+cd data
+ls
+cd ..
+ls
+cd bin
+ls
+ls -ltr
+cd /svc
+ls
+cd mcs_s
+cd mcs_svc/
+ls
+cd ..
+ls
+cd ..
+ls
+cd /home
+cd supporter/
+ls
+cd logs
+ls
+ls -ltr
+more mcs.log.2017-05-23
+tal -500f mcs.log.2017-05-23
+tail -50f mcs.log.2017-05-23
+clear
+ls
+cd ..
+l
+ls
+cd mcs
+ls
+ps -ef | grep mongo
+cd ..
+cd mongodb
+ls
+cd
+ls
+ls -ltr
+cd dumptest/
+ls
+cd meteor/
+ls
+cd
+ls
+mkdir mdbdump
+ls
+ls -ltr
+cd mdbdump/
+pwd
+cd ..
+cd mongodb/
+ls
+cd bin
+ls
+cd
+more .bash_profile 
+cd
+cd mongodb/
+ls
+cd bin
+./mongodump -d meteor -o /home/supporter/mdbdump/
+cd /home/supporter/mdbdump
+ls
+cd mcs
+ls
+ls -ltr
+more settings.json 
+cd /home/supporter/logs
+ls
+ls -ltr
+more mcs.log.2017-05-23
+ls
+cd shel
+cd shell/
+ls
+cat mongorsync.sh
+ls
+echo $MCS_HOME
+vi .bash_profile 
+clear
+ls
+cd /svc
+ls
+cd mcs_svc
+ls
+cd svc
+ls
+cd was
+ls
+cd accesslogs/
+ls
+ls -ltr
+cd
+ls
+ls -ltr
+ls
+cd ..
+ls
+ls -ltr
+cd src
+ls
+cd srv
+ls
+cd ..
+cd svc
+ls
+clear
+ls
+ls -ltr
+cs mcs_svc
+ls
+cs mcs_svc/
+ls
+cd mcs_svc/
+ls
+cd was
+ls
+cd accesslogs/
+ls
+cd ,.
+cd ..
+cd app
+ls
+cd mcs
+ls
+ls -ltr
+cd
+clear
+cd /svc
+cd
+ls
+ls -ltr
+cd mcs
+ls
+ls -ltr
+more settings.json 
+ clear
+cd
+ls
+cd /svc
+ls
+cd
+cd shell
+ls
+ls -ltr
+more meteor.sh
+more forever.sh 
+ps -ef | grep meteor
+clear
+ls
+vi active.sh
+ls
+vi active2.sh 
+ls
+vi active.sh
+ls
+ls -ltr
+clear
+ls -ltr
+cat start.sh 
+exit
+ls
+cd shell/
+ls
+cat start.sh 
+cat active.sh
+cat active2.sh
+cat mongorsync.sh
+cat mongorsync2.sh
+ls
+ls -ltr
+cd shell
+ls
+ls -ltr
+more mongo.sh 
+more forever.sh 
+clear
+exit
+ls
+cd logs
+ls
+ll -rth
+vi mcs.log.2017-05-26 
+ls
+grep kobis mcs.log.2017-05-2*
+vi mcs.log.2017-05-24 
+curl "http://www.kobis.or.kr/kobisopenapi/webservice/rest/skmovie/searchMovieInfo.json?key=2feedaf5fa71c152efa20f7919ff9abd&movieCd=20168261"
+{"movieInfoResult":{"movieInfo":{"movieCd":"20168261","movieNm":"원더 우먼","movieNmEn":"Wonder Woman","movieNmOg":"","showTm":"141","prdtYear":"2017","openDt":"20170531","prdtStatCd":"220220","prdtStatNm":"개봉예정","typeCd":"220101","typeNm":"장편","synop":"아마존 데미스키라 왕국의 공주 ‘다이애나 프린스’(갤 가돗)는 전사로서 훈련을 받던 중 최강 전사로서의 운명을 직감한다. 때마침 섬에 불시착한 조종사 ‘트레버 대위’(크리스 파인)를 통해 인간 세상의 존재와 그 곳에서 전쟁이 일어나고 있음을 알게 된다. 신들이 주신 능력으로 세상을 구하는 것이 자신의 사명임을 깨달은 다이애나는 낙원과 같은 섬을 뛰쳐나와 1차 세계 대전의 지옥 같은 전장 한가운데로 뛰어드는데…","audiCnt":"","scrnCnt":"","updDt":"2017-05-25 10:41:28","nations":[{"nationCd":"22042002","nationNm":"미국"}],"genres":[{"genreCd":"220517","genreNm":"액션"},{"genreCd":"220518","genreNm":"어드벤처"},{"genreCd":"220521","genreNm":"판타지"},{"genreCd":"220501","genreNm":"SF"}],"directors":[{"peopleCd":"10082849","peopleNm":"팻티 젠킨스","peopleNmEn":"Patty Jenkins"}],"actors":[{"peopleCd":"10000433","peopleNm":"갤 가돗","peopleNmEn":"Gal Gadot","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10017363","peopleNm":"로빈 라이트","peopleNmEn":"Robin Wright","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10077251","peopleNm":"크리스 파인","peopleNmEn":"Chris Pine","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10011684","peopleNm":"데이빗 듈리스","peopleNmEn":"David Thewlis","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10076151","peopleNm":"코니 닐슨","peopleNmEn":"Connie Nielsen","actorGb":"Y","cast":"","castEn":""},{"peopleCd":"10049156","peopleNm":"엘레나 아나야","peopleNmEn":"Elena Anaya","actorGb":"Y","cast":"","castEn":""}],"showTypes":[{"showTypeGroupNm":"2D","showTypeCd":"5010D","showTypeNm":"디지털","saleCd":"20168261D"},{"showTypeGroupNm":"3D","showTypeCd":"5010S","showTypeNm":"3D 디지털","saleCd":"20168261S"},{"showTypeGroupNm":"4D","showTypeCd":"5010F","showTypeNm":"4D","saleCd":"20168261F"},{"showTypeGroupNm":"IMAX","showTypeCd":"5010M","showTypeNm":"IMAX 3D","saleCd":"20168261M"}],"companys":[{"companyCd":"20100043","companyNm":"워너브러더스 코리아(주)","companyNmEn":"Warner Bros. Korea","companyPartCd":"260102","companyPartNm":"배급사"},{"companyCd":"20100043","companyNm":"워너브러더스 코리아(주)","companyNmEn":"Warner Bros. Korea","companyPartCd":"260103","companyPartNm":"수입사"}],"audits":[{"auditNo":"2017-MF00841","auditDt":"20170511","watchGradeCd":"2309120","watchGradeNm":"12세이상관람가"}],"staffs":[],"festivals":[]},"source":"영화진흥위원회"}}
+vi mcs.log.2017-05-24 
+grep omdb mcs.log.2017-05-2*
+exit
+ls
+cd cd shell
+ls
+cd ..
+cd ~
+cd shell
+ls
+cat mongorsync.sh
+ls
+cd mcs
+ls
+ls -ltr
+more settings.json 
+ls
+more package.json 
+more packages.json 
+ls
+cd logs
+ls
+ls -ltr
+tail -500f mcs.log.2017-06-01
+ls
+cd
+cd mcs
+ls
+cd server/
+ls
+cd module/
+ls
+ls -ltr
+more iws.js
+ls
+ls -ltr
+cd ..
+cd
+cd mcs
+ls
+more settings.json 
+!
+clear
+cd ..
+cd logs
+ls -ltr
+more mcs.log.2017-06-01
+   exit
+ls
+cd mcs
+ls
+ls -ltr
+more settings.json 
+ls
+ll
+cd ..
+cd ~
+ls
+cd oracle/
+ls
+cd ~
+ls -ltr
+cd
+ls -ltr
+ls -al
+vi .bash_history 
+cat .bash_history 
+q
+ls -ltr
+cd mcv_img_viewer
+ls
+ls -ltr
+cd mcs_img_viewer
+ls
+ls-tr
+ls -ltr
+cat server.js 
+ls
+cd controllers/
+ls
+cat img.js 
+cat crop.js 
+ls
+ls
+cd
+ls
+ls -ltr
+cd mcs
+ls
+ls -ltr
+ps -ef | grep node
+[supporter@DEV-VM-MetaCollection-1 ~]$ 

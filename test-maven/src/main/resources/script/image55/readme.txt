@@ -59,6 +59,7 @@ $ cmake -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX=/usr/local ..
 $ make
 $ sudo make install
 
+sudo yum install jasper-devel-1.900.1-29.el7 instead of sudo yum install jasper-devel should do the trick
 
 cmake -D CMAKE_BUILD_TYPE=RELEASE \
     -D CMAKE_INSTALL_PREFIX=/usr/local \

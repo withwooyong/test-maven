@@ -312,6 +312,11 @@ http://techieroop.com/install-opencv-in-centos/
 # echo -n "http://1.255.144.55/resize.php?u=http://stimage.hanafostv.com:8080/ontv/10250/T30222_src.jpg&w=200" | md5sum
 0c9aa652815494e45573c077c9015c60  -
 
+/home/manager/server/nginx_cache/sbin/nginx -s stop
+/home/manager/server/nginx_image/sbin/nginx -s stop
+
+/home/manager/server/nginx_image/sbin/nginx -c /home/manager/server/nginx_image/conf/nginx.conf
+
 /home/manager/server/nginx_master/sbin/nginx -s stop
 /home/manager/server/nginx_master/sbin/nginx -c /home/manager/server/nginx_master/conf/nginx.conf
 /home/manager/server/nginx_slave01/sbin/nginx -s stop
