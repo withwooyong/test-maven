@@ -1,0 +1,630 @@
+./configure \
+--prefix=/home/manager/server/php-7.1.5 \
+--with-config-file-path=/home/manager/server/php-7.1.5/etc \
+--with-config-file-scan-dir=/home/manager/server/php-7.1.5/etc/conf.d \
+--disable-debug \
+--enable-fpm \
+--enable-bcmath \
+--enable-exif \
+--enable-ftp \
+--enable-gd-native-ttf \
+--enable-inline-optimization \
+--enable-intl \
+--enable-mbregex \
+--enable-mbstring \
+--enable-sigchild \
+--enable-soap \
+--enable-sockets \
+--enable-sysvsem=yes \
+--enable-sysvshm=yes \
+--enable-xml \
+--enable-zip \
+--with-bz2 \
+--with-iconv \
+--with-curl \
+--with-zlib \
+--with-gd \
+--with-gettext \
+--with-mcrypt \
+--with-mhash \
+--with-mysqli \
+--with-xmlrpc \
+--with-freetype-dir=/usr/include/freetype2 \
+--with-jpeg-dir=/usr/lib \
+--with-libxml-dir=/usr/lib \
+--with-png-dir=/usr/lib \
+--with-zlib-dir=/usr/lib \
+--with-fpm-user=manager \
+--with-fpm-group=manager \
+--with-facedetect
+
+
+
+
+
+
+vi /etc/hosts
+sudo vi /etc/hosts
+cat /etc/hosts
+cat $mongo1
+echo $mongo1
+source /etc/hosts
+echo $mongo1
+echo mongo1
+echo #mongo1
+echo $mongo1
+echo %mongo1
+vi /etc/hosts
+sudo vi/etc/hosts
+sudo vi /etc/hosts
+exit
+sudo cd /root
+cd /root
+sudo cd /root
+sudo ifconfig
+ifconfig
+ifconfig -a
+sudo ls /root
+exit
+sudo yum install gcc
+which gcc
+which libgcc
+sudo yum group install "Development Tools"
+ls
+exit
+sudo yum install gcc-c++
+exit
+vi /etc/ssh/sshd_config 
+cat /etc/ssh/sshd_config
+cd /etc
+ls
+cd ssh
+ls
+ls -lah
+cat sshd_config
+cat ssh_host_key
+cat ssh_host_dsa_key.pub 
+cd ~/.ssh
+
+cd ~/
+ls
+exit
+sudo yum groupinstall 'Development Tools' && sudo yum install curl git irb python-setuptools ruby
+pwd
+vi .bash_profile
+exit
+yum install rsync 
+rsync
+cd ..
+ls
+exit
+vi /etc/hosts
+ls -lah /etc/hosts
+sudo vi /etc/hosts
+exity
+exit
+ls
+vi messages
+sudo vi messages
+cd ..
+ls
+cd /svc/
+ls
+exit
+vi /var/log/messages
+sudo vi /var/log/messages
+last
+sudo vi /var/log/boot.log 
+sudo vi /var/log/dmesg
+vi /etc/selinux/config 
+ls
+sudo iptables -L -n
+netstat -tan
+ping http://www.kobis.or.kr
+traceroute www.kobis.or.kr
+ping www.kobis.or.kr
+netstat -tan |ㅁgrep 210.104.16.53
+netstat -tan |grep 210.104.16.53
+netstat -tan | grep 80
+netstat -tan | grep ES
+ls
+ps -ef |grep meteor
+vi /etc/hosts
+sudo vi /etc/hosts
+cat /etc/hosts
+cd ~
+cd she
+exit
+sudo parted
+exit
+/etc/*-release
+sudo cat /etc/*-release
+rpm -qa
+yum list installed
+exit
+ls
+cd /svc
+mkdir /svc
+sudo mkdir /svc
+cd svc
+cd /svc
+ls
+ls -lah
+sudo chown supporter:supporter /svc
+cd /svc
+ls
+ls -lah
+exit
+sudo apt-get install lftp
+sudo brew install lftp
+brew
+sudo yum install lftp
+y
+lftp
+exit
+sudo swapon -s
+free -m
+df -f
+df -h
+ㅔㅈㅇpwd
+ls
+tail -f nohup.out
+pwd
+ls
+tail -f nohup.out
+exit
+ps -ef|grep tom
+telnet 116.126.69.112 1521
+telnet 116.126.69.112
+ping 116.126..69.112
+yum install opencv
+sudo yum install opencv
+opencv
+ps -ef | grep meteor
+exit
+yum install opencv
+sudo yum install opencv
+ls
+rm temp.tgz
+exit
+clear
+sudo rm -rf /usr/local/lib/node /usr/local/lib/node_modules /var/db/receipts/org.nodejs.*
+sudo npm uninstall npm -g
+sudo rm -rf /usr/local/include/node /Users/$USER/.npm
+sudo rm /usr/local/bin/node
+sudo rm /usr/local/share/man/man1/node.1
+sudo rm /usr/local/lib/dtrace/node.d
+node --version
+which node
+cd ~
+exit
+sudo yum groupinstall "Development Tools" 
+sudo yum install gcc
+sudo yum install cmake
+sudo yum install git
+sudo yum install gtk2-devel
+sudo yum install pkgconfig
+sudo yum install numpy
+sudo yum install ffmpeg
+sudo mkdir /opt/working
+cd /opt/working
+sudo git clone https://github.com/Itseez/opencv.git
+cd opencv/
+git checkout tags/2.4.8.2
+sudo git checkout tags/2.4.8.2
+mkdir release
+sudo mkdir release
+cd release/
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+sudo cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+pwd
+make
+sudo make
+sudo make install
+cd ~/shell
+exit
+wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+sudo yum install devtoolset-2-gcc devtoolset-2-binutils devtoolset-2-gcc-c++
+scl enable devtoolset-2 bash
+ls
+cd ..
+ls
+cd supporter/
+ls
+exit
+ls
+cd ..
+ls
+cd ..
+ls
+cd svc
+ls
+cd mcs_svc/
+ls
+cd was/
+ls
+sudo wget -qO- https://get.docker.com/ | sh
+sudo docker rm `sudo docker ps -aq`
+sudo docker rmi hello-world
+sudo service start docker
+sudo service docker start
+sudo docker images
+sudo docker pull 1.255.87.18:5000/hello:0.1
+sudo docker pull 1.255.87.18:3000/hello:0.1
+sudo docker images
+exit
+cat /etc/ssh/sshd_config 
+sudo cat /etc/ssh/sshd_config 
+sudo vi /etc/ssh/sshd_config 
+vi /etc/hosts
+sudo vi etc/hosts
+sudo vi /etc/hosts
+./source
+mongo1
+source /etc/hosts
+exit
+sudo yum install glibc
+exit
+ls
+ps -ef | grep 
+ps -ef | grep java
+ps -ef 
+pwd
+su supporter
+telnet
+exit
+ls
+exit
+ls
+cd ..
+ls
+cd ..
+ls
+cd svc
+ls
+cd mcs_svc
+ls
+ls -ltr
+cd was
+ls
+cd app
+ls
+ls -ltr
+cd mcs
+ls
+cd resources/
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd config
+ls
+ls -ltr
+more mongo.properties 
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+ls -ltr
+cd dev
+ls
+ls -ltr
+cd ..
+ls
+cd ..
+ls
+cd data
+ls
+ls -ltr
+cd img
+ls
+cd tmdb
+ls
+ls -ltr
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+ls -ltr
+cd usr
+ls
+ls -ltr
+cd local
+ls
+cd ..
+ls
+cd ,,
+cd ..
+ls
+ls -ltr
+cd opt
+ls
+cd ..
+ls
+cd ls
+cd ..
+ls
+cd home
+ls
+cd supporter
+ls
+ls -ltr
+cd mongodb/
+ls
+ls -ltr
+cd data
+ls
+ls -ltr
+ls
+cd journal/
+ls
+cd ..
+ls
+cd ..
+ls
+cd arb_data_1
+ls
+cd ..
+ls
+cd ..
+ls
+cd config
+ls
+cd shell
+cd ..
+cd shell
+ls
+ls -ltr
+more mongo.sh
+cat mongo.sh
+ls -ltr
+ls
+ll
+pwd
+ls
+cd ..
+ls
+cd supporter/
+ls
+ll
+cd mcs
+ls
+cd ..
+ls
+ll -h
+cd full
+ls
+ll
+cd ..
+ls
+cd mcs2
+ls
+ll
+ll -h
+cd bundle/
+ls
+ll
+cd server/
+ls
+cd ../programs/
+ls
+cd server/
+ls
+cd ../..
+ls
+cd ..
+ls
+cd ..
+ls
+cd mcstest
+ls
+cd ..
+ls
+cd mcs
+ps -ef | grep mcs
+exit
+ls
+cd /home/supporter/
+ls
+ll
+cd mcs
+ls
+ll
+ls
+cd ..
+ls
+ll
+id
+exit
+ls
+pwd
+ls
+cd ..
+ls
+cd supporter
+ls
+alias
+pwd
+ls
+cd shell
+ls
+cd ..
+ls
+cd mcs
+ls
+pwd
+cd ..
+ls
+cd logs
+ls
+tail -f mcs.log.2017-05-22
+ls
+cd ..
+ls
+cd mongodb
+ls
+cd data
+ls
+cd ..
+ls
+cd bin
+ls
+ls -al
+cd ..
+ls
+cd ..
+ls
+cd mcs2
+lw
+ls
+cd ..
+ls
+cd mcstest
+ls
+cd server
+ls
+cd ..
+ls
+cd config
+ls
+cat dbconfig.js
+ls
+cat sysConfig.js
+ls
+cat winston.js
+ls
+pwd
+cd ..
+ls
+cd mcs
+ls
+cat package.json
+cat packages.json
+ls
+pwd
+meteor mongo
+cd ..
+ls
+pwd
+alias
+cd shell
+ls
+cat meteor.sh
+ls -al
+who
+exit
+pwd
+ls
+cd ..
+ls
+exit
+ls -ltr
+ps -ef | grep opencv
+ps -ef | grep nginx
+ps -ef | grep apache
+ps -ef | grep tomcat
+ls -ltr
+netstat -an | grep 3005
+ls
+ls -ltr
+sudo su root
+ls -ltr
+cd /
+ls
+cd 
+ls
+cd ..
+ls
+ls -ltr
+cd supporter/
+ls
+ls -ltr
+cd mcs
+ls
+ls -lr
+cd /home/supporter/logs/
+ls -ltr
+tail -f mcs.log.2017-06-07
+tail -f rsync.log 
+tail -f mcs.mongo
+sudo su supporter
+ls -ltr
+ls -al
+vi .bash_history 
+cat .bash_history 
+sudo su root
+sudo su supporters
+sudo su supporter
+sudo su rot
+sudo su root
+sudo su root
+cd /data
+ls
+ls -ltr
+cd img
+ls
+cd still/
+ls
+cd 20163324
+ls
+pwd
+cd ..
+ls
+ls -lr
+cd ..
+ls
+cd tailor/
+ls
+ls -ltr
+cd 455739
+ls
+ls -ltr
+cd ..
+ls
+cd ..
+ls
+ls -ltr
+cd tmdb
+ls -ltr
+cd 10447
+ls -ltr
+cd ..
+ls
+cd ..
+ls
+cd ..
+ls
+ls -lr
+cd json
+ls
+cd tailor/
+ls
+ls -ltr
+cat 2017_06_06.json
+cd 
+sudo supporter
+sudo su supporter
+df -h
+su supporter
+sudo su supporter
+sudo su supporters
+ls
+sudo su supporter
+python
+cd /usr/local
+ls
+ls -ltr
+which opencv
+sudo su support
+sudo su supporter
+sudo su root

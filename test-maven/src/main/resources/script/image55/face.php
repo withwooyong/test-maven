@@ -14,8 +14,8 @@
         return $im;
     }
 
-    $total= face_count($_GET['file'],'haarcascade_frontalface_alt.xml');
-    $ord= face_detect($_GET['file'],'haarcascade_frontalface_alt.xml');
+    $total= face_count($_GET['file'],'/haarcascade/haarcascade_frontalface_alt.xml');
+    $ord= face_detect($_GET['file'],'/haarcascade/haarcascade_frontalface_alt.xml');
 
     $im = LoadJpeg($_GET['file']);
     $pink = imagecolorallocate($im, 255, 105, 180);

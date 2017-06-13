@@ -1,3 +1,6 @@
+PHP 7.0.0 설치 방법
+https://blog.bypass.kr/280
+
 # yum update
 # yum install epel-release
 # rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
@@ -11,6 +14,38 @@ yum --enablerepo=remi-php71 install -y php php-fpm php-mysql php-gd php-common p
 /usr/local/lib/libopencv_imgproc.so.3.2: error adding symbols: DSO missing from command line
 collect2: error: ld returned 1 exit status
 make: *** [sapi/cli/php] 오류 1
+
+
+/bin/sh /home/manager/PHP-Facedetect-master/libtool --mode=install cp ./facedetect.la /home/manager/PHP-Facedetect-master/modules
+libtool: install: cp ./.libs/facedetect.so /home/manager/PHP-Facedetect-master/modules/facedetect.so
+libtool: install: cp ./.libs/facedetect.lai /home/manager/PHP-Facedetect-master/modules/facedetect.la
+libtool: finish: PATH="/sbin:/bin:/usr/sbin:/usr/bin:/sbin" ldconfig -n /home/manager/PHP-Facedetect-master/modules
+----------------------------------------------------------------------
+Libraries have been installed in:
+   /home/manager/PHP-Facedetect-master/modules
+
+If you ever happen to want to link against installed libraries
+in a given directory, LIBDIR, you must either use libtool, and
+specify the full pathname of the library, or use the `-LLIBDIR'
+flag during linking and do at least one of the following:
+   - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+     during execution
+   - add LIBDIR to the `LD_RUN_PATH' environment variable
+     during linking
+   - use the `-Wl,-rpath -Wl,LIBDIR' linker flag
+   - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+
+See any operating system documentation about shared libraries for
+more information, such as the ld(1) and ld.so(8) manual pages.
+----------------------------------------------------------------------
+
+Build complete.
+Don't forget to run 'make test'.
+
+Installing shared extensions:     /usr/lib64/php/modules/
+
+
+
 
 
 http://techieroop.com/install-opencv-in-centos/

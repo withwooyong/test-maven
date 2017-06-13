@@ -1,3 +1,31 @@
+PHP 7.0.0 설치 방법
+https://blog.bypass.kr/280
+
+yum --enablerepo=remi-php71 install -y php php-fpm php-devel
+
+/home/manager/server/nginx_image/sbin/nginx -s stop
+/home/manager/server/nginx_image/sbin/nginx -c /home/manager/server/nginx_image/conf/nginx.conf
+
+systemctl start php-fpm   // php 시작 
+systemctl enable php-fpm  // php 부팅시 자동 실행
+systemctl status php-fpm  // php 상태 확인
+systemctl stop php-fpm    // php 정지
+
+ls -l /var/run/php-fpm/php-fpm.sock
+
+cenos6.4 에서 php권한에러
+http://zuriyang.tistory.com/86
+2017/06/13 15:58:13 [error] 3681#0: *55 FastCGI sent in stderr: "PHP message: PHP Warning:  Unknown: failed to open stream: Permission denied in Unknown on line 0
+Unable to open primary script: /home/manager/server/app/test.php (Permission denied)" while reading response header from upstream, client: 210.94.1.38, server: localhost, request: "GET /test.php HTTP/1.1", upstream: "fastcgi://127.0.0.1:9000", host: "1.255.144.56"
+일시적으로 끄기
+# setenforce 0
+다음부팅시에도 적용되는 설정
+# vi /etc/selinux/config
+SELINUX=enforcing   켜기
+SELINUX=disabled   끄기
+
+출처: http://zuriyang.tistory.com/86 [개발노트]
+
 # yum update
 # yum install epel-release
 # rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
@@ -285,7 +313,7 @@ http://stimage.hanafostv.com:8080/ontv/10250/T30222_100x100.jpg
 http://stimage.hanafostv.com:8080/zero/11000/Z329544.jpg
 /ontv/10550/T11549.jpg
 
-
+ln -s -f phar.phar /home/manager/server/php-7.1.5/bin/phar
 cp /usr/lib64/php/modules/facedetect.so /home/manager/server/php-7.1.5/lib/php/extensions/no-debug-non-zts-20160303
 cp /home/manager/PHP-Facedetect-master/modules /home/manager/server/php-7.1.5/lib/php/extensions/no-debug-non-zts-20160303
 tail -f /home/manager/server/nginx_master/logs/*.log
@@ -297,7 +325,7 @@ phpize && ./configure && make && make install
 http://techieroop.com/install-opencv-in-centos/
 
 - 원본 
-./configure --prefix=/home/manager/server/nginx_cache --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module  
+./configure --prefix=/home/manager/server/nginx_image --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module  
 
 - 이미지 라이브러리 추가
 ./configure --prefix=/home/manager/server/nginx_master --user=manager --group=manager

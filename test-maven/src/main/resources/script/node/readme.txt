@@ -1,3 +1,61 @@
+sudo yum install gcc
+
+which gcc
+which libgcc
+sudo yum group install "Development Tools"
+sudo yum install gcc-c++
+sudo yum groupinstall 'Development Tools' && sudo yum install curl git irb python-setuptools ruby
+yum install rsync
+yum install opencv
+
+sudo rm -rf /usr/local/lib/node /usr/local/lib/node_modules /var/db/receipts/org.nodejs.*
+sudo npm uninstall npm -g
+sudo rm -rf /usr/local/include/node /Users/$USER/.npm
+sudo rm /usr/local/bin/node
+sudo rm /usr/local/share/man/man1/node.1
+sudo rm /usr/local/lib/dtrace/node.d
+node --version
+which node
+sudo yum groupinstall "Development Tools" 
+sudo yum install gcc
+sudo yum install cmake
+sudo yum install git
+sudo yum install gtk2-devel
+sudo yum install pkgconfig
+sudo yum install numpy
+sudo yum install ffmpeg
+sudo mkdir /opt/working
+cd /opt/working
+sudo git clone https://github.com/Itseez/opencv.git
+cd opencv/
+git checkout tags/2.4.8.2
+sudo git checkout tags/2.4.8.2
+mkdir release
+sudo mkdir release
+cd release/
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+sudo cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+pwd
+make
+sudo make
+sudo make install
+cd ~/shell
+exit
+wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+sudo yum install devtoolset-2-gcc devtoolset-2-binutils devtoolset-2-gcc-c++
+scl enable devtoolset-2 bash
+
+
+
+npm install opencv --build-from-source
+yum install libopencv-dev
+node-pre-gyp ERR! Tried to download(403): https://node-opencv.s3.amazonaws.com/opencv/v6.0.0/Release/node-v48-linux-x64.tar.gz 
+node-pre-gyp ERR! Pre-built binaries not found for opencv@6.0.0 and node@6.10.3 (node-v48 ABI) (falling back to source compile with node-gyp) 
+gyp WARN EACCES user "root" does not have permission to access the dev dir "/root/.node-gyp/6.10.3"
+gyp WARN EACCES attempting to reinstall using temporary dev dir "/home/manager/node_modules/opencv/.node-gyp"
+
+
 501      13324 13317  0 Feb03 ?        03:42:20 /home/supporter/.meteor/packages/meteor-tool/.1.3.1.o8t0ss++os.linux.x86_64+web.browser+web.cordova/mt-os.linux.x86_64/dev_bundle/bin/node /home/supporter/.meteor/packages/meteor-tool/.1.3.1.o8t0ss++os.linux.x86_64+web.browser+web.cordova/mt-os.linux.x86_64/tools/index.js --settings settings.json
 501      13369 13324  0 Feb03 ?        01:25:12 /home/supporter/.meteor/packages/meteor-tool/.1.3.1.o8t0ss++os.linux.x86_64+web.browser+web.cordova/mt-os.linux.x86_64/dev_bundle/bin/node /home/supporter/mcs/.meteor/local/build/main.js
 501      13843     1  0 Feb03 ?        00:00:01 /home/supporter/node/bin/node /home/supporter/node/lib/node_modules/forever/bin/monitor server.js
@@ -33,6 +91,11 @@ make && make install
 /home/manager/server/nginx_slave02/sbin/nginx -c /home/manager/server/nginx_slave02/conf/nginx.conf
 ps -ef | grep nginx
 
+
+출처: http://terrorjang.tistory.com/61 [개발자 공간]
+pkg-config --modversion opencv
+
+http://techieroop.com/install-opencv-in-centos/
 -- opencv 설치
 $ yum install cmake
 $ yum install python-devel numpy
@@ -99,6 +162,15 @@ cd node-v6.11.0
 ./configure --prefix=/home/manager/server/node-v6.11.0
 make && make install
 node --version
+
+https://zetawiki.com/wiki/CentOS_yum_%ED%8C%A8%ED%82%A4%EC%A7%80_%EC%82%AD%EC%A0%9C
+-- yum remove
+- 리스트 
+yum list installed java*jdk
+- 삭제
+yum remove java-1.7.0-openjdk.x86_64
+- 확인
+yum list installed java*jdk
 
 안녕하세요. 전재오입니다.
 

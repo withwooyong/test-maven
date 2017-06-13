@@ -1,0 +1,175 @@
+
+https://corpocrat.com/2009/08/18/automatic-face-detection-with-php-in-linux/
+
+centos nginx php-fpm socket 설정 하는법에 대해 알아보도록 하자.
+http://bong8nim.com/post/programming/etc/centos-nginx-php-fpm-socket-%EC%84%A4%EC%A0%95/
+
+PHP 7.0.0 설치 방법
+https://blog.bypass.kr/280
+
+yum --enablerepo=remi-php71 install -y php php-fpm php-devel
+
+/home/manager/server/nginx_image/sbin/nginx -s stop
+/home/manager/server/nginx_image/sbin/nginx -c /home/manager/server/nginx_image/conf/nginx.conf
+
+systemctl start php-fpm   // php 시작 
+systemctl enable php-fpm  // php 부팅시 자동 실행
+systemctl status php-fpm  // php 상태 확인
+systemctl stop php-fpm    // php 정지
+
+ls -l /var/run/php-fpm/php-fpm.sock
+
+cenos6.4 에서 php권한에러
+http://zuriyang.tistory.com/86
+2017/06/13 15:58:13 [error] 3681#0: *55 FastCGI sent in stderr: "PHP message: PHP Warning:  Unknown: failed to open stream: Permission denied in Unknown on line 0
+Unable to open primary script: /home/manager/server/app/test.php (Permission denied)" while reading response header from upstream, client: 210.94.1.38, server: localhost, request: "GET /test.php HTTP/1.1", upstream: "fastcgi://127.0.0.1:9000", host: "1.255.144.56"
+일시적으로 끄기
+# setenforce 0
+다음부팅시에도 적용되는 설정
+# vi /etc/selinux/config
+SELINUX=enforcing   켜기
+SELINUX=disabled   끄기
+
+출처: http://zuriyang.tistory.com/86 [개발노트]
+
+https://blog.bypass.kr/280
+
+https://github.com/infusion/PHP-Facedetect
+http://www.xarg.org/project/php-facedetect/
+
+
+http://www.atblog.co.kr/?p=6287
+# 두개는 같은 명령어다. 하나씩치려면 위, 한번에 설치하려면 하단
+# 개별 설치
+$ yum install libxml2-devel
+$ yum install bzip2-devel
+$ yum install libcurl-devel
+$ yum install gdbm-devel
+$ yum install libvpx-devel
+$ yum install libvpx
+$ yum install libjpeg-turbo-devel
+$ yum install libpng-devel
+$ yum install libXpm libXpm-devel
+$ yum install freetype-devel
+$ yum install t1lib t1lib-devel
+$ yum install gmp-devel
+$ yum install libc-client libc-client-devel
+$ yum install pam-devel
+$ yum install libicu libicu-devel
+$ yum install openldap-devel
+$ yum install readline-devel
+$ yum install libedit-devel
+$ yum install libtidy libtidy-devel
+$ yum install libxslt libxslt-devel
+$ yum install krb5-devel
+$ yum install openssl-devel
+$ yum install db4-devel
+$ yum -y install expat*
+ 
+# 한번에 설치
+yum -y install libxml2-devel bzip2-devel libcurl-devel gdbm-devel libvpx libvpx-devel libjpeg-turbo-devel libpng-devel libXpm \
+libXpm-devel freetype-devel t1lib t1lib-devel gmp-devel libc-client libc-client-devel pam-devel libicu libicu-devel openldap-devel \
+readline-devel libedit-devel libtidy libtidy-devel libxslt libxslt-devel expat* krb5-devel openssl-devel db4-devel
+
+# 다음 libmcrypt를 설치한다. 그리고 심볼생성까지 마무리
+$ wget http://www.atblog.co.kr/file/package/libmcrypt-2.5.8.tar.gz
+$ tar zxvf libmcrypt-2.5.8.tar.gz
+$ cd libmcrypt-2.5.8
+$ ./configure
+$ make
+$ make install
+$ ln -s /usr/local/lib/libmcrypt.so.4 /usr/local/lib64/libmcrypt.so.4
+
+cd /home/manager/server/
+wget http://kr1.php.net/distributions/php-7.1.5.tar.gz
+cd ./php-7.1.5/etc
+wget https://github.com/infusion/PHP-Facedetect/archive/master.zip
+unzip master.zip
+mv PHP-Facedetect-master facedetect
+
+tar xvfz php-7.1.5.tar.gz
+cd php-7.1.5
+./configure \
+--prefix=/home/manager/server/php-7.1.5 \
+--with-config-file-path=/home/manager/server/php-7.1.5/etc \
+--with-config-file-scan-dir=/home/manager/server/php-7.1.5/etc/conf.d \
+--disable-debug \
+--enable-fpm \
+--enable-bcmath \
+--enable-exif \
+--enable-ftp \
+--enable-gd-native-ttf \
+--enable-inline-optimization \
+--enable-intl \
+--enable-mbregex \
+--enable-mbstring \
+--enable-sigchild \
+--enable-soap \
+--enable-sockets \
+--enable-sysvsem=yes \
+--enable-sysvshm=yes \
+--enable-xml \
+--enable-zip \
+--with-bz2 \
+--with-iconv \
+--with-curl \
+--with-zlib \
+--with-gd \
+--with-gettext \
+--with-mcrypt \
+--with-mhash \
+--with-mysqli \
+--with-xmlrpc \
+--with-freetype-dir=/usr/include/freetype2 \
+--with-jpeg-dir=/usr/lib \
+--with-libxml-dir=/usr/lib \
+--with-png-dir=/usr/lib \
+--with-zlib-dir=/usr/lib \
+--with-fpm-user=manager \
+--with-fpm-group=manager \
+--with-facedetect
+
+make && make install
+
+phpize && ./configure && make && make install
+
+Installing from sources
+Install OpenCV (OpenCV 2.3.1)
+Download facedetect source package
+Unpack facedetect source package
+Go to facedetect folder and type "phpize && ./configure && make && make install"
+Make sure you have extension=facedetect.so in your php.ini
+
+/bin/ld: ext/facedetect/.libs/facedetect.o: undefined reference to symbol 'cvEqualizeHist'
+/usr/local/lib/libopencv_imgproc.so.3.2: error adding symbols: DSO missing from command line
+collect2: error: ld returned 1 exit status
+make: *** [sapi/cli/php] 오류 1
+
+이다음 환경설정해야 하는부분이 있는데 다른부분은 원하는대로 설정하고
+우선 TImezone만 세팅해주자
+$ cp php.ini-production /usr/local/apache/conf/php.ini 
+$ vi /usr/local/apache/conf/php.ini
+ 
+date.timezone = "Asia/Seoul"
+
+자 이제 설치가 끝났으나 잘 설치 되있나 확인 해 보자
+$ vi /usr/local/apache/conf/httpd.conf
+ 
+# PHP 모듈이 정상적으로 추가되었는지 확인
+LoadModule php5_module        modules/libphp5.so
+ 
+# 마임타입 추가
+ 
+    ... 중략 ... 
+    AddType application/x-httpd-php .php .html 
+    AddType application/x-httpd-php-source .phps
+ 
+ 
+# index.php 연결
+ 
+    DirectoryIndex index.php index.html
+    
+끝으로 심볼릭 PATH 등록을 해주자
+$ ln -s /usr/local/php/bin/php /bin/php
+$ ln -s /usr/local/php/bin/php-config /usr/local/bin/php-config
+$ ln -s /usr/local/php/bin/phpize /usr/local/bin/phpize    
