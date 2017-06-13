@@ -1,12 +1,30 @@
+[Nginx] 컴파일 설치/구성
+http://no1jihoon.blogspot.kr/2016/09/nginx.html
+wget http://nginx.org/download/nginx-1.12.0.tar.gz
+원본 ./configure --prefix=/home/manager/server/nginx_image --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module
+수정 ./configure --prefix=/home/manager/server/nginx_image --user=manager --group=manager --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with-http_realip_module
+
+pcre 라이브러리 설치      
+yum install pcre*
+gzip 압축을 사용하기 위해서 설치
+yum install zlib zlib-devel
+open ssl 설치
+yum install openssl openssl-devel
+yum install gcc
 
 https://corpocrat.com/2009/08/18/automatic-face-detection-with-php-in-linux/
 
 centos nginx php-fpm socket 설정 하는법에 대해 알아보도록 하자.
 http://bong8nim.com/post/programming/etc/centos-nginx-php-fpm-socket-%EC%84%A4%EC%A0%95/
 
+http://stimage.hanafostv.com:8080/ontv/10250/T30222_src.jpg
+
 PHP 7.0.0 설치 방법
 https://blog.bypass.kr/280
 
+yum install -y epel-release
+rpm -ivh http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+yum --enablerepo=remi update remi-release
 yum --enablerepo=remi-php71 install -y php php-fpm php-devel
 
 /home/manager/server/nginx_image/sbin/nginx -s stop
@@ -35,6 +53,36 @@ SELINUX=disabled   끄기
 https://blog.bypass.kr/280
 
 https://github.com/infusion/PHP-Facedetect
+wget https://github.com/infusion/PHP-Facedetect/archive/master.zip
+
+리눅스 rpm 명령어 정리
+http://kyulak.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-rpm-%EB%AA%85%EB%A0%B9%EC%96%B4-%EC%A0%95%EB%A6%AC
+rpm -ql opencv
+
+In file included from /usr/include/jasper/jasper.h:77:0,
+                 from /home/manager/server/opencv-3.2.0/modules/imgcodecs/src/grfmt_jpeg2000.cpp:59:
+/usr/include/jasper/jas_math.h: In function [01mbool jas_safe_size_mul(size_t, size_t, size_t*)
+
+                                                                                                /usr/include/jasper/jas_math.h:143:15: error: [01mSIZE_MAXwas not declared in this scope
+  if (x && y > SIZE_MAX / x) {
+               ^
+/usr/include/jasper/jas_math.h: In function [01mbool jas_safe_size_add(size_t, size_t, size_t*)
+
+                                                                                                /usr/include/jasper/jas_math.h:170:10: error: [01mSIZE_MAXwas not declared in this scope
+  if (y > SIZE_MAX - x) {
+          ^
+
+Installing from sources
+
+	1. Install OpenCV libraries (at least version 1.0.0)
+	2. Unpack facedetect source package
+	3. Go to facedetect folder and type "phpize && ./configure && make && make install"
+	4. Make sure you have extension=facedetect.so in your php.ini
+
+Install OpenCV 3.1 and Python 2.7 on CentOS 7
+http://www.computervisiononline.com/blog/install-opencv-31-and-python-27-centos-7
+
+
 http://www.xarg.org/project/php-facedetect/
 
 
@@ -135,6 +183,29 @@ phpize && ./configure && make && make install
 
 Installing from sources
 Install OpenCV (OpenCV 2.3.1)
+wget https://github.com/opencv/opencv/archive/3.2.0.tar.gz
+
+yum install cmake
+yum install python-devel numpy
+yum install gcc gcc-c++
+yum install gtk2-devel
+yum install libdc1394-devel
+yum install libv4l-devel
+yum install ffmpeg-devel
+yum install gstreamer-plugins-base-devel
+yum install libpng-devel libjpeg-turbo-devel jasper-devel openexr-devel libtiff-devel libwebp-devel
+mkdir build
+cd build
+cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..
+make
+make install
+
+cp /usr/local/lib/python2.7/site-packages/cv2.so /usr/lib/python2.7/site-packages
+
+python
+>>> import cv2
+>>> print cv2.__version__
+
 Download facedetect source package
 Unpack facedetect source package
 Go to facedetect folder and type "phpize && ./configure && make && make install"
