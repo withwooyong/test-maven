@@ -1,3 +1,24 @@
+https://zetawiki.com/wiki/CentOS_JDK_%EC%84%A4%EC%B9%98
+yum list java*jdk-devel
+yum install java-1.8.0-openjdk-devel.x86_64
+rpm -qa java*jdk-devel
+javac -version
+echo "public class HelloWorld {" > HelloWorld.java
+echo "  public static void main(String[] args) {" >> HelloWorld.java
+echo "    System.out.println(\"Hello, World\");" >> HelloWorld.java
+echo "  }" >> HelloWorld.java
+echo "}" >> HelloWorld.java
+javac HelloWorld.java
+java HelloWorld
+rm -f HelloWorld.java HelloWorld.class
+
+ngrinder https://github.com/naver/ngrinder/releases
+wget https://github.com/naver/ngrinder/releases/download/ngrinder-3.4.1-20170131/ngrinder-controller-3.4.1.war
+java -XX:MaxPermSize=200m -jar ngrinder-controller-3.4.1.war
+http://1.255.144.53:8080/
+admin / admin
+
+
 [Nginx] 컴파일 설치/구성
 http://no1jihoon.blogspot.kr/2016/09/nginx.html
 wget http://nginx.org/download/nginx-1.12.0.tar.gz
