@@ -118,6 +118,9 @@ docker run -d -e 'CONTROLLER_ADDR=ip주소:8080' --memory="1g" --memory-swap -1 
 4core 16G
 docker run -d -e 'CONTROLLER_ADDR=1.255.144.53:8080' --memory="1g" --memory-swap -1 --cpu-period=50000 --cpu-quota=25000 --name agent_minimum ngrinder/agent:3.3
 
+cd /home/manager/ngrinder-agent/
+./run_agent.sh
+
 --memory  : 해당 컨테이너에 물리적으로 메모리를 얼마나 할당할 지 설정하여 줍니다. 할당받은 메모리를 전부 사용했을 시, host의 메모리를 빌려서 사용합니다.
 --memory-swap  : 컨테이너에게 얼만큼 메모리를 빌려줄 지 결정합니다. 만약 --memory="300m" --memory-swap="200m"일 경우, 해당 컨테이너에서 사용할 수 있는 메모리의 양은 500m입니다. 여기서는 정확하게 1gb/2gb/4gb만 사용하기 위해 -1로 메모리를 고정합니다.
 --cpu-period, --cpu-quota  :  cpu-priod는 cpu-quota와 함께 사용합니다. cpu-priod의 기본 값은 100000(100ms)로, cpu-quota를 이용해서 100ms 동안 어느정도의 cpu 할당할 것 인지를 설정할 수 있습니다. 만약 cpu-quota가 25000이라면, 1/4만큼의 cpu자원을 사용할 수 있습니다. 여기서 agent vm을 2core로 설정하였기 때문에 1/2만큼의 cpu자원을 사용하도록 하기 위해 --cpu-period는 50000, --cpu-quota는 25000을 정했습니다.

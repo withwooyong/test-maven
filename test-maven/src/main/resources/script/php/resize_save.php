@@ -6,11 +6,9 @@
         
         $is_width_height = true;
 
-        if (strpos($image_url, '1.255.144.56') > 0) {
-        //if (strpos($image_url, 'stimage.hanafostv.com:8080') > 0) {
-                
+        if (strpos($image_url, '1.255.144.56') > 0) {        
         	$resize_image = str_replace("http://", '/home/manager/server/images/', $image_url);
-        	echo "image_url : " . $image_url. "<br>";
+        	
         	if (file_exists($resize_image)) { // 파일이 존재하면
                	$resizeObj = new resize($resize_image);
                	header('Content-type: image/jpeg');
@@ -19,9 +17,13 @@
                	header("Expires: " . date(DATE_RFC822, strtotime(" 2 day")));
                	imagejpeg($resizeObj->getImage());
             } else {
-               	$stimage_full_path = str_replace("http://", '/home/manager/server/images/', $image_url);
+            	$stimage_full_path = $resize_image;
             	$stimage_file_path = substr($resize_image, 0, strrpos($resize_image, '/')).'/';
               	
+            	echo "<br>1. stimage_full_path : ". $stimage_full_path. "<br>";
+            	echo "<br>1. stimage_file_path : ". $stimage_file_path. "<br>";
+            	echo "<br>1. resize_image : ". $resize_image. "<br>";
+            	
                	// T30222_src_300x429.jpg
             	$stimage_file_name = str_replace($stimage_file_path, "", $resize_image);
                	$stimage_file_name = substr($stimage_file_name, 0, strrpos($stimage_file_name, '.'));
@@ -34,6 +36,14 @@
                	$http_image = "";
                	$save_image = "";
                	// $resize_image
+               	
+               	umask(0002);
+               	
+               	$path = pathinfo($stimage_full_path);
+               	if (!file_exists($path['dirname'])) {
+               		mkdir($path['dirname'], 0777, true);
+               	}
+               	
                	if ($width_height == NULL) { // src 원본 이미지
                		$save_image = $stimage_full_path;
                		copy($image_url, $save_image);
