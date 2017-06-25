@@ -1,0 +1,153 @@
+user  manager;
+worker_processes  auto;
+error_log  logs/error.log;
+
+pid        logs/nginx_master.pid;
+
+worker_rlimit_nofile 40960;
+
+events {
+    worker_connections 5120;
+    use epoll;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  logs/access.log  main;
+    sendfile        on;
+
+    #tcp_nopush     on;
+    keepalive_timeout  5 5;
+    keepalive_requests 5; 
+    gzip  on;
+    gzip_min_length 1k;
+    gzip_buffers 4 8k;
+    gzip_http_version 1.1;
+    gzip_comp_level 2;
+    gzip_types  text/plain application/x-javascript text/css application/xml;
+    #gzip_types  text/plain text/css image/png image/gif image/jpeg application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_vary on;
+    gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+    
+    # 캐시폴더 위치 : /home/manager/server/nginx_image/cache
+    # 캐시이름/메모리 : keys_zone=one:100m 메모리 100m (1m당 800개 키값 소유할 수 있음)
+    # inactive=30m 는 30분 동안 접근되지 않은 캐시파일 삭제
+    # max_size=1g 캐시파일의 총용량지정한다는 말이고, 1g가 넘어가면 가장 먼저 생성된 캐시파일부터 삭제
+    fastcgi_cache_path /home/manager/server/nginx_image/cache levels=1:2 keys_zone=one:100m inactive=60m max_size=1g;
+    
+    upstream cache_servers {
+        #ip_hash;
+        hash $scheme$proxy_host$request_uri consistent;    
+        server dev1.image.com:80;
+        server dev2.image.com:80;
+        server dev3.image.com:80;
+        server dev4.image.com:80;
+        #keepalive 10;
+    }
+    
+    server {
+        listen       80;
+        server_name  localhost;
+        charset UTF-8;
+        rewrite_log on;
+        # file size
+        client_max_body_size 100M;
+        
+        location = /favicon.ico {
+            return 204;
+            access_log     off;
+            log_not_found  off;
+        }
+        
+        location ~* ^ {
+            proxy_pass              http://cache_servers;
+            proxy_redirect          off;
+            proxy_set_header        Host    $host;
+            proxy_set_header        X-Real-IP       $remote_addr;
+            proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        #error_page  404              /404.html;
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+
+        location = /50x.html {
+            root   html;
+        }
+    }
+
+    server {
+        listen       80;
+        server_name  *.image.com;
+        charset UTF-8;
+        rewrite_log on;
+        # file size
+        client_max_body_size 100M; #최대 업로드 가능한 파일 사이트 설정
+
+        location = /favicon.ico {
+            return 204;
+            access_log     off;
+            log_not_found  off;
+        }
+        
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php$ {
+            root           /home/manager/server/app;
+
+            # with php7-fpm 설정
+            try_files $uri = 404;
+
+            fastcgi_ignore_headers Cache-Control;
+            #add_header X-Fastcgi-Cache $upstream_cache_status;
+            fastcgi_cache_methods GET HEAD; # Only GET and HEAD methods apply
+            fastcgi_cache_key "$scheme$host$request_uri";
+            fastcgi_cache one;
+            fastcgi_cache_valid 200 302 1m;
+            fastcgi_cache_min_uses 1;
+
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            fastcgi_pass 127.0.0.1:9000;
+            #fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include fastcgi_params;
+
+            # fastcgi 버퍼 사이즈 조절~
+            # 502 에러를 없애기 위한 proxy 버퍼 관련 설정 
+            proxy_buffer_size               128k;
+            proxy_buffers                   4 256k;
+            proxy_busy_buffers_size         256k; 
+
+            # 502 에러를 없애기 위한 fastcgi 버퍼 관련 설정
+            fastcgi_buffering               on;
+            fastcgi_buffer_size             16k;
+            fastcgi_buffers                 16 16k;
+ 
+            # 최대 timeout 설정
+            fastcgi_connect_timeout         600s;
+            fastcgi_send_timeout            600s;
+            fastcgi_read_timeout            600s;
+ 
+            # PHP 성능 향상을 위한 옵션
+            sendfile                        on;
+            tcp_nopush                      off;
+            keepalive_requests              0;
+        }
+        
+        #error_page  404              /404.html;
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+
+        location = /50x.html {
+            root   html;
+        }
+    }
+}

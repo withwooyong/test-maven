@@ -92,6 +92,7 @@ admin / admin
 1.255.144.54 agent 2 
 
 
+http://1.255.144.55/resize_cache.php?u=http://1.255.144.56/movie/33600/M335635_src.jpg
 
 http://1.255.144.53/resize.php?u=http://stimage.hanafostv.com:8080/ontv/10250/T30222_src.jpg&w=328
 
@@ -118,8 +119,70 @@ docker run -d -e 'CONTROLLER_ADDR=ip주소:8080' --memory="1g" --memory-swap -1 
 4core 16G
 docker run -d -e 'CONTROLLER_ADDR=1.255.144.53:8080' --memory="1g" --memory-swap -1 --cpu-period=50000 --cpu-quota=25000 --name agent_minimum ngrinder/agent:3.3
 
+/home/manager/ngrinder-agent/run_agent.sh
+
 cd /home/manager/ngrinder-agent/
 ./run_agent.sh
+
+
+[root@DEV-VM-IRCS-03 app]# ulimit -a
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 63462
+max locked memory       (kbytes, -l) 64
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 1024
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 8192
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 63462
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+[root@DEV-VM-IRCS-03 app]# exit
+exit
+[manager@DEV-VM-IRCS-03 ~]$ ulimit -a
+core file size          (blocks, -c) 0
+data seg size           (kbytes, -d) unlimited
+scheduling priority             (-e) 0
+file size               (blocks, -f) unlimited
+pending signals                 (-i) 63462
+max locked memory       (kbytes, -l) 64
+max memory size         (kbytes, -m) unlimited
+open files                      (-n) 1024
+pipe size            (512 bytes, -p) 8
+POSIX message queues     (bytes, -q) 819200
+real-time priority              (-r) 0
+stack size              (kbytes, -s) 8192
+cpu time               (seconds, -t) unlimited
+max user processes              (-u) 4096
+virtual memory          (kbytes, -v) unlimited
+file locks                      (-x) unlimited
+
+http://wifida.tistory.com/127
+http://intro0517.tistory.com/3
+
+vi /etc/security/limits.conf
+*                hard    nofile          65535
+*                soft    nofile          65535
+*                hard    nproc           65535
+*                soft    nproc           65535
+root             hard    nofile          65535
+root             soft    nofile          65535
+root             hard    nproc           65535
+root             soft    nproc           65535
+
+
+root hard nofile 65535
+root soft nofile 65535
+root hard nproc 65535
+root soft nproc 65535
+
+
+출처: http://intro0517.tistory.com/3 [전디버거의 코딩이야기]
 
 --memory  : 해당 컨테이너에 물리적으로 메모리를 얼마나 할당할 지 설정하여 줍니다. 할당받은 메모리를 전부 사용했을 시, host의 메모리를 빌려서 사용합니다.
 --memory-swap  : 컨테이너에게 얼만큼 메모리를 빌려줄 지 결정합니다. 만약 --memory="300m" --memory-swap="200m"일 경우, 해당 컨테이너에서 사용할 수 있는 메모리의 양은 500m입니다. 여기서는 정확하게 1gb/2gb/4gb만 사용하기 위해 -1로 메모리를 고정합니다.
@@ -178,7 +241,10 @@ systemctl enable php-fpm  // php 부팅시 자동 실행
 systemctl status php-fpm  // php 상태 확인
 systemctl stop php-fpm    // php 정지
 
+컴파일 설치시 해야함. mkdir /var/run/php-fpm/
+
 ls -l /var/run/php-fpm/php-fpm.sock
+
 
 
 wget -x, --force-directories http://stimage.hanafostv.com:8080/adult/11000/A329637_src.jpg

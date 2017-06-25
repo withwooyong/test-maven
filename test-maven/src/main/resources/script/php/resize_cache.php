@@ -27,11 +27,12 @@
             if (!file_exists($path['dirname'])) {
             	mkdir($path['dirname'], 0777, true);
             }
-            
+            // $image = file_get_contents(str_replace($width_height, "", $image_url));
+            // $size = getimagesize("http://www.example.com/gifs/logo.gif");
             // $resize_image
             if ($width_height == NULL) { // src 원본 이미지
             	copy($image_url, $resize_image);
-            	$is_width_height = false;               		
+            	$is_width_height = false;
             } else { // resize 이미지
             	$width = substr($width_height, 1, strrpos($width_height, 'x')-1); // 300
             	$height = substr($width_height, strrpos($width_height, 'x')+1, strlen($width_height)); // 429
