@@ -91,10 +91,13 @@ admin / admin
 
 1.255.144.54 agent 2 
 
-
+<!-- image -->^M                                                                                      
+<server id="image" address="http://stimage.hanafostv.com" port="8080"/>^M
+<server id="image" address="http://stimage.hanafostv.com" port="8080"/>^M
+  
 http://1.255.144.55/resize_cache.php?u=http://1.255.144.56/movie/33600/M335635_src.jpg
 
-http://1.255.144.53/resize.php?u=http://stimage.hanafostv.com:8080/ontv/10250/T30222_src.jpg&w=328
+http://1.255.144.55/resize_cache.php?u=http://stimage.hanafostv.com:8080/ontv/10250/T30222_src.jpg&w=328
 
 1.255.144.55 -> http 호출 
 http://1.255.144.55/resize.php?u=http://1.255.144.56/movie/33600/M335635_src.jpg
@@ -461,3 +464,10 @@ LoadModule php5_module        modules/libphp5.so
 $ ln -s /usr/local/php/bin/php /bin/php
 $ ln -s /usr/local/php/bin/php-config /usr/local/bin/php-config
 $ ln -s /usr/local/php/bin/phpize /usr/local/bin/phpize    
+
+http://1.255.144.55/resize_cache.php?u=http://1.255.144.56/movie/88850/M88816_src_100x100.jpg
+http://1.255.144.55/resize_cache.php?u=http://stimage.hanafostv.com:8080/movie/33700/M336802_180x258.jpg
+
+http://1.255.144.55/resize_cache.php?u=http://1.255.144.56/movie/88850/M88816_src_100x100.jpg
+
+

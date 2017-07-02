@@ -1,0 +1,114 @@
+
+전체메뉴
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/promo/hmenu/141394_car3new2_menu_pro_v1_0630_374x258.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/promo/hmenu/141394_car3new2_menu_pro_v1_0630_374x258.png
+
+영화/시리즈
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/33700/M336802_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/33700/M336599_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/33700/M336655_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/33700/M336559_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/33600/M335969_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/33700/M336869_180x258.jpg
+
+TV다시보기
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/promo/hmenu/137015_wondernewDC_h_menu_pro_v4_0630_374x258.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/promo/hmenu/137015_wondernewDC_h_menu_pro_v4_0630_374x258.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/promo/hmenu/139957_tvpluszz_h_menu_pro_v2_0630_374x258.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10600/T335916_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10650/T336192_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10650/T336385_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10600/T26552_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10250/T12244_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10450/T334152_180x258.jpg
+
+애니
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10750/T337090_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10700/T336799_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10750/T337092_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10650/T336235_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10600/T335940_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10550/T335403_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10650/T336497_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10550/T335186_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10600/T335621_180x258.jpg
+
+키즈
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/kids_new/10700/K336797_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/kids_new/10750/K337099_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/kids_new/10700/K336796_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/kids_new/10700/K336877_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/kids_new/10700/K336674_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/kids_new/10700/K336901_180x258.jpg
+
+다큐/라이프/교육
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/promo/hmenu/133267_ttoouuttaa_h_menu_pro_v1_0628_374x258.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/promo/hmenu/133267_ttoouuttaa_h_menu_pro_v1_0628_374x258.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/promo/hmenu/157684_bookstory_v1_0629_374x258.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10700/T336945_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10700/T336947_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/docu/10550/D325316_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/docu/10300/D90281_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/docu/10300/D322760_180x258.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/92400/M92398_180x258.jpg
+
+TV앱
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/TJ_newicon_154x154.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/j_joy_tng_tingbo_and.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/j_joy_appstone_gallary_and.png
+src 없음 I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/aquatv_96.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/internet.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/familyear_app.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/icon_154x154.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/j_joy_busi_airforce_and.png
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/UHDSTB2/DATA/epg/menu_image/update/j_joy_dgient_moveart_and.png
+
+원더우먼 
+패턴 불일치 I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/metaimg/tmdb/297762/tmdb_bg_297762_32_1604x902.jpg
+이미지 불일치 I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/33700/M336802_315x452.jpg
+                                     http://xxx.xxx.xxx.xxx:8080/movie/33700/M336599_315x452.jpg
+                                     http://stimage.hanafostv.com:8080/movie/33700/M336802_315x452.jpg
+스틸컷
+패턴 불일치 I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_0_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_1_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_2_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_3_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_4_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_5_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_6_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_7_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_8_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_9_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_10_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_11_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_12_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_13_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_14_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_15_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_16_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_17_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_18_142x142.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/smartdelivery/20168261/kobis_still_20168261_19_142x142.jpg
+
+연관콘텐츠
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/77900/M77895_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/69900/M69853_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/31150/M311455_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/30850/M308065_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/48000/M47976_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/30850/M308063_206x296.jpg
+
+최고의한방
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10600/T335916_315x452.jpg
+
+연관콘텐츠
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10850/T87838_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10300/T332924_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/movie/30950/M309442_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10600/T53557_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10300/T332925_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10100/T18096_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10900/T65875_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10300/T30293_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10200/T99157_206x296.jpg
+I/image-loader( 5236): http://xxx.xxx.xxx.xxx:8080/ontv/10300/T41254_206x296.jpg

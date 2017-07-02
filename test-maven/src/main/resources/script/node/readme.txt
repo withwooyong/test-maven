@@ -46,8 +46,6 @@ sudo wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.re
 sudo yum install devtoolset-2-gcc devtoolset-2-binutils devtoolset-2-gcc-c++
 scl enable devtoolset-2 bash
 
-
-
 npm install opencv --build-from-source
 yum install libopencv-dev
 node-pre-gyp ERR! Tried to download(403): https://node-opencv.s3.amazonaws.com/opencv/v6.0.0/Release/node-v48-linux-x64.tar.gz 
@@ -62,11 +60,71 @@ gyp WARN EACCES attempting to reinstall using temporary dev dir "/home/manager/n
 501      13910 13843  0 Feb03 ?        00:22:20 /home/supporter/node/bin/node /home/supporter/mcs_img_viewer/server.js
 501      24279 24143  0 10:36 pts/1    00:00:00 grep node
 
+- 실행
+node /home/manager/server/app/app.js
 /home/manager/server/node-v6.11.0/node /home/manager/server/app/app.js
 /home/manager/server/node-v6.11.0/node /home/manager/server/app/server.js
 
 find . -name "*.*" | xargs grep -n crop
 find . -name "mcs.mongo" | xargs grep -n crop
+
+
+이미지경로
+
+이미지구분 6-13 시스템관리->시스템파라미터관리
+
+C_PSTR_RES  C영역 포스터 이미지 해상도
+    C_PSTR_RES  C영역 포스터 이미지 해상도 180x258 C영역 포스터 이미지 해상도 NXUHD   Y
+
+D_PSTR_RES  D영역 포스터 이미지 해상도
+    D_PSTR_RES  D영역 포스터 이미지 해상도 315x452 D영역 포스터 이미지 해상도 NXUHD   Y
+    
+HPRMRESLTN  NextUI 홈전체메뉴 프로모션 이미지해상도
+    HPRMRESLTN  NextUI 홈전체메뉴 프로모션 이미지해상도    185x128 185x128 (레거시)   NXNEWUI Y
+    HPRMRESLTN  NextUI 홈전체메뉴 프로모션 이미지해상도    250x172 250x172 (SSTB)  NXSSTB  Y
+    HPRMRESLTN  NextUI 홈전체메뉴 프로모션 이미지해상도    374x258 374x258 (UHD)   NXUHDSTB    Y
+    
+IMGDEFDIR   이미지 디폴트 디렉토리명
+    IMGDEFDIR   이미지 디폴트 디렉토리명   01  change  01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   02  update  01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   03  default 01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   04  kids    01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   05  style   01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   06  style/blue  01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   07  style/green 01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   08  style/orange    01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   09  style/purple    01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   10  style/yellow    01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   11  widget  01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   12  widget/default  01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   13  widget/style    01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   14  widget/style/blue   01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   15  widget/style/green  01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   16  widget/style/orange 01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   17  widget/style/purple 01
+    IMGDEFDIR   이미지 디폴트 디렉토리명   18  widget/style/yellow 01
+    
+IMGFTPINFO  이미지 FTP 서버정보
+    IMGFTPINFO  이미지 FTP 서버정보    220 ftp://imageup:image_media@1.226.200.38:2401 COPY
+    IMGFTPINFO  이미지 FTP 서버정보    CDN ftp://ftpuser01:stbuser01@cdn.hanafostv.com:21  
+    IMGFTPINFO  이미지 FTP 서버정보    TAR ftp://epgrenew:dlvlwlrodtls@121.125.28.55:21    
+    
+MENUIMGINF  메뉴이미지업로드정보
+    MENUIMGINF  메뉴이미지업로드정보  CMS_WEBSVR_FTP_INFO 이미지 WEBSERVER FTP전송정보(P1:접속정보,P2:업로드경로)-was로변경150129    jeus:hmsysdev@123.215.199.157:22    /home/DATA/exbillhanaro/webapps/menu_image/kids/
+    MENUIMGINF  메뉴이미지업로드정보  IMG_HIST_LNKD_INFO  이미지 이력 I/F정보(P1:URL, P2:ENCODING)   http://cms.hanafostv.com/img/IMG_IMAGE_HIST_MULTI_P_6.jsp   UTF-8
+    MENUIMGINF  메뉴이미지업로드정보  IMG_WAS_ULD_PATH    이미지 WAS 업로드 경로정보(P1:업로드경로정보)    /home/DATA/menu_image_xpg_v7/menu_image/kids/   
+    
+MIMG_BRICK  메뉴이미지 1,2,3,5,9단 그룹
+    MIMG_BRICK  메뉴이미지 1,2,3,5,9단 그룹 34  1단메뉴 이미지속성  371*62|248*40|198*34    Y
+    MIMG_BRICK  메뉴이미지 1,2,3,5,9단 그룹 35  2단메뉴 이미지속성  371*130|248*84|198*72   Y
+    MIMG_BRICK  메뉴이미지 1,2,3,5,9단 그룹 36  3단메뉴 이미지속성  371*196|248*128|198*110 Y
+    MIMG_BRICK  메뉴이미지 1,2,3,5,9단 그룹 41  5단메뉴 이미지속성  371*326|248*216|198*186 Y
+    MIMG_BRICK  메뉴이미지 1,2,3,5,9단 그룹 42  9단메뉴 이미지속성  371*590|248*392|198*338 Y
+    
+MYPMRESLTN  MYPPM이미지 해상도
+    MYPMRESLTN  MYPPM이미지 해상도    305x60  305x60 (레거시)    NXNEWUI Y
+    MYPMRESLTN  MYPPM이미지 해상도    374x258 374x258(UHD)    NXSSTB  Y
+    MYPMRESLTN  MYPPM이미지 해상도    382x66  382x66 (SSTB)   NXUHDSTB    Y    
 
 
 find . -name "mcs.log.2017-06-08" | xargs grep -n crop
@@ -80,6 +138,14 @@ tar -xvzf nginx-1.12.0.tar.gz
 cd nginx-1.12.0
 ./configure --prefix=/home/manager/server/nginx_image --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module
 make && make install  
+
+
+./configure --prefix=/home/manager/server/nginx_node --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module
+
+/home/manager/server/nginx_node/sbin/nginx -s stop
+/home/manager/server/nginx_node/sbin/nginx -c /home/manager/server/nginx_node/conf/nginx.conf
+
+
 
 /home/manager/server/nginx_master/sbin/nginx -s stop
 /home/manager/server/nginx_master/sbin/nginx -c /home/manager/server/nginx_master/conf/nginx.conf

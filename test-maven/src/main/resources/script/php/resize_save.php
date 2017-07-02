@@ -1,9 +1,7 @@
 <?php
         // *** Include the class
         include("resize-class.php");
-
-        $image_url = $_REQUEST["u"];
-        
+        $image_url = $_REQUEST["u"];        
         $is_width_height = true;
 
         if (strpos($image_url, '1.255.144.56') > 0) {        
