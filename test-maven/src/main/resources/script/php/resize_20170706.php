@@ -27,7 +27,7 @@
     
     if (file_exists($resize_image)) { // 파일이 존재하면
     	$resizeObj = new resize($resize_image);
-    	header('Content-type: image/'.$extension);
+    	header('Content-type: image/jpeg');
     	header("Cache-Control: private, max-age=300, pre-check=300");
     	header("Pragma: private");
     	header("Expires: " . date(DATE_RFC822, strtotime(" 2 day")));
@@ -48,17 +48,30 @@
     		$remote_image = file_get_contents($image_url);
     		file_put_contents($resize_image, $remote_image);
     		$is_width_height = false;
-    	} else { // resize 이미지    		
+    	} else { // resize 이미지
+    		
     		$width = substr($width_height, 1, strrpos($width_height, 'x')-1); // 300
     		$height = substr($width_height, strrpos($width_height, 'x')+1, strlen($width_height)); // 429
     		if (is_numeric($width) && is_numeric($height)) { // resize 정보가 있으면
-    			$remote_image = @file_get_contents(str_replace($width_height, "_src", $image_url));
-    			if ($remote_image === false) {
-    				$remote_image = file_get_contents($image_url);
-    				$is_width_height = false;
+    			// kobis_still
+    			if (strpos($image_url, 'kobis_still') !== false) { // still 이미지는 원본이미지에 _src 와 확장자 .jpg 없음
+    				$remote_image = @file_get_contents(str_replace($width_height.".jpg", "", $image_url));
+    				if ($remote_image === false) {
+    					$remote_image = file_get_contents($image_url);
+    					$is_width_height = false;
+    				} else {
+    					$resize_image = str_replace($width_height.".jpg", "", $resize_image);
+    					$option = "crop";
+    				}
     			} else {
-    				$resize_image = str_replace($width_height, "_src", $resize_image);
-    				$option = "auto";
+    				$remote_image = @file_get_contents(str_replace($width_height, "_src", $image_url));
+    				if ($remote_image === false) {
+    					$remote_image = file_get_contents($image_url);
+    					$is_width_height = false;
+    				} else {
+    					$resize_image = str_replace($width_height, "_src", $resize_image);
+    					$option = "auto";
+    				}
     			}
     			// $resize_image
     			file_put_contents($resize_image, $remote_image);
@@ -77,7 +90,7 @@
     		$resizeObj->saveImage($save_image); // resize image save
     	} else {
     		$resizeObj = new resize($resize_image);
-    		header('Content-type: image/'.$extension);
+    		header('Content-type: image/jpeg');
     		header("Cache-Control: private, max-age=300, pre-check=300");
     		header("Pragma: private");
     		header("Expires: " . date(DATE_RFC822, strtotime(" 2 day")));
