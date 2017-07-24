@@ -20,7 +20,10 @@
     $width = "";
     $height = "";
     $remote_image = "";       
-    $extension = strtolower(strrchr($image_url, "."));
+    $extension = strtolower(substr(strrchr($image_url, "."), 1));
+    if ($extension == 'jpg') {
+    	$extension = 'jpeg';
+    }
     // $extension = .jpg
     $save_image = $resize_image;
     $option = "auto"; // crop
@@ -28,13 +31,18 @@
     if (file_exists($resize_image)) { // 파일이 존재하면
     	$resizeObj = new resize($resize_image);
     	header('Content-type: image/'.$extension);
-    	header("Cache-Control: private, max-age=300, pre-check=300");
-    	header("Pragma: private");
-    	header("Expires: " . date(DATE_RFC822, strtotime(" 2 day")));
-    	imagejpeg($resizeObj->getImage());
+    	if ($extension == 'png') {
+    		//$log_dir = "/home/manager/server/nginx_image/logs/";
+    		//$log_file = fopen($log_dir."php.log", "a");
+    		//fwrite($log_file, '1 '.$resize_image."\r\n");
+    		//fclose($log_file);
+    		// Output the image
+    		imagepng($resizeObj->getImage());
+    	} else {
+    		imagejpeg($resizeObj->getImage(), NULL, 100);
+    	}
     } else { // 파일이 없으면
-    	umask(0002);
-    	
+    	umask(0002);    	
     	// mount 되면 삭제
     	$path = pathinfo($resize_image);
     	if (!file_exists($path['dirname'])) {
@@ -73,16 +81,19 @@
     	if ($is_width_height == true) {
     		$resizeObj = new resize($resize_image);
     		$resizeObj->resizeImage($width, $height, $option);
-    		$resizeObj->viewImage();
+    		$resizeObj->viewImage($extension);
     		$resizeObj->saveImage($save_image); // resize image save
     	} else {
     		$resizeObj = new resize($resize_image);
     		header('Content-type: image/'.$extension);
-    		header("Cache-Control: private, max-age=300, pre-check=300");
-    		header("Pragma: private");
-    		header("Expires: " . date(DATE_RFC822, strtotime(" 2 day")));
-    		imagejpeg($resizeObj->getImage());
+    		//header("Cache-Control: private, max-age=300, pre-check=300");
+    		//header("Pragma: private");
+    		//header("Expires: " . date(DATE_RFC822, strtotime(" 2 day")));
+    		if ($extension == 'png') {
+    			imagepng($resizeObj->getImage());
+    		} else {
+    			imagejpeg($resizeObj->getImage(), NULL, 100);
+    		}
     	}
     }
-    
 ?>

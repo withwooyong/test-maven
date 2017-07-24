@@ -120,7 +120,7 @@ http://1.255.144.53:8080/ngrinder-controller-3.4.1/home
 yum -y install docker
 docker run -d -e 'CONTROLLER_ADDR=ip주소:8080' --memory="1g" --memory-swap -1 --cpu-period=50000 --cpu-quota=25000 --name agent_minimum ngrinder/agent:3.3
 4core 16G
-docker run -d -e 'CONTROLLER_ADDR=1.255.144.53:8080' --memory="1g" --memory-swap -1 --cpu-period=50000 --cpu-quota=25000 --name agent_minimum ngrinder/agent:3.3
+docker run -d -e 'CONTROLLER_ADDR=1.255.144.53:8080' --memory="1g" --memory-swap -1 --cpu-period=50000 --cpu-quota=25000 --name agent_minimum ngrinder/agent:3.4.1
 
 /home/manager/ngrinder-agent/run_agent.sh
 
@@ -238,6 +238,7 @@ curl http://stimage.hanafostv.com:8080/adult/11000/A329637_src.jpg       --creat
 curl http://stimage.hanafostv.com:8080/adult/11000/A329637_src.jpg
 curl http://stimage.hanafostv.com:8080/docu/10350/D89339_src.jpg
 
+chkconfig --add php-fpm
 
 systemctl start php-fpm   // php 시작 
 systemctl enable php-fpm  // php 부팅시 자동 실행
@@ -471,3 +472,13 @@ http://1.255.144.55/resize_cache.php?u=http://stimage.hanafostv.com:8080/movie/3
 http://1.255.144.55/resize_cache.php?u=http://1.255.144.56/movie/88850/M88816_src_100x100.jpg
 
 
+NGINX 설정에대한 취약점 입니다
+location 다음에 오는것은 모드와 정규식인데 .php 로 끝나는경우를 인식 하는 정규구문 입니다
+저런경우 \data\file.png\attack.php 에대한 php 처리를 해버리는 취약점으로 아래 조건을 첨가 합니다
+try_files $url =404;
+
+location ~ \.php${
+  try_files $uri =404;
+}
+
+출처: http://xtales.tistory.com/303 [Nightly]

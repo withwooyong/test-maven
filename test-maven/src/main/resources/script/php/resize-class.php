@@ -26,7 +26,7 @@
 			$this->image = $this->openImage ( $fileName );
 			
 			if ($this->image == null) {
-				$this->image = $this->openImage ( '/home/tvingadmin/www/default.jpg' );
+				$this->image = $this->openImage ( '/home/manager/server/app/default.jpg' );
 			}
 			
 			// *** Get width and height
@@ -48,6 +48,17 @@
 					break;
 				case 3 :
 					$img = @imagecreatefrompng ( $file );
+					// integer representation of the color black (rgb: 0,0,0)
+					$background = imagecolorallocate($img, 0, 0, 0);
+					// removing the black from the placeholder
+					imagecolortransparent($img, $background);
+					// turning off alpha blending (to ensure alpha channel information
+					// is preserved, rather than removed (blending with the rest of the
+					// image in the form of black))
+					imagealphablending($img, false);
+					// turning on alpha channel information saving (to ensure the full range
+					// of transparency is preserved)
+					imagesavealpha($img, true);
 					break;
 				default :
 					$img = @imagecreatefromjpeg ( $file );
@@ -105,7 +116,7 @@
 			$cut_bottom = 0;
 			$cut_left = 0;
 			$cut_right = 0;
-			// A ¹é I
+			// A ï¿½ï¿½ I
 			$break_yn = false;
 			for($j = 0; $j < $this->height / 2; $j ++) {
 				for($i = 0; $i < $this->width; $i ++) {
@@ -119,7 +130,7 @@
 					break;
 				}
 			}
-			// X ¹é I
+			// X ï¿½ï¿½ I
 			$break_yn = false;
 			for($j = $this->height; $j > $this->height / 2; $j --) {
 				for($i = $this->width; $i > 0; $i --) {
@@ -135,7 +146,7 @@
 				}
 			}
 			
-			// Ãø ¹é I
+			// ï¿½ï¿½ ï¿½ï¿½ I
 			$break_yn = false;
 			for($i = 0; $i < $this->width / 2; $i ++) {
 				for($j = 0; $j < $this->height; $j ++) {
@@ -150,7 +161,7 @@
 				}
 			}
 			
-			// Ãø ¹é I
+			// ï¿½ï¿½ ï¿½ï¿½ I
 			$break_yn = false;
 			for($i = $this->width; $i > $this->width / 2; $i --) {
 				for($j = $this->height; $j > 0; $j --) {
@@ -324,9 +335,21 @@
 		// # --------------------------------------------------------
 		public function viewImage() {
 			header ( 'Content-type: image/jpeg' );
-			imagejpeg ( $this->imageResized );
+			imagejpeg ( $this->imageResized, NULL, 100);
 			// imagedestroy($this->imageResized);
 		}
+		
+		public function viewImage($extension) {
+			header ( 'Content-type: image/'.$extension);
+			if ($extension == 'png') {
+				imagepng($resizeObj->getImage());
+			} else {
+				imagejpeg($resizeObj->getImage(), NULL, 100);
+			}
+			// imagejpeg ( $this->imageResized, NULL, 100);
+			// imagedestroy($this->imageResized);
+		}
+		
 		public function getWidth() {
 			return $this->width;
 		}
