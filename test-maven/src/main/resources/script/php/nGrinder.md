@@ -2,6 +2,19 @@
 > http://brownbears.tistory.com/26
 > http://blog.kalkin7.com/2014/02/05/wordpress-markdown-quick-reference-for-koreans/
 
+#############################
+docker pull ngrinder/controller:3.4
+docker run -d -v ~/.ngrinder:/root/.ngrinder -p 80:80 -p 16001:16001 -p 12000-12009:12000-12009 ngrinder/controller:3.3
+
+docker pull ngrinder/agent:3.3
+docker run -d --memory="1g" --memory-swap -1 --cpu-period=50000 --cpu-quota=25000 --name agent01 ngrinder/agent:3.4 1.255.144.53:80
+docker run -d --memory="1g" --memory-swap -1 --cpu-period=50000 --cpu-quota=25000 --name agent02 ngrinder/agent:3.4 1.255.144.53:80
+
+docker ps -a
+docker logs e1c175da41ae
+docker logs 9fa50a236982
+#############################
+
 ## nGrinder 설치 - docker
 
 * Controller 설치

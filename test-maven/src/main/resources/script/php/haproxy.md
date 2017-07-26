@@ -6,6 +6,9 @@ http://d2.naver.com/helloworld/284659
 https://medium.com/@jinro4/%EA%B0%9C%EB%B0%9C-haproxy-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%A0%95-f4623815622
 http://cyuu.tistory.com/entry/Haproxy-%EA%B8%B0%EB%B3%B8-%EC%84%A4%EC%B9%98-%EB%B0%8F-%EC%84%A4%EC%A0%95-%EB%B0%A9%EB%B2%95
 
+http://1.255.144.54/stats
+id:password
+
 -- 설명 잘 되어 있음
 $ wget http://haproxy.1wt.eu/download/1.4/src/haproxy-1.4.22.tar.gz
 $ tar xvfz haproxy-1.4.22.tar.gz
@@ -38,6 +41,10 @@ cp /home/manager/server/haproxy-1.7.8/examples/errorfiles/* /etc/haproxy/errors/
 cd /usr/sbin
 #ln -s /usr/local/haproxy/sbin/haproxy haproxy
 ln -s /home/manager/server/haproxy-1.7.8/haproxy haproxy
+
+
+vi /home/manager/server/haproxy-1.7.8/examples/haproxy.cfg
+cp /home/manager/server/haproxy-1.7.8/examples/haproxy.cfg /etc/haproxy/
 
 -- haproxy.cfg
 #서버 정보
@@ -112,6 +119,7 @@ backend web_server
 
 
 =========================================
+-- haproxy.cfg
 global
     daemon
     maxconn 4096
@@ -129,8 +137,8 @@ frontend http-in
 backend servers
     mode http
     balance roundrobin
-    server server1 1.255.144.54:8081
-    server server1 1.255.144.55:8081
-    server server1 1.255.144.56:8081
+    server dev2 1.255.144.54:8080
+    server dev3 1.255.144.55:8080
+    server dev4 1.255.144.56:8080
     
     

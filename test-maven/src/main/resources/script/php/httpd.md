@@ -46,8 +46,22 @@ Server compiled with....
  -D DEFAULT_ERRORLOG="logs/error_log"
  -D AP_TYPES_CONFIG_FILE="conf/mime.types"
  -D SERVER_CONFIG_FILE="conf/httpd.conf"
-[root@DOJ-STIMG-04 ~]# 
+[root@DOJ-STIMG-04 ~]#
+cd /home/manager
+https://archive.apache.org/dist/httpd/httpd-2.2.15.tar.gz
+tar -xvzf  httpd-2.2.15.tar.gz
+cd httpd-2.2.15
+./configure --prefix=/usr/local/apache2
+make && make install
+/usr/local/apache2/bin/httpd -k start
+netstat -anp | grep httpd
+ps -ef | grep httpd
+curl http://127.0.0.1
+/usr/local/apache2/bin/httpd -k start
+/usr/local/apache2/bin/httpd -k stop
 
+cp /home/manager/server/app/apache2/conf/httpd.conf /usr/local/apache2/conf/
+cp /home/manager/server/app/apache2/conf/extra/*.conf /usr/local/apache2/conf/extra/
 
 netstat -an
 netstat -an | grep 49220
