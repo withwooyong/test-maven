@@ -5907,3 +5907,37 @@ file locks                      (-x) unlimited
 * hard nproc  65536
 * soft nproc  65536 
 [root@DOJ-STIMG-04 ~]# 
+
+
+①
+②
+③
+④
+⑤
+⑥
+⑦
+
+1. 이미지 배포 시스템 개선
+2. Apache 에서 NGINX 로 변환
+3. Apache vs NGINX 비교
+4. MGINX 기능 및 특징(Reverse Proxy Cache)
+5. MGINX Static Cache 처리 절차 (Reverse Proxy Cache)
+6. 서버 별 이미지 프로세스 구성
+7. 성능 비교 테스트 구성 및 결과
+httpd 100
+http://1.255.144.53:8080/ngrinder-controller-3.4.1/perftest/34
+
+httpd 300
+http://1.255.144.53:8080/ngrinder-controller-3.4.1/perftest/36
+
+
+httpd 500
+http://1.255.144.53:8080/ngrinder-controller-3.4.1/perftest/38
+
+nginx 100
+http://1.255.144.53:8080/ngrinder-controller-3.4.1/perftest/31
+
+nginx 300
+http://1.255.144.53:8080/ngrinder-controller-3.4.1/perftest/30
+nginx 500
+http://1.255.144.53:8080/ngrinder-controller-3.4.1/perftest/27
