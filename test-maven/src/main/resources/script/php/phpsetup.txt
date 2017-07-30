@@ -1,3 +1,9 @@
+[root@DEV-VM-IRCS-04 php-fpm]# service php-fpm start
+[root@DEV-VM-IRCS-04 php-fpm]# service php-fpm stop 
+[root@DEV-VM-IRCS-04 php-fpm]# ps -ef | grep php-fpm
+root     30245     1  0 14:19 ?        00:00:00 php-fpm: master process (/home/manager/server/php-7.1.5/etc/php-fpm.conf)
+manager  30246 30245  0 14:19 ?        00:00:00 php-fpm: pool www
+
 PHP-FPM 설정 파일
 [global]
 pid = /var/run/php-fpm.pid

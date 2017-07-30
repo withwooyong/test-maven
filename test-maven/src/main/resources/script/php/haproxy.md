@@ -44,7 +44,10 @@ ln -s /home/manager/server/haproxy-1.7.8/haproxy haproxy
 
 
 vi /home/manager/server/haproxy-1.7.8/examples/haproxy.cfg
-cp /home/manager/server/haproxy-1.7.8/examples/haproxy.cfg /etc/haproxy/
+cp -R /home/manager/server/haproxy-1.7.8/examples/haproxy.cfg /etc/haproxy/
+
+haproxy 성능튜닝 해볼 필요성 있음.
+http://bbangho.com/haproxy-%EC%84%B1%EB%8A%A5-%ED%85%8C%EC%8A%A4%ED%8A%B8/
 
 -- haproxy.cfg
 #서버 정보
