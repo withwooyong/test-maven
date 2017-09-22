@@ -2,7 +2,7 @@ package pattern.builder;
 
 public class LgGramPc extends Spec {
 	 
-	private Computer computer;
+	private Computer computer;	
 	
 	public LgGramPc() {
 		computer = new Computer("cpu", "ram", "storage");

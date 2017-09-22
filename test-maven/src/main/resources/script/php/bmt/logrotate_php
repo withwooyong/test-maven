@@ -1,0 +1,25 @@
+/home/manager/server/php-7.1.5/log/
+vi /etc/logrotate.d/php_bmt
+/home/manager/server/php-7.1.5/log/*.log {
+        daily
+        dateext
+        dateyesterday
+        missingok
+        rotate 30
+        notifempty
+        
+        /home/manager/server/php-7.1.5/var/run/php-fpm.pid
+}
+
+https://gist.github.com/dgoujard/1210083
+/home/manager/server/php-7.1.5/log/*.log {
+        daily
+        missingok
+        rotate 52
+        compress
+        delaycompress
+        notifempty
+        sharedscripts
+        postrotate
+                [ ! -f /home/manager/server/php-7.1.5/var/run/php-fpm.pid ] || kill -USR1 `cat /home/manager/server/php-7.1.5/var/run/php-fpm.pid`
+        endscript 

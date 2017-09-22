@@ -1,0 +1,13 @@
+alias app='cd /home/manager/server/app'
+
+alias nginx-cache-purge='/home/manager/server/nginx_bmt/sbin/nginx-cache-purge'
+
+alias nginx_conf='cd /home/manager/server/nginx_bmt/conf/'
+alias nginx_log='tail -f /home/manager/server/nginx_bmt/logs/*.log'
+alias nginx_start='/home/manager/server/nginx_bmt/sbin/nginx -c /home/manager/server/nginx_bmt/conf/nginx.conf'
+alias nginx_stop='/home/manager/server/nginx_bmt/sbin/nginx -s stop'
+
+alias php_conf='cd /home/manager/server/php-7.1.5/etc/'
+alias php_log='tail -f /var/log/php-fpm/*.log'
+alias php_start='service php-fpm start'
+alias php_stop='service php-fpm stop'

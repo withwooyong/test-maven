@@ -1,0 +1,100 @@
+vi /etc/logrotate.d/nginx_bmt
+/home/manager/server/nginx_bmt/logs/*.log {
+        daily
+        dateext
+        dateyesterday
+        missingok
+        rotate 30
+        notifempty
+        postrotate
+                [ ! -f /home/manager/server/nginx_bmt/logs/nginx.pid ] || kill -USR1 `cat /home/manager/server/nginx_bmt/logs/nginx.pid`
+        endscript
+}
+
+
+https://extrememanual.net/10139
+http://www.programkr.com/blog/MMjNxADMwYT5.html
+
+http://blueskai.tistory.com/101
+
+vi /etc/logrotate.d/nginx_bmt
+[root@DEV-VM-IRCS-01 logrotate.d]# vi nginx_bmt
+/home/manager/server/nginx_bmt/logs/*.log {
+        daily
+        dateext
+        dateyesterday
+        missingok
+        rotate 7
+        compress
+        delaycompress
+        notifempty
+        create 0640 www-data adm
+        sharedscripts
+        prerotate
+                if [ -d /etc/logrotate.d/httpd-prerotate ]; then \
+                        run-parts /etc/logrotate.d/httpd-prerotate; \
+                fi \
+        endscript
+        postrotate
+                invoke-rc.d nginx rotate >/dev/null 2>&1
+        endscript
+}
+
+https://gist.github.com/tejasbubane/8160949
+
+/home/manager/server/nginx_bmt/logs/*.log {
+        daily
+        dateext
+        dateyesterday
+        missingok
+        rotate 30
+        notifempty
+        postrotate
+                [ ! -f /home/manager/server/nginx_bmt/logs/nginx.pid ] || kill -USR1 `cat /home/manager/server/nginx_bmt/logs/nginx.pid`
+        endscript
+}
+
+/home/manager/server/nginx_bmt/logs/access.log {
+daily
+rotate 7
+postrotate
+/bin/kill -USR1 `/bin/cat /home/manager/server/nginx_bmt/logs/nginx_master.pid`
+endscript
+}
+
+
+vi /etc/crontab
+59  23  *  *  * root run-parts /etc/cron.daily
+logrotate -f nginx
+
+00 *    * * *   root    cd / && run-parts --report /etc/cron.hourly
+00 0    * * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.daily )
+00 0    * * 7   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.weekly )
+00 0    1 * *   root    test -x /usr/sbin/anacron || ( cd / && run-parts --report /etc/cron.monthly )
+
+배치 완료 후 다시 cron 서비스의. 
+/sbin/service crond start //서비스 시작
+/sbin/service crond stop //닫기 서비스
+/sbin/service crond restart //다시 시작 서비스
+/sbin/service crond reload //새로 고침 설정
+
+$ /usr/sbin/logrotate -f /etc/logrotate.conf
+-f 옵션은 강제 실행 옵션이다 (Tells logrotate to force the rotation, even if it doesn't think this is necessary)
+출처: http://blueskai.tistory.com/101 [blueskai]
+
+logrotate -d /data/logs/test_logrotate
+/usr/sbin/logrotate -d /etc/logrotate.d/nginx_bmt
+/usr/sbin/logrotate -d /etc/logrotate.d/php_bmt
+
+Cron등록
+syslog가 순환되고 있는 것은 cat /etc/cron.daily/logrotate 파일에 정의되어 crontab에서 실행되고 있다.
+로테이션을 위해 생성한 /data/logs/test_logrotate 파일을 /etc/logrotate.d/ 하위에 두면 rsyslog가 로테이션되는 시간에 같이 로테이션 된다.
+또는 해당 원하는 시간에  crontab에 추가하여 별도 관리하여도 된다.
+1일치 로그로 관리하기 위하여 0시에 순환되도록 아래와 같이 설정한다.
+
+$ sudo crontab -e
+0 0 * * * /usr/sbin/logrotate -f /data/logs/test_logrotate
+0 0 * * * /usr/sbin/logrotate -f /etc/logrotate.d/nginx_bmt
+0 0 * * * /usr/sbin/logrotate -f /etc/logrotate.d/php_bmt
+[출처] logrotate를 이용한 로그파일 순환|작성자 혁이
+
