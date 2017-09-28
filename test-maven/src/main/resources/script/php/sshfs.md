@@ -10,5 +10,7 @@ sshfs manager@1.255.144.55:/home/manager/server/images /home/manager/server/imag
 #df -h
 fusermount -u /home/manager/server/images
 
+fusermount -u /mybackup
+
 root
 **fnxm!

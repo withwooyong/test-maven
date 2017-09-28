@@ -3,7 +3,9 @@
 # chmod 755 nginx-cache-purge
 # ./nginx-cache-purge /UHDSTB2/DATA/epg/menu_image/update/internet.png /home/manager/server/nginx_bmt/cache
 # ./nginx-cache-purge /ontv/10950/T89935_206x296.jpg /home/manager/server/nginx_bmt/cache
-
+# ./nginx-cache-purge /movie/32400/M323956_315x452.jpg /home/manager/server/nginx_bmt/cache
+# /home/manager/server/nginx_bmt/sbin/nginx-cache-purge movie/33950/M339317_315x452.jpg /home/manager/server/nginx_bmt/cache
+# movie/33950/M339317_315x452.jpg
 #!/bin/bash
 
 # nginx-cache-purge --- A simple Bash script to delete an item or set
