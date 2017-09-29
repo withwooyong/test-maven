@@ -57,7 +57,7 @@
             mkdir($path['dirname'], 0777, true);
         }
         
-        if ($width_height == NULL) { // error 원본 이미지  
+        if ($width_height == NULL || $extension == 'png') { // error 원본 이미지  
             if ($is_bmt == true) {
                 $remote_image = file_get_contents($remote_url.$image_url); // BMT http://stimage.hanafostv.com:8080/ontv/11000/T98976_315x452.jpg            
                 file_put_contents($resize_image, $remote_image); // BMT /home/manager/server/images/contents/ontv/11000/T98976_315x452.jpg
@@ -69,7 +69,7 @@
             
             if (is_numeric($width) && is_numeric($height)) { // resize 정보가 있으면    
                 /*
-                // png 파일 이미지 사이즈 등을 정의하지 못했음.
+                // png 파일, 이미지 사이즈 등을 정의하지 못했음.
                 if (in_array($width_height, $array_width_height) == false && $extension != 'png') { // resize 규칙에 어긋나면
                     header("HTTP/1.1 404 Not Found");                    
                     return;
