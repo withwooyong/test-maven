@@ -26,9 +26,10 @@
                         $this->image = $this->openImage ( $fileName );
 
                         if ($this->image == null) {
+                                error_log (date("Y-m-d H:i:s")." resize-class 1 : /home/manager/server/app/default.jpg \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
                                 $this->image = $this->openImage ( '/home/manager/server/app/default.jpg' );
+                                error_log (date("Y-m-d H:i:s")." resize-class 2 : /home/manager/server/app/default.jpg \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
                         }
-
                         // *** Get width and height
                         $this->width = imagesx ( $this->image );
                         $this->height = imagesy ( $this->image );
@@ -334,6 +335,7 @@
 
                 // # --------------------------------------------------------
                 public function viewImage($extension) {
+                        error_log (date("Y-m-d H:i:s")." ### 24 : ".$extension. "\n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
                         header ( 'Content-type: image/'.$extension);
                         imagejpeg ( $this->imageResized, NULL, 100);
                         // imagedestroy($this->imageResized);

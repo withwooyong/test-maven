@@ -8,6 +8,7 @@ yum install fuse sshfs
 sshfs manager@1.255.144.55:/home/manager/server/images /home/manager/server/images -o allow_other
 sshfs manager@1.255.144.55:/home/manager/server/images /home/manager/server/images
 #df -h
+마운트 해제
 fusermount -u /home/manager/server/images
 
 fusermount -u /mybackup
