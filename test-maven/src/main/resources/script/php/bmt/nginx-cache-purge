@@ -6,6 +6,7 @@
 # ./nginx-cache-purge /movie/32400/M323956_315x452.jpg /home/manager/server/nginx_bmt/cache
 # /home/manager/server/nginx_bmt/sbin/nginx-cache-purge /movie/33950/M339317_315x452.jpg /home/manager/server/nginx_bmt/cache
 # /home/manager/server/nginx_bmt/sbin/nginx-cache-purge /promo/hmenu/159877_new20thbtv_h_menu_pro_v4_0928_185x128.png /home/manager/server/nginx_bmt/cache
+# /usr/local/nginx/sbin/nginx-cache-purge /promo/hmenu/159877_new20thbtv_h_menu_pro_v4_0928_185x128.png /usr/local/nginx/cache
 # movie/33950/M339317_315x452.jpg
 #!/bin/bash
 
@@ -42,11 +43,11 @@
 SCRIPTNAME=${0##*/}
 
 function print_usage() {
-    echo "$SCRIPTNAME <URI (grep pattern)> <cache directory>."
+    echo "$SCRIPTNAME <URI (grep pattern)> /usr/local/nginx/cache."
 }
 
 ## Check the number of arguments.
-if [ $# -ne 2 ]; then
+if [ $# -ne 1 ]; then
     print_usage
     exit 1
 fi
@@ -88,4 +89,4 @@ function nginx_cache_purge_item() {
 } # nginx_cache_purge_item
 
 ## Try to purge the given item from the cache.
-nginx_cache_purge_item $1 $2
+nginx_cache_purge_item $1 "/usr/local/nginx/cache"

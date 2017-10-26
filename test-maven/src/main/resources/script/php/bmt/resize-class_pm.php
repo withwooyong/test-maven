@@ -14,7 +14,7 @@
 //
 //
 // ========================================================================#
-        class resize {                
+        class resize {
                 // *** Class variables
                 private $image;
                 private $width;
@@ -24,9 +24,14 @@
                 function __construct($fileName) {
                         // *** Open up the file
                         $this->image = $this->openImage ( $fileName );
+
                         if ($this->image == null) {
-                                $this->image = $this->openImage ( '/home/manager/server/images/contents/movie/33700/M336546_src.jpg' );
-                        } 
+                                error_log (date("Y-m-d H:i:s")." resize-class.php image not found : ".$fileName."\n", 3, "/usr/local/php-7.1.5/log/monitoring.log");
+                                header("HTTP/1.1 404 Not Found");
+                                return;
+                                // $this->image = $this->openImage ( '/home/manager/server/app/default.jpg' );
+                        }
+
                         // *** Get width and height
                         $this->width = imagesx ( $this->image );
                         $this->height = imagesy ( $this->image );
@@ -37,18 +42,14 @@
                         // *** Get extension
                         $this->originImage = $file;
 
-                        error_log (date("Y-m-d H:i:s")." resize-class ### openImage jpg : this->file=".exif_imagetype('/home/manager/server/images/contents/movie/33700/M336546_src.jpg')." \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
-
                         switch (exif_imagetype ( $file )) {
-                                case 1 : // IMAGETYPE_GIF
-                                        $img = @imagecreatefromgif ( $file );
-                                        break;
-                                case 2 : // IMAGETYPE_JPEG
-                                        error_log (date("Y-m-d H:i:s")." resize-class openImage jpg : this->file=".$file." \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
+                                case 2 :
                                         $img = @imagecreatefromjpeg ( $file );
                                         break;
-                                case 3 : // IMAGETYPE_PNG
-                                        error_log (date("Y-m-d H:i:s")." resize-class openImage png : this->file=".$file." \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
+                                case 1 :
+                                        $img = @imagecreatefromgif ( $file );
+                                        break;
+                                case 3 :
                                         $img = @imagecreatefrompng ( $file );
                                         // integer representation of the color black (rgb: 0,0,0)
                                         $background = imagecolorallocate($img, 0, 0, 0);
@@ -110,6 +111,91 @@
                         $this->imageResized = imagecreatetruecolor ( $newWidth, $newHeight );
                         // *** bool imagecopyresampled ( resource $dst_image , resource $src_image , int $dst_x , int $dst_y , int $src_x , int $src_y , int $dst_w , int $dst_h , int $src_w , int $src_h )
                         imagecopyresampled ( $this->imageResized, $this->image, 0, 0, $cropStartX, $cropStartY, $newWidth, $newHeight, $this->width, $optimalHeight );
+                }
+
+                // # --------------------------------------------------------
+                public function blackBackgroundCrop() {
+                        $cut_top = 0;
+                        $cut_bottom = 0;
+                        $cut_left = 0;
+                        $cut_right = 0;
+                        // A �� I
+                        $break_yn = false;
+                        for($j = 0; $j < $this->height / 2; $j ++) {
+                                for($i = 0; $i < $this->width; $i ++) {
+                                        if (imagecolorat ( $this->image, $i, $j ) != 0) {
+                                                $cut_top = $j;
+                                                $break_yn = true;
+                                                break;
+                                        }
+                                }
+                                if ($break_yn) {
+                                        break;
+                                }
+                        }
+                        // X �� I
+                        $break_yn = false;
+                        for($j = $this->height; $j > $this->height / 2; $j --) {
+                                for($i = $this->width; $i > 0; $i --) {
+                                        if (imagecolorat ( $this->image, $i, $j ) != 0) {
+                                                $cut_bottom = $j;
+                                                $break_yn = true;
+                                                break;
+                                        }
+                                }
+
+                                if ($break_yn) {
+                                        break;
+                                }
+                        }
+
+                        // �� �� I
+                        $break_yn = false;
+                        for($i = 0; $i < $this->width / 2; $i ++) {
+                                for($j = 0; $j < $this->height; $j ++) {
+                                        if (imagecolorat ( $this->image, $i, $j ) != 0) {
+                                                $cut_left = $i;
+                                                $break_yn = true;
+                                                break;
+                                        }
+                                }
+                                if ($break_yn) {
+                                        break;
+                                }
+                        }
+
+                        // �� �� I
+                        $break_yn = false;
+                        for($i = $this->width; $i > $this->width / 2; $i --) {
+                                for($j = $this->height; $j > 0; $j --) {
+                                        if (imagecolorat ( $this->image, $i, $j ) != 0) {
+                                                $cut_right = $i;
+                                                $break_yn = true;
+                                                break;
+                                        }
+                                }
+                                if ($break_yn) {
+                                        break;
+                                }
+                        }
+
+                        if ($cut_top > 10 || $cut_bottom > 10) {
+                                $cut_top += 15;
+                                $cut_bottom -= 10;
+                        }
+
+                        if ($cut_left > 10 || $cut_right > 10) {
+                                $cut_left += 15;
+                                $cut_right -= 12;
+                        }
+
+                        if ($cut_top > 0 && $cut_bottom > 0 && $cut_left > 0 && $cut_right > 0) {
+                                $canvas = imagecreatetruecolor ( $this->width - $cut_left - ($this->width - $cut_right), $this->height - $cut_top - ($this->height - $cut_bottom) );
+                                imagecopy ( $canvas, $this->image, 0, 0, $cut_left, $cut_top, $this->width, $this->height );
+                                $this->image = $canvas;
+                                $this->width = imagesx ( $this->image );
+                                $this->height = imagesy ( $this->image );
+                        }
                 }
 
                 // # --------------------------------------------------------
@@ -250,34 +336,10 @@
                 }
 
                 // # --------------------------------------------------------
-                public function viewImage($resized) { 
-                        error_log (date("Y-m-d H:i:s")." ### viewImage test ### \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
-                        error_log (date("Y-m-d H:i:s")." ### resized = ".$resized ." \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
-                        if ($resized == 'N') {
-                                $this->imageResized = $this->originImage;
-                                error_log (date("Y-m-d H:i:s")." resize-class viewImage resized == false : ".$this->imageResized." \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
-                        } 
-                        switch (exif_imagetype ( $this->imageResized )) {
-                                case 1 : // IMAGETYPE_GIF
-                                        header ( 'Content-type: image/gif');
-                                        imagegif ( $this->imageResized);
-                                        break;
-                                case 2 : // IMAGETYPE_JPEG
-                                        header ( 'Content-type: image/jpeg');
-                                        error_log (date("Y-m-d H:i:s")." resize-class viewImage jpg : ".$this->imageResized." \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
-                                        imagejpeg ( $this->imageResized, NULL, 100);
-                                        break;                                
-                                case 3 : // IMAGETYPE_PNG
-                                        header ( 'Content-type: image/png');
-                                        error_log (date("Y-m-d H:i:s")." resize-class viewImage png : ".$this->imageResized." \n", 3, "/home/manager/server/php-7.1.5/log/debug.log");
-                                        imagepng ( $this->imageResized, NULL, 0);
-                                        break;
-                                default :
-                                        header ( 'Content-type: image/jpeg');
-                                        imagejpeg ( $this->imageResized, NULL, 100);
-                                        break;
-                        } 
-                        //imagedestroy($this->imageResized);
+                public function viewImage($extension) {
+                        header ( 'Content-type: image/'.$extension);
+                        imagejpeg ( $this->imageResized, NULL, 100);
+                        // imagedestroy($this->imageResized);
                 }
 
                 public function getWidth() {

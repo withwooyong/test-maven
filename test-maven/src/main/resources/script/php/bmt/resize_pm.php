@@ -1,17 +1,17 @@
 <?php
     include("resize-class.php");
     
-    $image_url = $_REQUEST["u"]; // /ontv/11000/T98976_315x452.jpg    
+    $image_url = $_REQUEST["u"]; // /ontv/11000/T98976_315x452.jpg
     $is_bmt = false;
     
     $remote_url = "";
     if ($is_bmt == true) {
         $remote_url = "http://stimage.hanafostv.com:8080"; // rsync server url 
     } else {
-        $remote_url = "/home/manager/server/images/contents"; // LIVE image local path
+        $remote_url = "/contents"; // LIVE image local path
     }
         
-    $image_root = "/home/manager/server/images/contents";
+    $image_root = "/contents";
     $resize_image = $image_root.$image_url; // /home/manager/server/images/contents/ontv/11000/T98976_315x452.jpg
     $extension = strtolower(substr(strrchr($image_url, "."), 1));
     
@@ -32,8 +32,8 @@
         }
         ////////////////////////////////////////////////////////////////////////
     } else { // file not exist
-        $monitoring_log = "/home/manager/server/php-7.1.5/log/debug.log";
-        error_log (date("Y-m-d H:i:s")." _REQUEST : ".$image_url."\n", 3, $monitoring_log);
+        $monitoring_log = "/usr/local/php-7.1.5/log/monitoring.log";
+        error_log (date("Y-m-d H:i:s")." resize.php _REQUEST : ".$image_url."\n", 3, $monitoring_log);
         $image_origin1 = "_src";
         $image_origin2 = "_315x452";
         $is_width_height = true;
@@ -74,9 +74,9 @@
                         if ($is_bmt == true) {
                             $remote_image = @file_get_contents(str_replace($width_height, $image_origin1, $remote_url.$image_url)); // stimage 원본 _src                 
                             if ($remote_image === false) {
-                                $remote_image = @file_get_contents(str_replace($width_height, $image_origin2, $remote_url.$image_url)); // stimage 원본 _315x452                    
+                                $remote_image = @file_get_contents(str_replace($width_height, $image_origin2, $remote_url.$image_url)); // stimage 원본 315x452                    
                                 if ($remote_image === false) { // 원본 없음
-                                    error_log (date("Y-m-d H:i:s")." image not found : ".$image_url."\n", 3, $monitoring_log);
+                                    error_log (date("Y-m-d H:i:s")." resize.php image not found bmt : ".$image_url."\n", 3, $monitoring_log);
                                     $is_width_height = false;
                                     header("HTTP/1.1 404 Not Found");
                                     return;
@@ -87,6 +87,7 @@
                                 $resize_image = str_replace($width_height, $image_origin1, $resize_image);
                             }                                                
                         } else {
+                            error_log (date("Y-m-d H:i:s")." resize.php image not found : ".$image_url."\n", 3, $monitoring_log);
                             header("HTTP/1.1 404 Not Found");
                             return;
                         }

@@ -6,14 +6,26 @@ yum -y install libxml2-devel bzip2-devel libcurl-devel gdbm-devel libvpx libvpx-
 libXpm-devel freetype-devel t1lib t1lib-devel gmp-devel libc-client libc-client-devel pam-devel libicu libicu-devel openldap-devel \
 readline-devel libedit-devel libtidy libtidy-devel libxslt libxslt-devel expat* krb5-devel openssl-devel db4-devel
 
-cd /home/manager/
+운영에서 설치 안됨. yum -y install libmcrypt libmcrypt-devel
+
+# 다음 libmcrypt를 설치한다. 그리고 심볼생성까지 마무리
+$ wget http://www.atblog.co.kr/file/package/libmcrypt-2.5.8.tar.gz
+$ tar zxvf libmcrypt-2.5.8.tar.gz
+$ cd libmcrypt-2.5.8
+$ ./configure
+$ make
+$ make install
+$ ln -s /usr/local/lib/libmcrypt.so.4 /usr/local/lib64/libmcrypt.so.4
+
+
+cd /usr/local/
 wget http://kr1.php.net/distributions/php-7.1.5.tar.gz
 tar -xvzf php-7.1.5.tar.gz
 cd php-7.1.5
 ./configure \
---prefix=/home/manager/server/php-7.1.5 \
---with-config-file-path=/home/manager/server/php-7.1.5/etc \
---with-config-file-scan-dir=/home/manager/server/php-7.1.5/etc/conf.d \
+--prefix=/usr/local/php-7.1.5 \
+--with-config-file-path=/usr/local/php-7.1.5/etc \
+--with-config-file-scan-dir=/usr/local/php-7.1.5/etc/conf.d \
 --disable-debug \
 --enable-fpm \
 --enable-bcmath \
@@ -48,17 +60,17 @@ cd php-7.1.5
 --with-libxml-dir=/usr/lib \
 --with-png-dir=/usr/lib \
 --with-zlib-dir=/usr/lib \
---with-fpm-user=manager \
---with-fpm-group=manager
+--with-fpm-user=daemon \
+--with-fpm-group=daemon
 
 make && make install
 
-vi /home/manager/server/php-7.1.5/etc/php-fpm.conf
-vi /home/manager/server/php-7.1.5/etc/php-fpm.d/www.conf
+vi /usr/local/php-7.1.5/etc/php-fpm.conf
+vi /usr/local/php-7.1.5/etc/php-fpm.d/www.conf
 
 # 컴파일 설치시 해야 함.
 mkdir /var/run/php-fpm/
 mkdir /var/log/php
 mkdir /var/log/php-fpm
-mkdir /home/manager/server/php-7.1.5/log/
+mkdir /usr/local/php-7.1.5/log/
 
