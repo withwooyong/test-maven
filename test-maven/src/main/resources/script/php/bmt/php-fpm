@@ -12,7 +12,7 @@
 # Description:       starts the PHP FastCGI Process Manager daemon
 ### END INIT INFO
 
-prefix=/home/manager/server/php-7.1.5
+prefix=/usr/local/php-7.1.5
 exec_prefix=${prefix}
 
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm

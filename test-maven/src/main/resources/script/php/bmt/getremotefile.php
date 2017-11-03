@@ -1,7 +1,7 @@
 <?php
 
-    $remote_file = "http://stimage.hanafostv.com:8080/ontv/10800/T307805_src.jpg";
-    $local_file = "/contents/T307805_src.jpg";
+    // $remote_file = "http://stimage.hanafostv.com:8080/ontv/10800/T307805_src.jpg";
+    // $local_file = "/contents/T307805_src.jpg";
     //copy($remote_file, $local_file);
 
     //file_put_contents($local_file, file_get_contents($remote_file));
@@ -33,29 +33,52 @@
     copy($remote_file, $local_file);
     $dt = filemtime($remote_file);
     touch($local_file, $dt);
-    */
+    
 
-    function parseHeaders( $headers )
-    {
-        $head = array();
-        foreach( $headers as $k=>$v )
-        {
-            $t = explode( ':', $v, 2 );
-            if( isset( $t[1] ) )
-                $head[ trim($t[0]) ] = trim( $t[1] );
-            else
-            {
-                $head[] = $v;
-                if( preg_match( "#HTTP/[0-9\.]+\s+([0-9]+)#",$v, $out ) )
-                    $head['reponse_code'] = intval($out[1]);
-            }
-        }
-        return $head;
+    $fileURL = "http://stimage.hanafostv.com:8080/ontv/10800/T307805_src.jpg";
+    $headers = get_headers($fileURL, 1);
+    $date = "Error";
+    
+    if ($headers && (strpos($headers[0],'200') !== FALSE)) {
+        $time = strtotime($headers['Last-Modified']);
+        $date = date("d-m-Y H:i:s", $time);
     }
 
-    file_get_contents("http://stimage.hanafostv.com:8080/ontv/10800/T307805_src.jpg");
-    $time = strtotime($http_response_header['Last-Modified']);
-    $date = date("d-m-Y H:i:s", $time);
-    print_r($date);
+    */
+
+    $remote_file = "http://stimage.hanafostv.com:8080/ontv/10800/T307805_src.jpg";
+    $local_file = "/contents/T307805_src.jpg";
+
+    $date = "Error";
+    $headers = get_headers($remote_file, 1);
+    var_dump($headers);    
+
+    if ($headers && (strpos ($headers[0], '200') !== FALSE)) {        
+        var_dump($headers['Last-Modified']);
+        $time = strtotime($headers['Last-Modified']);
+        $date = date("d-m-Y H:i:s", $time);
+    }
+    var_dump('date : '.$date);
+    
+    // "Last-Modified: Thu, 14 May 2015 02:54:59 GMT"
+    file_put_contents($local_file, file_get_contents($remote_file));    
+    //$time = strtotime(str_replace("Last-Modified: ", "", $http_response_header[3]));
+    $date = date("d-m-Y H:i:s", strtotime(str_replace("Last-Modified: ", "", $http_response_header[3])));
+    touch($local_file, $date);
+    
     //parseHeaders($http_response_header);    
 ?>
+
+$headers = get_headers("http://stimage.hanafostv.com:8080/ontv/10800/T307805_src.jpg", 1);
+
+if ($headers && (strpos ($headers[0], '200') !== FALSE))
+  {
+var_dump($headers['Last-Modified']);
+    $time = strtotime($headers['Last-Modified']);
+    $date = date("d-m-Y H:i:s", $time);
+}
+// var_dump($http_response_header[3]);
+ //   $time = strtotime($http_response_header[3]);
+ //   $date = date("d-m-Y H:i:s", $time);
+ //   var_dump('time : '.$time);
+    var_dump('date : '.$date);

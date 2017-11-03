@@ -41,15 +41,23 @@
                 private function openImage($file) {
                         // *** Get extension
                         $this->originImage = $file;
+                        $extension = strtolower(substr(strrchr($file, "."), 1));
 
-                        switch (exif_imagetype ( $file )) {
-                                case 2 :
+                        switch ($extension) {
+                                case 'jpg' :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php openImage : jpg ".$file."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
                                         $img = @imagecreatefromjpeg ( $file );
                                         break;
-                                case 1 :
+                                case 'jpeg' :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php openImage : jpeg ".$file."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
+                                        $img = @imagecreatefromjpeg ( $file );
+                                        break;        
+                                case 'gif' :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php openImage : gif ".$file."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
                                         $img = @imagecreatefromgif ( $file );
                                         break;
-                                case 3 :
+                                case 'png' :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php openImage : png ".$file."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
                                         $img = @imagecreatefrompng ( $file );
                                         // integer representation of the color black (rgb: 0,0,0)
                                         $background = imagecolorallocate($img, 0, 0, 0);
@@ -64,6 +72,7 @@
                                         imagesavealpha($img, true);
                                         break;
                                 default :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php openImage : default ".$file."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
                                         $img = @imagecreatefromjpeg ( $file );
                                         break;
                         }
@@ -312,14 +321,23 @@
                         if (! file_exists ( dirname ( $savePath ) ))
                                 mkdir ( dirname ( $savePath ), 0777, true );
 
-                        switch (exif_imagetype ( $this->originImage )) {
-                                case 2 :
+                        $extension = strtolower(substr(strrchr($savePath, "."), 1));
+
+                        switch ($extension) {
+                                case 'jpg' :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php saveImage : jpg ".$savePath."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
                                         imagejpeg ( $this->imageResized, $savePath, $imageQuality );
                                         break;
-                                case 1 :
+                                case 'jpeg' :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php saveImage : jpeg ".$savePath."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
+                                        imagejpeg ( $this->imageResized, $savePath, $imageQuality );
+                                        break;        
+                                case 'gif' :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php saveImage : gif ".$savePath."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
                                         imagegif ( $this->imageResized, $savePath );
                                         break;
-                                case 3 :
+                                case 'png' :
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php saveImage : png ".$savePath."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
                                         // *** Scale quality from 0-100 to 0-9
                                         $scaleQuality = round ( ($imageQuality / 100) * 9 );
 
@@ -327,11 +345,11 @@
                                         $invertScaleQuality = 9 - $scaleQuality;
                                         imagepng ( $this->imageResized, $savePath, $invertScaleQuality );
                                         break;
-                                // ... etc
-                                default :
-                                        // *** No extension - No save.
+                                default : 
+                                        // *** No extension - No save.                                       
+                                        error_log (date("Y-m-d H:i:s")." resize-class.php saveImage : default ".$savePath."\n", 3, "/home/manager/server/nginx_bmt/logs/php_debug.log");
                                         break;
-                        }
+                        }                        
                         imagedestroy ( $this->imageResized );
                 }
 

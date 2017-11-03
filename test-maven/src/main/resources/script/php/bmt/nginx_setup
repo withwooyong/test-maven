@@ -4,15 +4,19 @@
 
 yum install -y pcre pcre-devel openssl-devel zlib zlib-devel gd gd-devel php-gd
 
-cd /home/manager/
+cd /usr/local/
+git clone git://github.com/vozlt/nginx-module-vts.git
+
+cd /usr/
 wget http://nginx.org/download/nginx-1.12.0.tar.gz
 tar -xvzf nginx-1.12.0.tar.gz
 cd nginx-1.12.0
 
-cd /home/manager/server/
-./configure --prefix=/home/manager/server/nginx_bmt --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --add-module=/home/manager/nginx-module-vts
+
+
+./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --add-module=/usr/local/nginx-module-vts
 
 make && make install
 
-vi /home/manager/server/nginx_bmt/conf/nginx.conf
+vi /usr/local/nginx/conf/nginx.conf
 

@@ -7,7 +7,6 @@
     
     $remote_url = "";
     if ($is_bmt == true) {
-
         $remote_url = "http://stimage.hanafostv.com:8080"; // rsync server url 
     } else {
         $remote_url = "/contents"; // LIVE image local path
@@ -23,24 +22,29 @@
     
     $option = "exact"; // auto crop exact 
 
-    //$monitoring_log = "/home/manager/server/php-7.1.5/log/debug.log";
-    $monitoring_log = "/home/manager/server/nginx_bmt/logs/php_debug.log";
+    $monitoring_log = "/home/manager/server/nginx_bmt/logs/php_debug.log";    
     
     if (file_exists($resize_image)) { // file exist
-        error_log (date("Y-m-d H:i:s")." resize.php file exist _REQUEST : ".$image_url."\n", 3, $monitoring_log);
-        $fp = fopen($resize_image, 'rb');
+        $resizeObj = new resize($resize_image);
         header('Accept-Ranges: bytes');
-        header('Content-Length: '.filesize($resize_image));
-        header('Content-Type: image/'.$extension);
-        header("ETag: ".md5_file($resize_image));
-        header("Last-Modified: ".gmdate("D, d M Y H:i:s", filemtime($resize_image))." GMT");
-        $fp = fopen($resize_image, 'rb');
-        fpassthru($fp);
-        fclose($fp);
-
+        //header('Content-Length: '.filesize($resize_image));
+        header('Content-type: image/'.$extension);
+        header('ETag: '.md5_file($resize_image));
+        header('Last-Modified: '.gmdate("D, d M Y H:i:s", filemtime($resize_image))." GMT");
+        
+        ob_start();
+        if ($extension == 'png') {
+            imagepng($resizeObj->getImage());
+        } else {
+            imagejpeg($resizeObj->getImage(), NULL, 100);
+        }
+        $size = ob_get_length();
+        header("Content-length: " .$size); 
+        ob_flush();
+        
         ////////////////////////////////////////////////////////////////////////
     } else { // file not exist
-        // $monitoring_log = "/home/manager/server/php-7.1.5/log/debug.log";
+        
         error_log (date("Y-m-d H:i:s")." resize.php file not exist _REQUEST : ".$image_url."\n", 3, $monitoring_log);
         $image_origin1 = "_src";
         $image_origin2 = "_315x452";
@@ -55,8 +59,7 @@
         $save_image = $resize_image;
         $remote_image = "";
 
-        umask(0002);    
-        
+        umask(0002);            
         $path = pathinfo($resize_image);
         
         if (!file_exists($path['dirname'])) {
@@ -117,11 +120,6 @@
                 } else {
                     $resize_image = str_replace($width_height, $image_origin1, $resize_image);
                 }
-                /*
-                if ($is_bmt == true) {
-                    file_put_contents($resize_image, $remote_image); // stimage 서버에 있는 이미지 BMT 서버에 다운로드
-                    touch($resize_image, strtotime(str_replace("Last-Modified: ", "", $http_response_header[3])));
-                }*/
             } else { // resize 정보가 없으면
                 if ($is_bmt == true) {
                     $remote_image = file_get_contents($remote_url.$image_url); // BMT
@@ -136,25 +134,45 @@
             $resizeObj = new resize($resize_image);
             $resizeObj->resizeImage($width, $height, $option);
             $resizeObj->saveImage($save_image); // resize image save
-            $fp = fopen($save_image, 'rb');
+            
+            error_log (date("Y-m-d H:i:s")." resize.php is_width_height == true : ".$save_image."\n", 3, $monitoring_log);
+            
+            $resizeObj2 = new resize($save_image);
             header('Accept-Ranges: bytes');
-            header('Content-Length: '.filesize($save_image));
-            header('Content-Type: image/'.$extension);
-            header("ETag: ".md5_file($save_image));
-            header("Last-Modified: ".gmdate("D, d M Y H:i:s", filemtime($save_image))." GMT");            
-            fpassthru($fp);
-            fclose($fp); 
+            //header('Content-Length: '.filesize($save_image));
+            header('Content-type: image/'.$extension);
+            header('ETag: '.md5_file($save_image));
+            header('Last-Modified: '.gmdate("D, d M Y H:i:s", filemtime($save_image))." GMT");
+
+            ob_start();
+            if ($extension == 'png') {
+                imagepng($resizeObj2->getImage());
+            } else {
+                imagejpeg($resizeObj2->getImage(), NULL, 100);
+            }
+            $size = ob_get_length();
+            header("Content-length: " .$size);  
+            ob_flush();
             //$resizeObj->viewImage($extension, $resize_image);
         } else {
-            header('Content-Type: image/'.$extension);
-            $fp = fopen($resize_image, 'rb');
+            error_log (date("Y-m-d H:i:s")." resize.php is_width_height == false : ".$resize_image."\n", 3, $monitoring_log);
+            
+            $resizeObj = new resize($resize_image);
             header('Accept-Ranges: bytes');
-            header('Content-Length: '.filesize($resize_image));
-            header('Content-Type: image/'.$extension);
-            header("ETag: ".md5_file($resize_image));
-            header("Last-Modified: ".gmdate("D, d M Y H:i:s", filemtime($resize_image))." GMT");            
-            fpassthru($fp);
-            fclose($fp);
+            //header('Content-Length: '.filesize($resize_image));
+            header('Content-type: image/'.$extension);
+            header('ETag: '.md5_file($resize_image));
+            header('Last-Modified: '.gmdate("D, d M Y H:i:s", filemtime($resize_image))." GMT");
+
+            ob_start();
+            if ($extension == 'png') {
+                imagepng($resizeObj->getImage());
+            } else {
+                imagejpeg($resizeObj->getImage(), NULL, 100);
+            }
+            $size = ob_get_length();
+            header("Content-length: " .$size);
+            ob_flush();
         }
     }
 ?>
