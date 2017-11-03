@@ -131,7 +131,6 @@
                 $is_width_height = false;
             }
         }
-        
     
         if ($is_width_height == true) {
             $resizeObj = new resize($resize_image);
