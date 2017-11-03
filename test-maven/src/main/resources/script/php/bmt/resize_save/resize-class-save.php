@@ -348,6 +348,7 @@
                         imagedestroy($this->imageResized);
                 }
 
+
                 public function getWidth() {
                         return $this->width;
                 }

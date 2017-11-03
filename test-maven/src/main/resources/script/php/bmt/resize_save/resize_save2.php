@@ -11,6 +11,7 @@
     } else {
         $remote_url = "/contents"; // LIVE image local path
     }
+    
         
     $image_root = "/contents";
     $resize_image = $image_root.$image_url; // /home/manager/server/images/contents/ontv/11000/T98976_315x452.jpg
