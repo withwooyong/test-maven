@@ -70,6 +70,16 @@
                         return $img;
                 }
 
+                private function png2jpg($originalFile, $outputFile, $quality) {
+                    // Quality is a number between 0 (best compression) and 100 (best quality)
+                        
+
+
+                        $image = imagecreatefrompng($originalFile);
+    imagejpeg($image, $outputFile, $quality);
+    imagedestroy($image);
+}
+
                 // # --------------------------------------------------------
                 public function resizeImage($newWidth, $newHeight, $option = "auto") {
                         // *** Get optimal width and height - based on $option
@@ -93,6 +103,7 @@
                         $cropStartX = 0;
                         $newHeight = $this->calcHeightRatio16x9 ( $newWidth );
                         $optimalHeight = $this->calcHeightRatio16x9 ( $this->width );
+                                
 
                         // *** if option is 'crop', then crop too
                         switch ($option) {
@@ -105,6 +116,8 @@
                                 default :
                                         $cropStartY = round ( ($this->height - $optimalHeight) / 2 );
                         }
+                        
+
 
                         // *** Now crop from center to exact requested size
                         $this->imageResized = imagecreatetruecolor ( $newWidth, $newHeight );

@@ -14,7 +14,11 @@
 //
 //
 // ========================================================================#
-        class resize {                
+class resize {
+        
+}
+        class resize {
+         
                 // *** Class variables
                 private $image;
                 private $width;
@@ -22,6 +26,7 @@
                 private $imageResized;
                 private $originImage;
                 function __construct($fileName) {
+
                         // *** Open up the file
                         $this->image = $this->openImage ( $fileName );
                         if ($this->image == null) {
