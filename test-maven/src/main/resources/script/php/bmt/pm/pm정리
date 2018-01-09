@@ -1,0 +1,3273 @@
+################################################################################
+ NGINX Setup
+################################################################################
+yum install -y pcre pcre-devel openssl-devel zlib zlib-devel gd gd-devel php-gd
+cd /usr/local/
+git clone git://github.com/vozlt/nginx-module-vts.git
+cd /usr/
+wget http://nginx.org/download/nginx-1.12.0.tar.gz
+tar -xvzf nginx-1.12.0.tar.gz
+cd nginx-1.12.0
+./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --add-module=/usr/local/nginx-module-vts
+make && make install
+################################################################################
+vi /usr/local/nginx/conf/nginx.conf
+[root@IC-STIMG-04 conf]# cat nginx.conf
+user  daemon;
+worker_processes  auto;
+error_log  logs/error.log;
+
+pid        logs/nginx_master.pid;
+
+worker_rlimit_nofile 40960;
+
+events {
+    worker_connections 5120;
+    use epoll;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" $upstream_cache_status '
+                      'request_time=$request_time '
+                      'upstream_response_time=$upstream_response_time '
+                      'upstream_connect_time=$upstream_connect_time '
+                      'upstream_header_time=$upstream_header_time';
+
+    access_log  logs/access.log  main;
+    sendfile        on;
+
+    #tcp_nopush     on;
+    keepalive_timeout  5 5;
+    keepalive_requests 5; 
+    gzip  on;
+    gzip_min_length 1k;
+    gzip_buffers 4 8k;
+    gzip_http_version 1.1;
+    gzip_comp_level 2;
+    gzip_types  text/plain application/x-javascript text/css application/xml;
+    #gzip_types  text/plain text/css image/png image/gif image/jpeg application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_vary on;
+    gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+    
+    #fastcgi cache path define
+    fastcgi_cache_path /usr/local/nginx/cache levels=1:2 keys_zone=one:100m inactive=60m max_size=10g use_temp_path=off;
+
+    vhost_traffic_status_zone;
+    
+    server {
+        listen       8080;
+        server_name  localhost;
+        charset UTF-8;
+        rewrite_log on;
+        # file size
+        client_max_body_size 100M;
+        server_tokens off;  # 버전 숨기기 활성화
+
+        if ($time_iso8601 ~ "^(\d{4})-(\d{2})-(\d{2})T(\d{2})") {
+           set $year $1;
+           set $month $2;
+           set $day $3;
+           set $hour $4;
+        }
+        access_log  logs/$year-$month-$day-$hour-access.log  main;
+
+        location = /favicon.ico {
+            return 204;
+            access_log     off;
+            log_not_found  off;
+        }
+
+        location ~* \.(?:jpg|jpeg|png)$ {
+            try_files $uri $uri/ /resize.php?u=$uri;
+        }
+        
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php$ {
+            root           /usr/local/app;
+
+            # with php7-fpm 설정
+            try_files $uri = 404;
+
+            #fastcgi_ignore_headers Cache-Control;
+            add_header X-Fastcgi-Cache $upstream_cache_status;
+            fastcgi_cache_methods GET HEAD; # Only GET and HEAD methods apply
+            fastcgi_cache_key "$scheme$host$request_uri";
+            fastcgi_cache one;
+            fastcgi_cache_valid 200 302 5m;
+
+            fastcgi_cache_revalidate on;
+            fastcgi_cache_min_uses 1;
+            fastcgi_cache_use_stale error timeout updating http_500 http_503 http_403 http_404 http_429;
+            fastcgi_cache_lock on;
+
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            #fastcgi_pass 127.0.0.1:9000;
+            fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include fastcgi_params;
+
+            # fastcgi 버퍼 사이즈 조절~
+            # 502 에러를 없애기 위한 proxy 버퍼 관련 설정 
+            proxy_buffer_size               128k;
+            proxy_buffers                   4 256k;
+            proxy_busy_buffers_size         256k; 
+
+            # 502 에러를 없애기 위한 fastcgi 버퍼 관련 설정
+            fastcgi_buffering               on;
+            fastcgi_buffer_size             16k;
+            fastcgi_buffers                 16 16k;
+ 
+            # 최대 timeout 설정
+            # fastcgi_connect_timeout         600s;
+            # fastcgi_send_timeout            600s;
+            # fastcgi_read_timeout            600s;
+ 
+            # PHP 성능 향상을 위한 옵션
+            sendfile                        on;
+            tcp_nopush                      off;
+            keepalive_requests              0;
+        }
+
+        location /nginx_status {
+            stub_status on;
+            access_log   off;
+            allow all;
+            #deny all;
+        }
+      
+        location /php_status {
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME /status;
+            fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+            access_log off;
+        }   
+
+        location /vts_status {
+            vhost_traffic_status_display;
+            vhost_traffic_status_display_format html;
+            access_log   off;
+        }
+        
+        #error_page  404              /404.html;
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+
+        location = /50x.html {
+            root   html;
+        }
+    }
+}
+
+################################################################################
+ PHP Setup
+################################################################################
+
+yum -y install libxml2-devel bzip2-devel libcurl-devel gdbm-devel libvpx libvpx-devel libjpeg-turbo-devel libpng-devel libXpm \
+libXpm-devel freetype-devel t1lib t1lib-devel gmp-devel libc-client libc-client-devel pam-devel libicu libicu-devel openldap-devel \
+readline-devel libedit-devel libtidy libtidy-devel libxslt libxslt-devel expat* krb5-devel openssl-devel db4-devel
+
+운영에서 설치 안됨. yum -y install libmcrypt libmcrypt-devel
+
+# 다음 libmcrypt를 설치한다. 그리고 심볼생성까지 마무리
+$ wget http://www.atblog.co.kr/file/package/libmcrypt-2.5.8.tar.gz
+$ tar zxvf libmcrypt-2.5.8.tar.gz
+$ cd libmcrypt-2.5.8
+$ ./configure
+$ make
+$ make install
+$ ln -s /usr/local/lib/libmcrypt.so.4 /usr/local/lib64/libmcrypt.so.4
+################################################################################
+cd /usr/local/
+wget http://kr1.php.net/distributions/php-7.1.5.tar.gz
+tar -xvzf php-7.1.5.tar.gz
+cd php-7.1.5
+./configure \
+--prefix=/usr/local/php-7.1.5 \
+--with-config-file-path=/usr/local/php-7.1.5/etc \
+--with-config-file-scan-dir=/usr/local/php-7.1.5/etc/conf.d \
+--disable-debug \
+--enable-fpm \
+--enable-bcmath \
+--enable-exif \
+--enable-ftp \
+--enable-gd-native-ttf \
+--enable-inline-optimization \
+--enable-intl \
+--enable-mbregex \
+--enable-mbstring \
+--enable-sigchild \
+--enable-soap \
+--enable-sockets \
+--enable-sysvsem=yes \
+--enable-sysvshm=yes \
+--enable-xml \
+--enable-zip \
+--with-bz2 \
+--with-iconv \
+--with-curl \
+--with-zlib \
+--with-gd \
+--with-gettext \
+--with-mcrypt \
+--with-mhash \
+--with-mysqli \
+--with-openssl \
+--with-openssl-dir=/usr/local/bin \
+--with-xmlrpc \
+--with-freetype-dir=/usr/include/freetype2 \
+--with-jpeg-dir=/usr/lib \
+--with-libxml-dir=/usr/lib \
+--with-png-dir=/usr/lib \
+--with-zlib-dir=/usr/lib \
+--with-fpm-user=daemon \
+--with-fpm-group=daemon
+
+make && make install
+################################################################################
+vi /usr/local/php-7.1.5/etc/php-fpm.conf
+[root@IC-STIMG-04 conf]# cat /usr/local/php-7.1.5/etc/php-fpm.conf
+################################################################################
+;;;;;;;;;;;;;;;;;;;;;
+; FPM Configuration ;
+;;;;;;;;;;;;;;;;;;;;;
+
+; All relative paths in this configuration file are relative to PHP's install
+; prefix (/usr/local/php-7.1.5). This prefix can be dynamically changed by using the
+; '-p' argument from the command line.
+
+;;;;;;;;;;;;;;;;;;
+; Global Options ;
+;;;;;;;;;;;;;;;;;;
+
+[global]
+; Pid file
+; Note: the default prefix is /usr/local/php-7.1.5/var
+; Default Value: none
+;pid = run/php-fpm.pid
+
+; Error log file
+; If it's set to "syslog", log is sent to syslogd instead of being written
+; into a local file.
+; Note: the default prefix is /usr/local/php-7.1.5/var
+; Default Value: log/php-fpm.log
+;error_log = log/php-fpm.log
+
+; syslog_facility is used to specify what type of program is logging the
+; message. This lets syslogd specify that messages from different facilities
+; will be handled differently.
+; See syslog(3) for possible values (ex daemon equiv LOG_DAEMON)
+; Default Value: daemon
+;syslog.facility = daemon
+
+; syslog_ident is prepended to every message. If you have multiple FPM
+; instances running on the same server, you can change the default value
+; which must suit common needs.
+; Default Value: php-fpm
+;syslog.ident = php-fpm
+
+; Log level
+; Possible Values: alert, error, warning, notice, debug
+; Default Value: notice
+;log_level = notice
+log_level = notice
+
+; If this number of child processes exit with SIGSEGV or SIGBUS within the time
+; interval set by emergency_restart_interval then FPM will restart. A value
+; of '0' means 'Off'.
+; Default Value: 0
+;emergency_restart_threshold = 0
+
+; Interval of time used by emergency_restart_interval to determine when
+; a graceful restart will be initiated.  This can be useful to work around
+; accidental corruptions in an accelerator's shared memory.
+; Available Units: s(econds), m(inutes), h(ours), or d(ays)
+; Default Unit: seconds
+; Default Value: 0
+;emergency_restart_interval = 0
+
+; Time limit for child processes to wait for a reaction on signals from master.
+; Available units: s(econds), m(inutes), h(ours), or d(ays)
+; Default Unit: seconds
+; Default Value: 0
+;process_control_timeout = 0
+
+; The maximum number of processes FPM will fork. This has been designed to control
+; the global number of processes when using dynamic PM within a lot of pools.
+; Use it with caution.
+; Note: A value of 0 indicates no limit
+; Default Value: 0
+; process.max = 128
+
+; Specify the nice(2) priority to apply to the master process (only if set)
+; The value can vary from -19 (highest priority) to 20 (lowest priority)
+; Note: - It will only work if the FPM master process is launched as root
+;       - The pool process will inherit the master process priority
+;         unless specified otherwise
+; Default Value: no set
+; process.priority = -19
+
+; Send FPM to background. Set to 'no' to keep FPM in foreground for debugging.
+; Default Value: yes
+;daemonize = yes
+
+; Set open file descriptor rlimit for the master process.
+; Default Value: system defined value
+;rlimit_files = 1024
+
+; Set max core size rlimit for the master process.
+; Possible Values: 'unlimited' or an integer greater or equal to 0
+; Default Value: system defined value
+;rlimit_core = 0
+
+; Specify the event mechanism FPM will use. The following is available:
+; - select     (any POSIX os)
+; - poll       (any POSIX os)
+; - epoll      (linux >= 2.5.44)
+; - kqueue     (FreeBSD >= 4.1, OpenBSD >= 2.9, NetBSD >= 2.0)
+; - /dev/poll  (Solaris >= 7)
+; - port       (Solaris >= 10)
+; Default Value: not set (auto detection)
+;events.mechanism = epoll
+
+; When FPM is built with systemd integration, specify the interval,
+; in seconds, between health report notification to systemd.
+; Set to 0 to disable.
+; Available Units: s(econds), m(inutes), h(ours)
+; Default Unit: seconds
+; Default value: 10
+;systemd_interval = 10
+
+;;;;;;;;;;;;;;;;;;;;
+; Pool Definitions ;
+;;;;;;;;;;;;;;;;;;;;
+
+; Multiple pools of child processes may be started with different listening
+; ports and different management options.  The name of the pool will be
+; used in logs and stats. There is no limitation on the number of pools which
+; FPM can handle. Your system will tell you anyway :)
+
+; Include one or more files. If glob(3) exists, it is used to include a bunch of
+; files from a glob(3) pattern. This directive can be used everywhere in the
+; file.
+; Relative path can also be used. They will be prefixed by:
+;  - the global prefix if it's been set (-p argument)
+;  - /usr/local/php-7.1.5 otherwise
+include=/usr/local/php-7.1.5/etc/php-fpm.d/*.conf
+
+################################################################################
+vi /usr/local/php-7.1.5/etc/php-fpm.d/www.conf
+[root@IC-STIMG-04 conf]# cat /usr/local/php-7.1.5/etc/php-fpm.d/www.conf
+################################################################################
+; Start a new pool named 'www'.
+; the variable $pool can be used in any directive and will be replaced by the
+; pool name ('www' here)
+[www]
+
+; Per pool prefix
+; It only applies on the following directives:
+; - 'access.log'
+; - 'slowlog'
+; - 'listen' (unixsocket)
+; - 'chroot'
+; - 'chdir'
+; - 'php_values'
+; - 'php_admin_values'
+; When not set, the global prefix (or /usr/local/php-7.1.5) applies instead.
+; Note: This directive can also be relative to the global prefix.
+; Default Value: none
+;prefix = /path/to/pools/$pool
+
+; Unix user/group of processes
+; Note: The user is mandatory. If the group is not set, the default user's group
+;       will be used.
+user = daemon
+group = daemon
+
+; The address on which to accept FastCGI requests.
+; Valid syntaxes are:
+;   'ip.add.re.ss:port'    - to listen on a TCP socket to a specific IPv4 address on
+;                            a specific port;
+;   '[ip:6:addr:ess]:port' - to listen on a TCP socket to a specific IPv6 address on
+;                            a specific port;
+;   'port'                 - to listen on a TCP socket to all addresses
+;                            (IPv6 and IPv4-mapped) on a specific port;
+;   '/path/to/unix/socket' - to listen on a unix socket.
+; Note: This value is mandatory.
+;listen = 127.0.0.1:9000
+listen = /var/run/php-fpm/php-fpm.sock
+
+; Set listen(2) backlog.
+; Default Value: 511 (-1 on FreeBSD and OpenBSD)
+;listen.backlog = 511
+
+; Set permissions for unix socket, if one is used. In Linux, read/write
+; permissions must be set in order to allow connections from a web server. Many
+; BSD-derived systems allow connections regardless of permissions.
+; Default Values: user and group are set as the running user
+;                 mode is set to 0660
+listen.owner = daemon
+listen.group = daemon
+;listen.mode = 0660
+; When POSIX Access Control Lists are supported you can set them using
+; these options, value is a comma separated list of user/group names.
+; When set, listen.owner and listen.group are ignored
+;listen.acl_users =
+;listen.acl_groups =
+
+; List of addresses (IPv4/IPv6) of FastCGI clients which are allowed to connect.
+; Equivalent to the FCGI_WEB_SERVER_ADDRS environment variable in the original
+; PHP FCGI (5.2.2+). Makes sense only with a tcp listening socket. Each address
+; must be separated by a comma. If this value is left blank, connections will be
+; accepted from any ip address.
+; Default Value: any
+;listen.allowed_clients = 127.0.0.1
+
+; Specify the nice(2) priority to apply to the pool processes (only if set)
+; The value can vary from -19 (highest priority) to 20 (lower priority)
+; Note: - It will only work if the FPM master process is launched as root
+;       - The pool processes will inherit the master process priority
+;         unless it specified otherwise
+; Default Value: no set
+; process.priority = -19
+
+; Choose how the process manager will control the number of child processes.
+; Possible Values:
+;   static  - a fixed number (pm.max_children) of child processes;
+;   dynamic - the number of child processes are set dynamically based on the
+;             following directives. With this process management, there will be
+;             always at least 1 children.
+;             pm.max_children      - the maximum number of children that can
+;                                    be alive at the same time.
+;             pm.start_servers     - the number of children created on startup.
+;             pm.min_spare_servers - the minimum number of children in 'idle'
+;                                    state (waiting to process). If the number
+;                                    of 'idle' processes is less than this
+;                                    number then some children will be created.
+;             pm.max_spare_servers - the maximum number of children in 'idle'
+;                                    state (waiting to process). If the number
+;                                    of 'idle' processes is greater than this
+;                                    number then some children will be killed.
+;  ondemand - no children are created at startup. Children will be forked when
+;             new requests will connect. The following parameter are used:
+;             pm.max_children           - the maximum number of children that
+;                                         can be alive at the same time.
+;             pm.process_idle_timeout   - The number of seconds after which
+;                                         an idle process will be killed.
+; Note: This value is mandatory.
+pm = dynamic
+
+; The number of child processes to be created when pm is set to 'static' and the
+; maximum number of child processes when pm is set to 'dynamic' or 'ondemand'.
+; This value sets the limit on the number of simultaneous requests that will be
+; served. Equivalent to the ApacheMaxClients directive with mpm_prefork.
+; Equivalent to the PHP_FCGI_CHILDREN environment variable in the original PHP
+; CGI. The below defaults are based on a server without much resources. Don't
+; forget to tweak pm.* to fit your needs.
+; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
+; Note: This value is mandatory.
+;pm.max_children = 5
+;pm.max_children = 30
+pm.max_children = 130
+
+; The number of child processes created on startup.
+; Note: Used only when pm is set to 'dynamic'
+; Default Value: min_spare_servers + (max_spare_servers - min_spare_servers) / 2
+;pm.start_servers = 2
+;pm.start_servers = 11
+pm.start_servers = 30
+
+; The desired minimum number of idle server processes.
+; Note: Used only when pm is set to 'dynamic'
+; Note: Mandatory when pm is set to 'dynamic'
+;pm.min_spare_servers = 1
+;pm.min_spare_servers = 10
+pm.min_spare_servers = 30
+
+; The desired maximum number of idle server processes.
+; Note: Used only when pm is set to 'dynamic'
+; Note: Mandatory when pm is set to 'dynamic'
+;pm.max_spare_servers = 3
+;pm.max_spare_servers = 15
+pm.max_spare_servers = 100
+
+; The number of seconds after which an idle process will be killed.
+; Note: Used only when pm is set to 'ondemand'
+; Default Value: 10s
+;pm.process_idle_timeout = 10s;
+
+; The number of requests each child process should execute before respawning.
+; This can be useful to work around memory leaks in 3rd party libraries. For
+; endless request processing specify '0'. Equivalent to PHP_FCGI_MAX_REQUESTS.
+; Default Value: 0
+;pm.max_requests = 500
+pm.max_requests = 500
+
+; The URI to view the FPM status page. If this value is not set, no URI will be
+; recognized as a status page. It shows the following informations:
+;   pool                 - the name of the pool;
+;   process manager      - static, dynamic or ondemand;
+;   start time           - the date and time FPM has started;
+;   start since          - number of seconds since FPM has started;
+;   accepted conn        - the number of request accepted by the pool;
+;   listen queue         - the number of request in the queue of pending
+;                          connections (see backlog in listen(2));
+;   max listen queue     - the maximum number of requests in the queue
+;                          of pending connections since FPM has started;
+;   listen queue len     - the size of the socket queue of pending connections;
+;   idle processes       - the number of idle processes;
+;   active processes     - the number of active processes;
+;   total processes      - the number of idle + active processes;
+;   max active processes - the maximum number of active processes since FPM
+;                          has started;
+;   max children reached - number of times, the process limit has been reached,
+;                          when pm tries to start more children (works only for
+;                          pm 'dynamic' and 'ondemand');
+; Value are updated in real time.
+; Example output:
+;   pool:                 www
+;   process manager:      static
+;   start time:           01/Jul/2011:17:53:49 +0200
+;   start since:          62636
+;   accepted conn:        190460
+;   listen queue:         0
+;   max listen queue:     1
+;   listen queue len:     42
+;   idle processes:       4
+;   active processes:     11
+;   total processes:      15
+;   max active processes: 12
+;   max children reached: 0
+;
+; By default the status page output is formatted as text/plain. Passing either
+; 'html', 'xml' or 'json' in the query string will return the corresponding
+; output syntax. Example:
+;   http://www.foo.bar/status
+;   http://www.foo.bar/status?json
+;   http://www.foo.bar/status?html
+;   http://www.foo.bar/status?xml
+;
+; By default the status page only outputs short status. Passing 'full' in the
+; query string will also return status for each pool process.
+; Example:
+;   http://www.foo.bar/status?full
+;   http://www.foo.bar/status?json&full
+;   http://www.foo.bar/status?html&full
+;   http://www.foo.bar/status?xml&full
+; The Full status returns for each process:
+;   pid                  - the PID of the process;
+;   state                - the state of the process (Idle, Running, ...);
+;   start time           - the date and time the process has started;
+;   start since          - the number of seconds since the process has started;
+;   requests             - the number of requests the process has served;
+;   request duration     - the duration in µs of the requests;
+;   request method       - the request method (GET, POST, ...);
+;   request URI          - the request URI with the query string;
+;   content length       - the content length of the request (only with POST);
+;   user                 - the user (PHP_AUTH_USER) (or '-' if not set);
+;   script               - the main script called (or '-' if not set);
+;   last request cpu     - the %cpu the last request consumed
+;                          it's always 0 if the process is not in Idle state
+;                          because CPU calculation is done when the request
+;                          processing has terminated;
+;   last request memory  - the max amount of memory the last request consumed
+;                          it's always 0 if the process is not in Idle state
+;                          because memory calculation is done when the request
+;                          processing has terminated;
+; If the process is in Idle state, then informations are related to the
+; last request the process has served. Otherwise informations are related to
+; the current request being served.
+; Example output:
+;   ************************
+;   pid:                  31330
+;   state:                Running
+;   start time:           01/Jul/2011:17:53:49 +0200
+;   start since:          63087
+;   requests:             12808
+;   request duration:     1250261
+;   request method:       GET
+;   request URI:          /test_mem.php?N=10000
+;   content length:       0
+;   user:                 -
+;   script:               /home/fat/web/docs/php/test_mem.php
+;   last request cpu:     0.00
+;   last request memory:  0
+;
+; Note: There is a real-time FPM status monitoring sample web page available
+;       It's available in: /usr/local/php-7.1.5/share/php/fpm/status.html
+;
+; Note: The value must start with a leading slash (/). The value can be
+;       anything, but it may not be a good idea to use the .php extension or it
+;       may conflict with a real PHP file.
+; Default Value: not set
+pm.status_path = /status
+
+; The ping URI to call the monitoring page of FPM. If this value is not set, no
+; URI will be recognized as a ping page. This could be used to test from outside
+; that FPM is alive and responding, or to
+; - create a graph of FPM availability (rrd or such);
+; - remove a server from a group if it is not responding (load balancing);
+; - trigger alerts for the operating team (24/7).
+; Note: The value must start with a leading slash (/). The value can be
+;       anything, but it may not be a good idea to use the .php extension or it
+;       may conflict with a real PHP file.
+; Default Value: not set
+;ping.path = /ping
+
+; This directive may be used to customize the response of a ping request. The
+; response is formatted as text/plain with a 200 response code.
+; Default Value: pong
+;ping.response = pong
+
+; The access log file
+; Default: not set
+;access.log = log/$pool.access.log
+
+; The access log format.
+; The following syntax is allowed
+;  %%: the '%' character
+;  %C: %CPU used by the request
+;      it can accept the following format:
+;      - %{user}C for user CPU only
+;      - %{system}C for system CPU only
+;      - %{total}C  for user + system CPU (default)
+;  %d: time taken to serve the request
+;      it can accept the following format:
+;      - %{seconds}d (default)
+;      - %{miliseconds}d
+;      - %{mili}d
+;      - %{microseconds}d
+;      - %{micro}d
+;  %e: an environment variable (same as $_ENV or $_SERVER)
+;      it must be associated with embraces to specify the name of the env
+;      variable. Some exemples:
+;      - server specifics like: %{REQUEST_METHOD}e or %{SERVER_PROTOCOL}e
+;      - HTTP headers like: %{HTTP_HOST}e or %{HTTP_USER_AGENT}e
+;  %f: script filename
+;  %l: content-length of the request (for POST request only)
+;  %m: request method
+;  %M: peak of memory allocated by PHP
+;      it can accept the following format:
+;      - %{bytes}M (default)
+;      - %{kilobytes}M
+;      - %{kilo}M
+;      - %{megabytes}M
+;      - %{mega}M
+;  %n: pool name
+;  %o: output header
+;      it must be associated with embraces to specify the name of the header:
+;      - %{Content-Type}o
+;      - %{X-Powered-By}o
+;      - %{Transfert-Encoding}o
+;      - ....
+;  %p: PID of the child that serviced the request
+;  %P: PID of the parent of the child that serviced the request
+;  %q: the query string
+;  %Q: the '?' character if query string exists
+;  %r: the request URI (without the query string, see %q and %Q)
+;  %R: remote IP address
+;  %s: status (response code)
+;  %t: server time the request was received
+;      it can accept a strftime(3) format:
+;      %d/%b/%Y:%H:%M:%S %z (default)
+;      The strftime(3) format must be encapsuled in a %{<strftime_format>}t tag
+;      e.g. for a ISO8601 formatted timestring, use: %{%Y-%m-%dT%H:%M:%S%z}t
+;  %T: time the log has been written (the request has finished)
+;      it can accept a strftime(3) format:
+;      %d/%b/%Y:%H:%M:%S %z (default)
+;      The strftime(3) format must be encapsuled in a %{<strftime_format>}t tag
+;      e.g. for a ISO8601 formatted timestring, use: %{%Y-%m-%dT%H:%M:%S%z}t
+;  %u: remote user
+;
+; Default: "%R - %u %t \"%m %r\" %s"
+;access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
+
+; The log file for slow requests
+; Default Value: not set
+; Note: slowlog is mandatory if request_slowlog_timeout is set
+slowlog = log/$pool.log.slow
+
+; The timeout for serving a single request after which a PHP backtrace will be
+; dumped to the 'slowlog' file. A value of '0s' means 'off'.
+; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
+; Default Value: 0
+;request_slowlog_timeout = 0
+request_slowlog_timeout = 2
+
+; The timeout for serving a single request after which the worker process will
+; be killed. This option should be used when the 'max_execution_time' ini option
+; does not stop script execution for some reason. A value of '0' means 'off'.
+; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
+; Default Value: 0
+;request_terminate_timeout = 0
+request_terminate_timeout = 10
+
+; Set open file descriptor rlimit.
+; Default Value: system defined value
+;rlimit_files = 1024
+
+; Set max core size rlimit.
+; Possible Values: 'unlimited' or an integer greater or equal to 0
+; Default Value: system defined value
+;rlimit_core = 0
+
+; Chroot to this directory at the start. This value must be defined as an
+; absolute path. When this value is not set, chroot is not used.
+; Note: you can prefix with '$prefix' to chroot to the pool prefix or one
+; of its subdirectories. If the pool prefix is not set, the global prefix
+; will be used instead.
+; Note: chrooting is a great security feature and should be used whenever
+;       possible. However, all PHP paths will be relative to the chroot
+;       (error_log, sessions.save_path, ...).
+; Default Value: not set
+;chroot =
+
+; Chdir to this directory at the start.
+; Note: relative path can be used.
+; Default Value: current directory or / when chroot
+;chdir = /var/www
+
+; Redirect worker stdout and stderr into main error log. If not set, stdout and
+; stderr will be redirected to /dev/null according to FastCGI specs.
+; Note: on highloaded environement, this can cause some delay in the page
+; process time (several ms).
+; Default Value: no
+;catch_workers_output = yes
+
+; Clear environment in FPM workers
+; Prevents arbitrary environment variables from reaching FPM worker processes
+; by clearing the environment in workers before env vars specified in this
+; pool configuration are added.
+; Setting to "no" will make all environment variables available to PHP code
+; via getenv(), $_ENV and $_SERVER.
+; Default Value: yes
+;clear_env = no
+
+; Limits the extensions of the main script FPM will allow to parse. This can
+; prevent configuration mistakes on the web server side. You should only limit
+; FPM to .php extensions to prevent malicious users to use other extensions to
+; exectute php code.
+; Note: set an empty value to allow all extensions.
+; Default Value: .php
+;security.limit_extensions = .php .php3 .php4 .php5 .php7
+
+; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
+; the current environment.
+; Default Value: clean env
+;env[HOSTNAME] = $HOSTNAME
+;env[PATH] = /usr/local/bin:/usr/bin:/bin
+;env[TMP] = /tmp
+;env[TMPDIR] = /tmp
+;env[TEMP] = /tmp
+
+; Additional php.ini defines, specific to this pool of workers. These settings
+; overwrite the values previously defined in the php.ini. The directives are the
+; same as the PHP SAPI:
+;   php_value/php_flag             - you can set classic ini defines which can
+;                                    be overwritten from PHP call 'ini_set'.
+;   php_admin_value/php_admin_flag - these directives won't be overwritten by
+;                                     PHP call 'ini_set'
+; For php_*flag, valid values are on, off, 1, 0, true, false, yes or no.
+
+; Defining 'extension' will load the corresponding shared extension from
+; extension_dir. Defining 'disable_functions' or 'disable_classes' will not
+; overwrite previously defined php.ini values, but will append the new value
+; instead.
+
+; Note: path INI options can be relative and will be expanded with the prefix
+; (pool, global or /usr/local/php-7.1.5)
+
+; Default Value: nothing is defined by default except the values in php.ini and
+;                specified at startup with the -d argument
+;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
+;php_flag[display_errors] = off
+;php_admin_value[error_log] = /var/log/fpm-php.www.log
+;php_admin_flag[log_errors] = on
+;php_admin_value[memory_limit] = 32M
+################################################################################
+
+# 컴파일 설치시 해야 함.
+mkdir /var/run/php-fpm/
+mkdir /var/log/php
+mkdir /var/log/php-fpm
+mkdir /usr/local/php-7.1.5/log/
+
+################################################################################
+
+[root@IC-STIMG-04 logs]# alias
+alias apache_start='/usr/local/apache2/bin/httpd -k start'
+alias apache_stop='/usr/local/apache2/bin/httpd -k stop'
+alias cp='cp -i'
+alias l.='ls -d .* --color=auto'
+alias ll='ls -l --color=auto'
+alias ls='ls --color=auto'
+alias mv='mv -i'
+alias nginx_conf='cd /usr/local/nginx/conf'
+alias nginx_log='tail -f /usr/local/nginx/logs/`date +%Y-%m-%d-%H`-access.log'
+alias nginx_start='/usr/local/nginx/sbin/nginx'
+alias nginx_stop='/usr/local/nginx/sbin/nginx -s stop'
+alias php_start='/etc/rc.d/init.d/php-fpm start'
+alias php_stop='/etc/rc.d/init.d/php-fpm stop'
+alias rm='rm -i'
+alias which='alias | /usr/bin/which --tty-only --read-alias --show-dot --show-tilde'
+
+################################################################################
+-- 로그 삭제 쉘/root/shell/log_delete.sh
+#! /bin/sh
+# SMD Access Log Delete, 2015.06.26(KSI)
+# Apache - /usr/local/apache2/logs/
+
+/usr/bin/find /usr/local/apache2/logs/access_log.* -type f -mtime +7 -exec /bin/rm {} \;
+
+sleep 5
+
+/usr/bin/find /usr/local/apache2/logs/error_log.* -type f -mtime +7 -exec /bin/rm {} \;
+################################################################################
+sleep 5
+
+/usr/bin/find /usr/local/nginx/logs/*access* -type f -mtime +7 -exec /bin/rm {} \;
+
+sleep 5
+
+/usr/bin/find /usr/local/nginx/logs/error.* -type f -mtime +7 -exec /bin/rm {} \;
+################################################################################
+
+-- 로그 디렉토리 
+/usr/local/nginx/logs
+
+-- 로그 포맷 
+2017-11-23-04-access.log
+DATE=`date '+%Y-%m-%d-%H'`
+DATE=`date +%Y-%m-%d`
+DATE=`date '+%Y-%m-%d %H:%M:%S'`
+
+
+error.log
+
+-- crontab -l
+[root@IC-STIMG-04 logs]# crontab -l
+# ONM Agent
+#* * * * * /home/onm/NGFAgent/bin/start.sh cron >> /home/onm/NGFAgent/bin/start.log
+#* * * * * /home/onm/NGFAgent/bin/chkIcmp.sh >> /home/onm/NGFAgent/bin/chkIcmp.log
+
+
+#### delete sendmail queue (In-Soft) ####
+30 5 * * * /usr/bin/find /var/spool/clientmqueue -mtime +1 | xargs rm -f
+
+#Time Sync
+45 1 * * * rdate -s time.hanafostv.com;clock -w
+
+#rsync
+5,15,25,35,45,55 * * * * /data/shell/sync_contents_data.sh
+
+#igs rsync
+*/2 * * * * /data/shell/sync_igs_data.sh
+
+#log delete script (2015.06.26, KSI)####################
+50 05 * * * su - root -c 'sh /root/shell/log_delete.sh'
+
+################################################################################
+-- /data/shell/sync_contents_data.sh
+################################################################################
+[root@IC-STIMG-04 logs]# cat /data/shell/sync_contents_data.sh
+#!/bin/sh
+Contents_count=`ps -ef | grep ::contents | grep -v grep | wc -l`
+
+if [ $Contents_count -lt 2 ]
+then
+
+rsync -av --progress --size-only --exclude=.* --bwlimit=10000 1.226.200.38::contents /contents
+
+fi
+
+################################################################################
+-- /data/shell/sync_igs_data.sh
+################################################################################
+[root@IC-STIMG-04 logs]# cat /data/shell/sync_igs_data.sh
+#!/bin/sh
+Contents_count=`ps -ef | grep "/contents/igs" | grep -v grep | wc -l`
+
+if [ $Contents_count -lt 2 ]
+then
+
+rsync -av --size-only --exclude=.* 1.226.200.38::contents/igs/ /contents/igs/
+
+fi
+
+################################################################################
+-- nginx.conf
+[root@IC-STIMG-04 conf]# cat nginx.conf
+user  daemon;
+worker_processes  auto;
+error_log  logs/error.log;
+
+pid        logs/nginx_master.pid;
+
+worker_rlimit_nofile 40960;
+
+events {
+    worker_connections 5120;
+    use epoll;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for" $upstream_cache_status '
+                      'request_time=$request_time '
+                      'upstream_response_time=$upstream_response_time '
+                      'upstream_connect_time=$upstream_connect_time '
+                      'upstream_header_time=$upstream_header_time';
+
+    access_log  logs/access.log  main;
+    sendfile        on;
+
+    #tcp_nopush     on;
+    keepalive_timeout  5 5;
+    keepalive_requests 5; 
+    gzip  on;
+    gzip_min_length 1k;
+    gzip_buffers 4 8k;
+    gzip_http_version 1.1;
+    gzip_comp_level 2;
+    gzip_types  text/plain application/x-javascript text/css application/xml;
+    #gzip_types  text/plain text/css image/png image/gif image/jpeg application/x-javascript text/xml application/xml application/xml+rss text/javascript;
+    gzip_vary on;
+    gzip_disable "MSIE [1-6]\.(?!.*SV1)";
+    
+    #fastcgi cache path define
+    fastcgi_cache_path /usr/local/nginx/cache levels=1:2 keys_zone=one:100m inactive=60m max_size=10g use_temp_path=off;
+
+    vhost_traffic_status_zone;
+    
+    server {
+        listen       8080;
+        server_name  localhost;
+        charset UTF-8;
+        rewrite_log on;
+        # file size
+        client_max_body_size 100M;
+        server_tokens off;  # 버전 숨기기 활성화
+
+        if ($time_iso8601 ~ "^(\d{4})-(\d{2})-(\d{2})T(\d{2})") {
+           set $year $1;
+           set $month $2;
+           set $day $3;
+           set $hour $4;
+        }
+        access_log  logs/$year-$month-$day-$hour-access.log  main;
+
+        location = /favicon.ico {
+            return 204;
+            access_log     off;
+            log_not_found  off;
+        }
+
+        location ~* \.(?:jpg|jpeg|png)$ {
+            try_files $uri $uri/ /resize.php?u=$uri;
+        }
+        
+        # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+        #
+        location ~ \.php$ {
+            root           /usr/local/app;
+
+            # with php7-fpm 설정
+            try_files $uri = 404;
+
+            #fastcgi_ignore_headers Cache-Control;
+            add_header X-Fastcgi-Cache $upstream_cache_status;
+            fastcgi_cache_methods GET HEAD; # Only GET and HEAD methods apply
+            fastcgi_cache_key "$scheme$host$request_uri";
+            fastcgi_cache one;
+            fastcgi_cache_valid 200 302 5m;
+
+            fastcgi_cache_revalidate on;
+            fastcgi_cache_min_uses 1;
+            fastcgi_cache_use_stale error timeout updating http_500 http_503 http_403 http_404 http_429;
+            fastcgi_cache_lock on;
+
+            fastcgi_split_path_info ^(.+\.php)(/.+)$;
+            #fastcgi_pass 127.0.0.1:9000;
+            fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+            fastcgi_index index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include fastcgi_params;
+
+            # fastcgi 버퍼 사이즈 조절~
+            # 502 에러를 없애기 위한 proxy 버퍼 관련 설정 
+            proxy_buffer_size               128k;
+            proxy_buffers                   4 256k;
+            proxy_busy_buffers_size         256k; 
+
+            # 502 에러를 없애기 위한 fastcgi 버퍼 관련 설정
+            fastcgi_buffering               on;
+            fastcgi_buffer_size             16k;
+            fastcgi_buffers                 16 16k;
+ 
+            # 최대 timeout 설정
+            # fastcgi_connect_timeout         600s;
+            # fastcgi_send_timeout            600s;
+            # fastcgi_read_timeout            600s;
+ 
+            # PHP 성능 향상을 위한 옵션
+            sendfile                        on;
+            tcp_nopush                      off;
+            keepalive_requests              0;
+        }
+
+        location /nginx_status {
+            stub_status on;
+            access_log   off;
+            allow all;
+            #deny all;
+        }
+      
+        location /php_status {
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME /status;
+            fastcgi_pass unix:/var/run/php-fpm/php-fpm.sock;
+            access_log off;
+        }   
+
+        location /vts_status {
+            vhost_traffic_status_display;
+            vhost_traffic_status_display_format html;
+            access_log   off;
+        }
+        
+        #error_page  404              /404.html;
+        # redirect server error pages to the static page /50x.html
+        #
+        error_page   500 502 503 504  /50x.html;
+
+        location = /50x.html {
+            root   html;
+        }
+    }
+}
+
+################################################################################
+[root@IC-STIMG-04 conf]# 
+-- php-fpm.conf
+[root@IC-STIMG-04 etc]# cat php-fpm.conf
+################################################################################
+;;;;;;;;;;;;;;;;;;;;;
+; FPM Configuration ;
+;;;;;;;;;;;;;;;;;;;;;
+
+; All relative paths in this configuration file are relative to PHP's install
+; prefix (/usr/local/php-7.1.5). This prefix can be dynamically changed by using the
+; '-p' argument from the command line.
+
+;;;;;;;;;;;;;;;;;;
+; Global Options ;
+;;;;;;;;;;;;;;;;;;
+
+[global]
+; Pid file
+; Note: the default prefix is /usr/local/php-7.1.5/var
+; Default Value: none
+;pid = run/php-fpm.pid
+
+; Error log file
+; If it's set to "syslog", log is sent to syslogd instead of being written
+; into a local file.
+; Note: the default prefix is /usr/local/php-7.1.5/var
+; Default Value: log/php-fpm.log
+;error_log = log/php-fpm.log
+
+; syslog_facility is used to specify what type of program is logging the
+; message. This lets syslogd specify that messages from different facilities
+; will be handled differently.
+; See syslog(3) for possible values (ex daemon equiv LOG_DAEMON)
+; Default Value: daemon
+;syslog.facility = daemon
+
+; syslog_ident is prepended to every message. If you have multiple FPM
+; instances running on the same server, you can change the default value
+; which must suit common needs.
+; Default Value: php-fpm
+;syslog.ident = php-fpm
+
+; Log level
+; Possible Values: alert, error, warning, notice, debug
+; Default Value: notice
+;log_level = notice
+log_level = notice
+
+; If this number of child processes exit with SIGSEGV or SIGBUS within the time
+; interval set by emergency_restart_interval then FPM will restart. A value
+; of '0' means 'Off'.
+; Default Value: 0
+;emergency_restart_threshold = 0
+
+; Interval of time used by emergency_restart_interval to determine when
+; a graceful restart will be initiated.  This can be useful to work around
+; accidental corruptions in an accelerator's shared memory.
+; Available Units: s(econds), m(inutes), h(ours), or d(ays)
+; Default Unit: seconds
+; Default Value: 0
+;emergency_restart_interval = 0
+
+; Time limit for child processes to wait for a reaction on signals from master.
+; Available units: s(econds), m(inutes), h(ours), or d(ays)
+; Default Unit: seconds
+; Default Value: 0
+;process_control_timeout = 0
+
+; The maximum number of processes FPM will fork. This has been designed to control
+; the global number of processes when using dynamic PM within a lot of pools.
+; Use it with caution.
+; Note: A value of 0 indicates no limit
+; Default Value: 0
+; process.max = 128
+
+; Specify the nice(2) priority to apply to the master process (only if set)
+; The value can vary from -19 (highest priority) to 20 (lowest priority)
+; Note: - It will only work if the FPM master process is launched as root
+;       - The pool process will inherit the master process priority
+;         unless specified otherwise
+; Default Value: no set
+; process.priority = -19
+
+; Send FPM to background. Set to 'no' to keep FPM in foreground for debugging.
+; Default Value: yes
+;daemonize = yes
+
+; Set open file descriptor rlimit for the master process.
+; Default Value: system defined value
+;rlimit_files = 1024
+
+; Set max core size rlimit for the master process.
+; Possible Values: 'unlimited' or an integer greater or equal to 0
+; Default Value: system defined value
+;rlimit_core = 0
+
+; Specify the event mechanism FPM will use. The following is available:
+; - select     (any POSIX os)
+; - poll       (any POSIX os)
+; - epoll      (linux >= 2.5.44)
+; - kqueue     (FreeBSD >= 4.1, OpenBSD >= 2.9, NetBSD >= 2.0)
+; - /dev/poll  (Solaris >= 7)
+; - port       (Solaris >= 10)
+; Default Value: not set (auto detection)
+;events.mechanism = epoll
+
+; When FPM is built with systemd integration, specify the interval,
+; in seconds, between health report notification to systemd.
+; Set to 0 to disable.
+; Available Units: s(econds), m(inutes), h(ours)
+; Default Unit: seconds
+; Default value: 10
+;systemd_interval = 10
+
+;;;;;;;;;;;;;;;;;;;;
+; Pool Definitions ;
+;;;;;;;;;;;;;;;;;;;;
+
+; Multiple pools of child processes may be started with different listening
+; ports and different management options.  The name of the pool will be
+; used in logs and stats. There is no limitation on the number of pools which
+; FPM can handle. Your system will tell you anyway :)
+
+; Include one or more files. If glob(3) exists, it is used to include a bunch of
+; files from a glob(3) pattern. This directive can be used everywhere in the
+; file.
+; Relative path can also be used. They will be prefixed by:
+;  - the global prefix if it's been set (-p argument)
+;  - /usr/local/php-7.1.5 otherwise
+include=/usr/local/php-7.1.5/etc/php-fpm.d/*.conf
+[root@IC-STIMG-04 etc]# 
+
+-- www.conf
+[root@IC-STIMG-04 php-fpm.d]# cat www.conf
+; Start a new pool named 'www'.
+; the variable $pool can be used in any directive and will be replaced by the
+; pool name ('www' here)
+[www]
+
+; Per pool prefix
+; It only applies on the following directives:
+; - 'access.log'
+; - 'slowlog'
+; - 'listen' (unixsocket)
+; - 'chroot'
+; - 'chdir'
+; - 'php_values'
+; - 'php_admin_values'
+; When not set, the global prefix (or /usr/local/php-7.1.5) applies instead.
+; Note: This directive can also be relative to the global prefix.
+; Default Value: none
+;prefix = /path/to/pools/$pool
+
+; Unix user/group of processes
+; Note: The user is mandatory. If the group is not set, the default user's group
+;       will be used.
+user = daemon
+group = daemon
+
+; The address on which to accept FastCGI requests.
+; Valid syntaxes are:
+;   'ip.add.re.ss:port'    - to listen on a TCP socket to a specific IPv4 address on
+;                            a specific port;
+;   '[ip:6:addr:ess]:port' - to listen on a TCP socket to a specific IPv6 address on
+;                            a specific port;
+;   'port'                 - to listen on a TCP socket to all addresses
+;                            (IPv6 and IPv4-mapped) on a specific port;
+;   '/path/to/unix/socket' - to listen on a unix socket.
+; Note: This value is mandatory.
+;listen = 127.0.0.1:9000
+listen = /var/run/php-fpm/php-fpm.sock
+
+; Set listen(2) backlog.
+; Default Value: 511 (-1 on FreeBSD and OpenBSD)
+;listen.backlog = 511
+
+; Set permissions for unix socket, if one is used. In Linux, read/write
+; permissions must be set in order to allow connections from a web server. Many
+; BSD-derived systems allow connections regardless of permissions.
+; Default Values: user and group are set as the running user
+;                 mode is set to 0660
+listen.owner = daemon
+listen.group = daemon
+;listen.mode = 0660
+; When POSIX Access Control Lists are supported you can set them using
+; these options, value is a comma separated list of user/group names.
+; When set, listen.owner and listen.group are ignored
+;listen.acl_users =
+;listen.acl_groups =
+
+; List of addresses (IPv4/IPv6) of FastCGI clients which are allowed to connect.
+; Equivalent to the FCGI_WEB_SERVER_ADDRS environment variable in the original
+; PHP FCGI (5.2.2+). Makes sense only with a tcp listening socket. Each address
+; must be separated by a comma. If this value is left blank, connections will be
+; accepted from any ip address.
+; Default Value: any
+;listen.allowed_clients = 127.0.0.1
+
+; Specify the nice(2) priority to apply to the pool processes (only if set)
+; The value can vary from -19 (highest priority) to 20 (lower priority)
+; Note: - It will only work if the FPM master process is launched as root
+;       - The pool processes will inherit the master process priority
+;         unless it specified otherwise
+; Default Value: no set
+; process.priority = -19
+
+; Choose how the process manager will control the number of child processes.
+; Possible Values:
+;   static  - a fixed number (pm.max_children) of child processes;
+;   dynamic - the number of child processes are set dynamically based on the
+;             following directives. With this process management, there will be
+;             always at least 1 children.
+;             pm.max_children      - the maximum number of children that can
+;                                    be alive at the same time.
+;             pm.start_servers     - the number of children created on startup.
+;             pm.min_spare_servers - the minimum number of children in 'idle'
+;                                    state (waiting to process). If the number
+;                                    of 'idle' processes is less than this
+;                                    number then some children will be created.
+;             pm.max_spare_servers - the maximum number of children in 'idle'
+;                                    state (waiting to process). If the number
+;                                    of 'idle' processes is greater than this
+;                                    number then some children will be killed.
+;  ondemand - no children are created at startup. Children will be forked when
+;             new requests will connect. The following parameter are used:
+;             pm.max_children           - the maximum number of children that
+;                                         can be alive at the same time.
+;             pm.process_idle_timeout   - The number of seconds after which
+;                                         an idle process will be killed.
+; Note: This value is mandatory.
+pm = dynamic
+
+; The number of child processes to be created when pm is set to 'static' and the
+; maximum number of child processes when pm is set to 'dynamic' or 'ondemand'.
+; This value sets the limit on the number of simultaneous requests that will be
+; served. Equivalent to the ApacheMaxClients directive with mpm_prefork.
+; Equivalent to the PHP_FCGI_CHILDREN environment variable in the original PHP
+; CGI. The below defaults are based on a server without much resources. Don't
+; forget to tweak pm.* to fit your needs.
+; Note: Used when pm is set to 'static', 'dynamic' or 'ondemand'
+; Note: This value is mandatory.
+;pm.max_children = 5
+;pm.max_children = 30
+pm.max_children = 130
+
+; The number of child processes created on startup.
+; Note: Used only when pm is set to 'dynamic'
+; Default Value: min_spare_servers + (max_spare_servers - min_spare_servers) / 2
+;pm.start_servers = 2
+;pm.start_servers = 11
+pm.start_servers = 30
+
+; The desired minimum number of idle server processes.
+; Note: Used only when pm is set to 'dynamic'
+; Note: Mandatory when pm is set to 'dynamic'
+;pm.min_spare_servers = 1
+;pm.min_spare_servers = 10
+pm.min_spare_servers = 30
+
+; The desired maximum number of idle server processes.
+; Note: Used only when pm is set to 'dynamic'
+; Note: Mandatory when pm is set to 'dynamic'
+;pm.max_spare_servers = 3
+;pm.max_spare_servers = 15
+pm.max_spare_servers = 100
+
+; The number of seconds after which an idle process will be killed.
+; Note: Used only when pm is set to 'ondemand'
+; Default Value: 10s
+;pm.process_idle_timeout = 10s;
+
+; The number of requests each child process should execute before respawning.
+; This can be useful to work around memory leaks in 3rd party libraries. For
+; endless request processing specify '0'. Equivalent to PHP_FCGI_MAX_REQUESTS.
+; Default Value: 0
+;pm.max_requests = 500
+pm.max_requests = 500
+
+; The URI to view the FPM status page. If this value is not set, no URI will be
+; recognized as a status page. It shows the following informations:
+;   pool                 - the name of the pool;
+;   process manager      - static, dynamic or ondemand;
+;   start time           - the date and time FPM has started;
+;   start since          - number of seconds since FPM has started;
+;   accepted conn        - the number of request accepted by the pool;
+;   listen queue         - the number of request in the queue of pending
+;                          connections (see backlog in listen(2));
+;   max listen queue     - the maximum number of requests in the queue
+;                          of pending connections since FPM has started;
+;   listen queue len     - the size of the socket queue of pending connections;
+;   idle processes       - the number of idle processes;
+;   active processes     - the number of active processes;
+;   total processes      - the number of idle + active processes;
+;   max active processes - the maximum number of active processes since FPM
+;                          has started;
+;   max children reached - number of times, the process limit has been reached,
+;                          when pm tries to start more children (works only for
+;                          pm 'dynamic' and 'ondemand');
+; Value are updated in real time.
+; Example output:
+;   pool:                 www
+;   process manager:      static
+;   start time:           01/Jul/2011:17:53:49 +0200
+;   start since:          62636
+;   accepted conn:        190460
+;   listen queue:         0
+;   max listen queue:     1
+;   listen queue len:     42
+;   idle processes:       4
+;   active processes:     11
+;   total processes:      15
+;   max active processes: 12
+;   max children reached: 0
+;
+; By default the status page output is formatted as text/plain. Passing either
+; 'html', 'xml' or 'json' in the query string will return the corresponding
+; output syntax. Example:
+;   http://www.foo.bar/status
+;   http://www.foo.bar/status?json
+;   http://www.foo.bar/status?html
+;   http://www.foo.bar/status?xml
+;
+; By default the status page only outputs short status. Passing 'full' in the
+; query string will also return status for each pool process.
+; Example:
+;   http://www.foo.bar/status?full
+;   http://www.foo.bar/status?json&full
+;   http://www.foo.bar/status?html&full
+;   http://www.foo.bar/status?xml&full
+; The Full status returns for each process:
+;   pid                  - the PID of the process;
+;   state                - the state of the process (Idle, Running, ...);
+;   start time           - the date and time the process has started;
+;   start since          - the number of seconds since the process has started;
+;   requests             - the number of requests the process has served;
+;   request duration     - the duration in µs of the requests;
+;   request method       - the request method (GET, POST, ...);
+;   request URI          - the request URI with the query string;
+;   content length       - the content length of the request (only with POST);
+;   user                 - the user (PHP_AUTH_USER) (or '-' if not set);
+;   script               - the main script called (or '-' if not set);
+;   last request cpu     - the %cpu the last request consumed
+;                          it's always 0 if the process is not in Idle state
+;                          because CPU calculation is done when the request
+;                          processing has terminated;
+;   last request memory  - the max amount of memory the last request consumed
+;                          it's always 0 if the process is not in Idle state
+;                          because memory calculation is done when the request
+;                          processing has terminated;
+; If the process is in Idle state, then informations are related to the
+; last request the process has served. Otherwise informations are related to
+; the current request being served.
+; Example output:
+;   ************************
+;   pid:                  31330
+;   state:                Running
+;   start time:           01/Jul/2011:17:53:49 +0200
+;   start since:          63087
+;   requests:             12808
+;   request duration:     1250261
+;   request method:       GET
+;   request URI:          /test_mem.php?N=10000
+;   content length:       0
+;   user:                 -
+;   script:               /home/fat/web/docs/php/test_mem.php
+;   last request cpu:     0.00
+;   last request memory:  0
+;
+; Note: There is a real-time FPM status monitoring sample web page available
+;       It's available in: /usr/local/php-7.1.5/share/php/fpm/status.html
+;
+; Note: The value must start with a leading slash (/). The value can be
+;       anything, but it may not be a good idea to use the .php extension or it
+;       may conflict with a real PHP file.
+; Default Value: not set
+pm.status_path = /status
+
+; The ping URI to call the monitoring page of FPM. If this value is not set, no
+; URI will be recognized as a ping page. This could be used to test from outside
+; that FPM is alive and responding, or to
+; - create a graph of FPM availability (rrd or such);
+; - remove a server from a group if it is not responding (load balancing);
+; - trigger alerts for the operating team (24/7).
+; Note: The value must start with a leading slash (/). The value can be
+;       anything, but it may not be a good idea to use the .php extension or it
+;       may conflict with a real PHP file.
+; Default Value: not set
+;ping.path = /ping
+
+; This directive may be used to customize the response of a ping request. The
+; response is formatted as text/plain with a 200 response code.
+; Default Value: pong
+;ping.response = pong
+
+; The access log file
+; Default: not set
+;access.log = log/$pool.access.log
+
+; The access log format.
+; The following syntax is allowed
+;  %%: the '%' character
+;  %C: %CPU used by the request
+;      it can accept the following format:
+;      - %{user}C for user CPU only
+;      - %{system}C for system CPU only
+;      - %{total}C  for user + system CPU (default)
+;  %d: time taken to serve the request
+;      it can accept the following format:
+;      - %{seconds}d (default)
+;      - %{miliseconds}d
+;      - %{mili}d
+;      - %{microseconds}d
+;      - %{micro}d
+;  %e: an environment variable (same as $_ENV or $_SERVER)
+;      it must be associated with embraces to specify the name of the env
+;      variable. Some exemples:
+;      - server specifics like: %{REQUEST_METHOD}e or %{SERVER_PROTOCOL}e
+;      - HTTP headers like: %{HTTP_HOST}e or %{HTTP_USER_AGENT}e
+;  %f: script filename
+;  %l: content-length of the request (for POST request only)
+;  %m: request method
+;  %M: peak of memory allocated by PHP
+;      it can accept the following format:
+;      - %{bytes}M (default)
+;      - %{kilobytes}M
+;      - %{kilo}M
+;      - %{megabytes}M
+;      - %{mega}M
+;  %n: pool name
+;  %o: output header
+;      it must be associated with embraces to specify the name of the header:
+;      - %{Content-Type}o
+;      - %{X-Powered-By}o
+;      - %{Transfert-Encoding}o
+;      - ....
+;  %p: PID of the child that serviced the request
+;  %P: PID of the parent of the child that serviced the request
+;  %q: the query string
+;  %Q: the '?' character if query string exists
+;  %r: the request URI (without the query string, see %q and %Q)
+;  %R: remote IP address
+;  %s: status (response code)
+;  %t: server time the request was received
+;      it can accept a strftime(3) format:
+;      %d/%b/%Y:%H:%M:%S %z (default)
+;      The strftime(3) format must be encapsuled in a %{<strftime_format>}t tag
+;      e.g. for a ISO8601 formatted timestring, use: %{%Y-%m-%dT%H:%M:%S%z}t
+;  %T: time the log has been written (the request has finished)
+;      it can accept a strftime(3) format:
+;      %d/%b/%Y:%H:%M:%S %z (default)
+;      The strftime(3) format must be encapsuled in a %{<strftime_format>}t tag
+;      e.g. for a ISO8601 formatted timestring, use: %{%Y-%m-%dT%H:%M:%S%z}t
+;  %u: remote user
+;
+; Default: "%R - %u %t \"%m %r\" %s"
+;access.format = "%R - %u %t \"%m %r%Q%q\" %s %f %{mili}d %{kilo}M %C%%"
+
+; The log file for slow requests
+; Default Value: not set
+; Note: slowlog is mandatory if request_slowlog_timeout is set
+slowlog = log/$pool.log.slow
+
+; The timeout for serving a single request after which a PHP backtrace will be
+; dumped to the 'slowlog' file. A value of '0s' means 'off'.
+; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
+; Default Value: 0
+;request_slowlog_timeout = 0
+request_slowlog_timeout = 2
+
+; The timeout for serving a single request after which the worker process will
+; be killed. This option should be used when the 'max_execution_time' ini option
+; does not stop script execution for some reason. A value of '0' means 'off'.
+; Available units: s(econds)(default), m(inutes), h(ours), or d(ays)
+; Default Value: 0
+;request_terminate_timeout = 0
+request_terminate_timeout = 10
+
+; Set open file descriptor rlimit.
+; Default Value: system defined value
+;rlimit_files = 1024
+
+; Set max core size rlimit.
+; Possible Values: 'unlimited' or an integer greater or equal to 0
+; Default Value: system defined value
+;rlimit_core = 0
+
+; Chroot to this directory at the start. This value must be defined as an
+; absolute path. When this value is not set, chroot is not used.
+; Note: you can prefix with '$prefix' to chroot to the pool prefix or one
+; of its subdirectories. If the pool prefix is not set, the global prefix
+; will be used instead.
+; Note: chrooting is a great security feature and should be used whenever
+;       possible. However, all PHP paths will be relative to the chroot
+;       (error_log, sessions.save_path, ...).
+; Default Value: not set
+;chroot =
+
+; Chdir to this directory at the start.
+; Note: relative path can be used.
+; Default Value: current directory or / when chroot
+;chdir = /var/www
+
+; Redirect worker stdout and stderr into main error log. If not set, stdout and
+; stderr will be redirected to /dev/null according to FastCGI specs.
+; Note: on highloaded environement, this can cause some delay in the page
+; process time (several ms).
+; Default Value: no
+;catch_workers_output = yes
+
+; Clear environment in FPM workers
+; Prevents arbitrary environment variables from reaching FPM worker processes
+; by clearing the environment in workers before env vars specified in this
+; pool configuration are added.
+; Setting to "no" will make all environment variables available to PHP code
+; via getenv(), $_ENV and $_SERVER.
+; Default Value: yes
+;clear_env = no
+
+; Limits the extensions of the main script FPM will allow to parse. This can
+; prevent configuration mistakes on the web server side. You should only limit
+; FPM to .php extensions to prevent malicious users to use other extensions to
+; exectute php code.
+; Note: set an empty value to allow all extensions.
+; Default Value: .php
+;security.limit_extensions = .php .php3 .php4 .php5 .php7
+
+; Pass environment variables like LD_LIBRARY_PATH. All $VARIABLEs are taken from
+; the current environment.
+; Default Value: clean env
+;env[HOSTNAME] = $HOSTNAME
+;env[PATH] = /usr/local/bin:/usr/bin:/bin
+;env[TMP] = /tmp
+;env[TMPDIR] = /tmp
+;env[TEMP] = /tmp
+
+; Additional php.ini defines, specific to this pool of workers. These settings
+; overwrite the values previously defined in the php.ini. The directives are the
+; same as the PHP SAPI:
+;   php_value/php_flag             - you can set classic ini defines which can
+;                                    be overwritten from PHP call 'ini_set'.
+;   php_admin_value/php_admin_flag - these directives won't be overwritten by
+;                                     PHP call 'ini_set'
+; For php_*flag, valid values are on, off, 1, 0, true, false, yes or no.
+
+; Defining 'extension' will load the corresponding shared extension from
+; extension_dir. Defining 'disable_functions' or 'disable_classes' will not
+; overwrite previously defined php.ini values, but will append the new value
+; instead.
+
+; Note: path INI options can be relative and will be expanded with the prefix
+; (pool, global or /usr/local/php-7.1.5)
+
+; Default Value: nothing is defined by default except the values in php.ini and
+;                specified at startup with the -d argument
+;php_admin_value[sendmail_path] = /usr/sbin/sendmail -t -i -f www@my.domain.com
+;php_flag[display_errors] = off
+;php_admin_value[error_log] = /var/log/fpm-php.www.log
+;php_admin_flag[log_errors] = on
+;php_admin_value[memory_limit] = 32M
+[root@IC-STIMG-04 php-fpm.d]# 
+
+-- ps -ef | grep nginx
+[root@IC-STIMG-04 php-fpm.d]# ps -ef | grep nginx
+root     18579     1  0 02:18 ?        00:00:00 nginx: master process /usr/local/nginx/sbin/nginx
+daemon   18580 18579  0 02:18 ?        00:00:02 nginx: worker process      
+daemon   18581 18579  0 02:18 ?        00:00:02 nginx: worker process      
+daemon   18582 18579  0 02:18 ?        00:00:02 nginx: worker process      
+daemon   18583 18579  0 02:18 ?        00:00:02 nginx: worker process      
+daemon   18584 18579  0 02:18 ?        00:00:02 nginx: worker process      
+daemon   18585 18579  0 02:18 ?        00:00:02 nginx: worker process      
+daemon   18586 18579  0 02:18 ?        00:00:02 nginx: worker process      
+daemon   18587 18579  0 02:18 ?        00:00:03 nginx: worker process      
+daemon   18588 18579  0 02:18 ?        00:00:03 nginx: worker process      
+daemon   18589 18579  0 02:18 ?        00:00:03 nginx: worker process      
+daemon   18590 18579  0 02:18 ?        00:00:03 nginx: worker process      
+daemon   18591 18579  0 02:18 ?        00:00:03 nginx: worker process      
+daemon   18592 18579  0 02:18 ?        00:00:03 nginx: worker process      
+daemon   18593 18579  0 02:18 ?        00:00:03 nginx: worker process      
+daemon   18594 18579  0 02:18 ?        00:00:04 nginx: worker process      
+daemon   18595 18579  0 02:18 ?        00:00:04 nginx: worker process      
+daemon   18596 18579  0 02:18 ?        00:00:04 nginx: worker process      
+daemon   18597 18579  0 02:18 ?        00:00:04 nginx: worker process      
+daemon   18598 18579  0 02:18 ?        00:00:05 nginx: worker process      
+daemon   18599 18579  0 02:18 ?        00:00:05 nginx: worker process      
+daemon   18600 18579  0 02:18 ?        00:00:06 nginx: worker process      
+daemon   18601 18579  0 02:18 ?        00:00:10 nginx: worker process      
+daemon   18602 18579  0 02:18 ?        00:00:08 nginx: worker process      
+daemon   18603 18579  0 02:18 ?        00:00:04 nginx: worker process      
+daemon   18604 18579  0 02:18 ?        00:00:01 nginx: cache manager process
+root     29237 27146  0 04:08 pts/3    00:00:00 grep nginx
+
+[root@IC-STIMG-04 php-fpm.d]# ps -ef | grep php
+root     18123     1  0 02:15 ?        00:00:00 php-fpm: master process (/usr/local/php-7.1.5/etc/php-fpm.conf)
+daemon   26903 18123  0 03:41 ?        00:00:02 php-fpm: pool www
+daemon   27048 18123  0 03:44 ?        00:00:02 php-fpm: pool www
+daemon   27049 18123  0 03:44 ?        00:00:01 php-fpm: pool www
+daemon   27562 18123  0 03:49 ?        00:00:01 php-fpm: pool www
+daemon   28178 18123  0 03:56 ?        00:00:00 php-fpm: pool www
+daemon   28418 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28419 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28424 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28433 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28434 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28435 18123  0 03:59 ?        00:00:01 php-fpm: pool www
+daemon   28436 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28437 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28438 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28439 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28440 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28441 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28442 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28443 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28444 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28449 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28450 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28451 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28452 18123  0 03:59 ?        00:00:01 php-fpm: pool www
+daemon   28453 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28455 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28456 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28465 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28466 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28467 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28468 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28469 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28470 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28471 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28472 18123  0 03:59 ?        00:00:00 php-fpm: pool www
+daemon   28477 18123  0 04:00 ?        00:00:00 php-fpm: pool www
+daemon   28846 18123  0 04:04 ?        00:00:00 php-fpm: pool www
+daemon   28956 18123  0 04:05 ?        00:00:00 php-fpm: pool www
+daemon   29014 18123  0 04:06 ?        00:00:00 php-fpm: pool www
+root     29268 27146  0 04:09 pts/3    00:00:00 grep php
+[root@IC-STIMG-04 php-fpm.d]# 
+
+-- bash_history
+[root@IC-STIMG-04 ~]# cat .bash_history 
+ls-ltr
+ls -ltr
+ps -ef | grep apache
+cd /usr
+ls
+cd local/
+ls
+ls -ltr
+cd ..
+ls -ltr
+rm -rf nginx-1.12.0
+pwd
+cd local/
+ls
+ls -ltr
+df -h
+mkdir app
+ls -ltr
+cd app
+ls -ltr
+cd ..
+ls
+ls -ltr
+pwd
+cd nginx
+ls
+ls -ltr
+cd conf
+ls -ltr
+vi nginx.conf
+cd /usr/local/
+yum -y install libxml2-devel bzip2-devel libcurl-devel gdbm-devel libvpx libvpx-devel libjpeg-turbo-devel libpng-devel libXpm libXpm-devel freetype-devel t1lib t1lib-devel gmp-devel libc-client libc-client-devel pam-devel libicu libicu-devel openldap-devel readline-devel libedit-devel libtidy libtidy-devel libxslt libxslt-devel expat* krb5-devel openssl-devel db4-devel
+cd /usr/local/
+ls
+ls -ltr
+git clone git://github.com/vozlt/nginx-module-vts.git
+ls -ltr
+pwd
+cd ..
+ls -ltr
+cd nginx-1.12.0
+ls -ltr
+./configure --prefix=/usr/local/nginx --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --add-module=/usr/local/nginx-module-vts
+ls -ltr
+cd ..
+cd local/
+ls
+cd nginx-module-vts/
+cd ../nginx-module-vts/
+cd ..
+ls -ltr
+cd nginx-1.12.0
+make && make install
+ls -ltr
+pwd
+cd ../
+ls
+ls -ltr
+cd local/
+ls
+ls -ltr
+cd nginx
+ls
+ls -ltr
+cd conf
+ls
+ls -ltr
+vi nginx.conf
+ls -ltr
+cp nginx.conf nginx.conf.origin
+cat /dev/null > nginx.conf
+vi nginx.conf
+cd /usr/local/
+ls -ltr
+wget http://kr1.php.net/distributions/php-7.1.5.tar.gz
+ls -ltr
+tar -xvzf php-7.1.5.tar.gz
+ls -ltr
+cd php-7.1.5
+ls -ltr
+./configure --prefix=/usr/local/php-7.1.5 --with-config-file-path=/usr/local/php-7.1.5/etc --with-config-file-scan-dir=/usr/local/php-7.1.5/etc/conf.d --disable-debug --enable-fpm --enable-bcmath --enable-exif --enable-ftp --enable-gd-native-ttf --enable-inline-optimization --enable-intl --enable-mbregex --enable-mbstring --enable-sigchild --enable-soap --enable-sockets --enable-sysvsem=yes --enable-sysvshm=yes --enable-xml --enable-zip --with-bz2 --with-iconv --with-curl --with-zlib --with-gd --with-gettext --with-mcrypt --with-mhash --with-mysqli --with-openssl --with-openssl-dir=/usr/local/bin --with-xmlrpc --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=/usr/lib --with-libxml-dir=/usr/lib --with-png-dir=/usr/lib --with-zlib-dir=/usr/lib --with-fpm-user=daemon --with-fpm-group=daemon
+make && make install
+ls -ltr
+cd ..
+ls -ltr
+rm -rf php-7.1.5
+tar -xvzf php-7.1.5.tar.gz
+ls-ltr
+ls -ltr
+cd php-7.1.5
+ls -ltr
+cd php-7.1.5
+./configure --prefix=/usr/local/php-7.1.5 --with-config-file-path=/usr/local/php-7.1.5/etc --with-config-file-scan-dir=/usr/local/php-7.1.5/etc/conf.d --disable-debug --enable-fpm --enable-bcmath --enable-exif --enable-ftp --enable-gd-native-ttf --enable-inline-optimization --enable-intl --enable-mbregex --enable-mbstring --enable-sigchild --enable-soap --enable-sockets --enable-sysvsem=yes --enable-sysvshm=yes --enable-xml --enable-zip --with-bz2 --with-iconv --with-curl --with-zlib --with-gd --with-gettext --with-mcrypt --with-mhash --with-mysqli --with-openssl --with-openssl-dir=/usr/local/bin --with-xmlrpc --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=/usr/lib --with-libxml-dir=/usr/lib --with-png-dir=/usr/lib --with-zlib-dir=/usr/lib --with-fpm-user=daemon --with-fpm-group=daemon
+ps -ef
+java -v
+ps -ef | grep java
+javac
+cd /usr/local/dsms/jre/bin/
+ls -ltr
+java -v
+javac
+./java -v
+./javac
+cd
+ls -ltr
+mkdir /var/run/php-fpm/
+mkdir /var/log/php
+mkdir /var/log/php-fpm
+mkdir /usr/local/php-7.1.5/log/
+cd /
+ls
+cd /usr/local
+cd app
+ls -ltr
+vi resize.php
+cat /dev/null > resize.php
+vi resize.php
+ls -ltr
+vi resize-class.php
+ls -ltr
+cd
+alias
+ls -al
+vi .bashrc
+. .bashrc
+nginx_log
+cd /usr/local/nginx/logs/
+ls -ltr
+vi test.log
+nginx_log
+ls -ltr
+rm -rf test.log 
+cd /usr/local/nginx
+ls
+ls -ltr
+cd sbin
+ls -ltr
+pwd
+cd ..
+ls -ltr
+cd logs/
+ls
+ls -ltr
+ps -ef | grep apache
+cd /usr/local/
+ls -ltr
+yum -y install libmcrypt libmcrypt-devel
+ps -ef | grep libmcrypt
+wget http://www.atblog.co.kr/file/package/libmcrypt-2.5.8.tar.gz
+ls -ltr
+tar zxvf libmcrypt-2.5.8.tar.gz
+cd libmcrypt-2.5.8
+ls -ltr
+./configure
+make
+make install
+ln -s /usr/local/lib/libmcrypt.so.4 /usr/local/lib64/libmcrypt.so.4
+cd ..
+ls -ltr
+cd php-7.1.5
+ls -ltr
+cd php-7.1.5
+./configure --prefix=/usr/local/php-7.1.5 --with-config-file-path=/usr/local/php-7.1.5/etc --with-config-file-scan-dir=/usr/local/php-7.1.5/etc/conf.d --disable-debug --enable-fpm --enable-bcmath --enable-exif --enable-ftp --enable-gd-native-ttf --enable-inline-optimization --enable-intl --enable-mbregex --enable-mbstring --enable-sigchild --enable-soap --enable-sockets --enable-sysvsem=yes --enable-sysvshm=yes --enable-xml --enable-zip --with-bz2 --with-iconv --with-curl --with-zlib --with-gd --with-gettext --with-mcrypt --with-mhash --with-mysqli --with-openssl --with-openssl-dir=/usr/local/bin --with-xmlrpc --with-freetype-dir=/usr/include/freetype2 --with-jpeg-dir=/usr/lib --with-libxml-dir=/usr/lib --with-png-dir=/usr/lib --with-zlib-dir=/usr/lib --with-fpm-user=daemon --with-fpm-group=daemon
+make && make install
+vi /usr/local/php-7.1.5/etc/php-fpm.conf
+pwd
+ls -ltr
+cd conf
+cd /etc
+ls
+cd ~
+cd
+cd /usr/local/php-7.1.5/etc/
+ls -ltr
+vi php-fpm.conf
+ls -ltr
+cd php-fpm.d
+ls
+ls -ltr
+vi www.conf
+ls -ltr
+cd
+ls -ltr
+cd /usr/local/
+ls
+cd app
+ls
+ls -ltr
+vi robots.txt
+ls -ltr
+                                                                                                                                              
+ulimit -a
+vi /etc/security/limits.conf
+ls -ltr
+nginx_conf
+cd
+alias
+exit
+alias
+php_stop
+cd /etc/rc
+cd /etc/rc.d/init.d/
+ls
+ls -ltr
+./php-fpm stop
+./php-fpm start
+pwd
+exit
+alias
+vi .bashrc
+. .bashrc
+ls -ltr
+cd  
+cd /var/run/php-fpm/
+ls -ltr
+cd
+ls -ltr
+ps -ef | grep apache
+nginx_conf
+cd /usr/local/
+ls
+cd nginx
+ls
+cd conf
+ls -ltr
+cd
+vi .bashrc
+. .bashrc
+nginx_conf
+ls
+vi nginx.conf
+ls -ltr
+alias
+nginx_start
+cd
+vi .bashrc
+. .bashrc
+ls -ltr
+php_start
+systemctl start php-fpm
+systemctl
+cd /usr/local/
+ls
+ls ltr
+ls -ltr
+cd cd /etc/init.d/
+cd /etc/init.d/
+ls -ltr
+ls -l php-fp
+ls -l php-fpm
+vi php-fpm
+ls -ltr
+chmod 755 php-fpm 
+ls -ltr
+cd
+ls -ltr
+alias
+vi .bashrc
+cd /usr/local/
+ls
+ls -ltr
+cd php-7.1.5
+ls
+cd conf
+ls -ltr
+cd /etc
+ls
+cd /usr/local/php-7.1.5/etc
+ls
+ls -ltr
+cd php-fpm.d
+ls
+vi www.conf
+alias
+php_start
+nginx_start 
+ps -ef | grep nginx
+ps -ef | grep php-fpm
+cd /contents/
+ls
+cd movie
+ls
+pwd
+cd 99200
+ls -ltr
+ls -l *_src.jpg
+pwd
+ls -l M99151
+ls -l M99151*
+ps -ef | grep apache
+cd /usr/local/apache2/logs/
+ls -ltr
+top
+cd /usr/local/apache2/logs/
+ls
+tail -f access_log.2017-10-20-04-00 
+ps -ef | grep 
+ps -ef | grep http
+ps -ef
+exit
+ps -ef
+cd /usr/local/nginx/logs/
+ls
+ls -alt
+s
+ls
+tail -f access.log 
+exit
+ps -ef
+eixt
+exit
+cd i
+cd /usr/local/php-7.1.5/log/
+ls -ltr
+cd ..
+ls -ltr
+ps -ef | grep php
+ls -lr
+cd log
+ls
+cd ..
+ls -ltr
+chmod -R 777 log
+ls -ltr
+cd log
+ls
+ls -ltr
+tail -f monitoring.log 
+pwd
+ls -tr
+cd
+ls -ltr
+cd /usr
+cd local/
+ls
+ls -ltr
+cd apache2/
+ls -tr
+ls-tr
+ls -ltr
+cd bin
+ls -ltr
+ps -ef | grep apache
+cd
+alias
+vi .bashrc
+cd /usr/local/nginx/logs/
+ls -ltr
+/usr/local/apache2/bin/rotatelogs /usr/local/nginx/logs/access.log.%Y-%m-%d-%H-%M 14400 +540
+/usr/local/apache2/bin/rotatelogs /usr/local/nginx/logs/access.log.%Y-%m-%d-%H-%M 1M
+alias
+exit
+alias
+vi .bashrc
+. .bashrc
+php_resize_log 
+cd /usr/local/
+ls
+cd nginx
+ls
+ls -ltr
+cd logs
+ls
+ls -ltr
+cd /usr/local/
+ls
+cd nginx
+ls
+cd logs
+ls
+ls -ltr
+rm -rf error.log.%Y-%m-%d-%H-%M 
+rm -rf access.log.%Y-%m-%d-%H-%M 
+ls -ltr
+/usr/local/apache2/bin/rotatelogs /usr/local/nginx/logs/access.log 1M
+alias
+ps -ef
+cd 
+ps -ef | grep http
+history | grep rsync
+ps -ef | grep apache
+nginx_conf
+ls -ltr
+vi nginx.conf
+cd
+vi .bashrc
+cd /usr
+ls
+cd local/
+ls
+ls -ltr
+cd apache2/
+ls
+cd logs
+ls
+ls -ltr
+cd ../conf/
+ls
+vi httpd.conf 
+pwd
+nginx_conf
+ls
+ls -ltr
+pwd
+cd ..
+ls -ltr
+pwd
+cd sbin
+ls
+ls -ltr
+ps -ef | grep nginx
+cd /usr/local/nginx/
+ls ltr
+ls -ltr
+cd conf
+ls
+ls -ltr
+cd ..
+ls -ltr
+cd sbin
+ls -ltr
+pwd
+cd ..
+ls -ltr
+vi conf
+cd conf
+ls
+vi nginx.conf
+ls -ltr
+cd
+ls -ltr
+alas
+alias
+exit
+ls -ltr
+cd /etc/logrotate.d
+ls -ltr
+vi nginx
+ls -ltr
+alias
+vi .bashrc
+ls -ltr
+alias
+nginx_stop
+nginx_conf
+ls -ltr
+vi nginx.conf
+apache_stop 
+ps -ef | grep apache
+nginx_stop
+nginx_start
+ps -ef | grep nginx
+ps -ef | grep php-fpm
+ls -l /usr/local/nginx/logs/nginx_master.pid
+cd /etc/logrotate.d
+ls
+ls -ltr
+cat nginx 
+cd /usr/local/nginx/logs/
+ls
+ls -alt
+cat access.log | more
+ls
+cd ..
+ls
+cd conf/
+ls
+cat nginx.conf
+cd /etc/logrotate.
+cd /etc/logrotate.d
+ls -ltr
+cat nginx 
+nginx_conf
+ls -tr
+vi nginx.conf
+alias
+nginx_log
+alias
+nginx_log
+nginx_conf
+ls
+ls -ltr
+vi nginx.conf
+nginx_stop
+nginx_start
+nginx_log
+cd ../log
+pwd
+cd ../logs
+ls
+ls -ltr
+cd ../conf
+ls
+ls -ltr
+vi nginx.conf
+nginx_stop
+nginx_start
+nginx_log
+tail -f /usr/local/nginx/logs/access.log
+tail -f /usr/local/nginx/logs/error.log
+nginx_log
+cd /etc/logrotate.
+cd /etc/logrotate.d
+ls -ltr
+vi nginx 
+crontab -l
+cat /root/shell/log_delete.sh
+ls
+cd /usr/local/nginx
+ls
+cd conf/
+ls
+cat nginx.conf
+cd /var/log/
+ls
+ls -ltr
+cd /usr/local/
+ls
+ls -ltr
+cd nginx
+ls
+cd conf
+sl -ltr
+ls -ltr
+vi nginx.conf
+nginx_stop
+vi nginx.conf
+ls -l /contents/smartdelivery/2010A750/kobis_still_2010A750_0_142x142.jpg
+cd /contents/smartdelivery/2010A750/
+ls -l kobis_still_2010A750_0_142x142.jpg
+ls -l kobis_still_2010A750*
+ls -l /contents/iis/{2BD46CB2-D9F3-11E5-A1D9-DD3E37F95E83}/{2BD46CB2-D9F3-11E5-A1D9-DD3E37F95E83}*
+cd /contents/iis/
+cd {2BD46CB2-D9F3-11E5-A1D9-DD3E37F95E83}
+cd /usr/local/
+ls
+cd nginx
+ls
+cd conf
+ls -ltr
+cat nginx.conf
+ls -ltr
+alias
+cd ..
+ls -ltr
+cd ..
+ls -ltr
+cd php-7.1.5
+ls -ltr
+cd etc
+ls
+cat php-fpm.conf
+ls
+cd php-fpm.d
+ls
+cat www.conf
+ls -ltr
+cd
+ls -ltr
+cd /usr/local/
+ls
+ls -ltr
+cd nginx
+ls
+cd sbin
+ls
+ls -ltr
+vi nginx-cache-purge
+ls -ltr
+ls -l /usr/local/nginx/cache
+vi nginx-cache-purge
+ls -ltr
+chmod 755 nginx-cache-purge 
+ls -ltr
+./nginx-cache-purge /movie/32100/M320983_206x296.jpg
+vi nginx-cache-purge 
+cd
+vi .bash_history
+cd /usr
+ls
+ls -ltr
+rm -rf nginx-1.12.0.tar.gz 
+cd local/
+ls
+ls -ltr
+cd src
+ls
+ls -ltr
+cd ..
+ls ltr
+rm -rf php-7.1.5.tar.gz 
+ls -ltr
+cd /usr/local/app
+ls
+vi resize.php
+cd /contents/ontv/10400/69_T_313560_20170317002935.jpg
+cd /usr/local/nginx
+lx
+ls
+cd logs/
+ls
+ls -alt
+ls -alth
+cd /contents/ontv/10150/T341095_190x272.jpg
+ls -l /contents/movie/31200/M311939_190x272.jpg
+ls -l /contents/movie/33950/M339318_190x272.jpg
+nginx_log
+alias
+cd /usr/local/nginx/logs/
+ls -ltr
+tail -f error.log 
+ls -ltr
+cat access.log | grep 404
+cat access.log | grep 'HTTP/1.1" 200'
+cat access.log | grep "HTTP/1.1'" 200"
+cat access.log | grep "HTTP/1.1'"' 200"
+cat access.log | grep "404 "
+ls -ltr
+tail -f access.log 
+ls -ltr
+cat access.log | grep "404 "
+ps -ef
+ls
+ps -ef
+top
+ps -ef
+cd /usr/local/nginx
+ls
+cd logs/
+ls
+tail -f access.log 
+ls
+tail -f error.log 
+tail -f access.log 
+cd contents
+cd /contents/
+ls -ltr
+find . -name checksystem.html
+cd /
+find . -name checksystem.html
+cd /usr/local
+ls
+ls -ltr
+cd /contents/
+ls -al checksystem.html
+cat checksystem.html 
+top
+cd /usr/local/nginx/logs/
+ls
+cat access.log | more
+tail -f access.log 
+nginx_cof
+nginx_coff
+nginx_conf
+vi nginx.conf
+nginx_log | grep checksystem.html
+nginx_log
+ls -ltr
+cd /usr/local/
+ls
+cd app
+ls -ltr
+vi resize.php 
+cd /usr/local/
+ls
+ls -ltr
+cd nginx
+ls -ltr
+cd ../php-7.1.5
+ls
+cd logs
+cd log
+ls
+tail -f monitoring.log 
+cd /usr/local/nginx
+ls
+cd logs/
+ls
+tail -f access.log 
+ps -ef | grep nginx
+top
+ps -ef | grep rsync
+crontab -l
+ps -ef | grep rsync
+top
+ls
+top
+free
+cd /usr/local/nginx
+cd logs/
+ls
+cat access.log | more
+cat access.log | grep "1.233.81." | more
+cat access.log | grep "1.255." | more
+ps -ef
+cd /contents/
+cd igs/
+ls
+ls -alt | more
+            
+ls
+cd ..
+ls
+cd /usr/local/nginx
+ls
+cd logs/
+ls
+tail -f access.log 
+nginx_log
+alias
+cat /usr/local/nginx/logs/access.log | grep html
+lpwd
+ls -ltr
+cd log
+pwd
+cd /usr/local/
+ls
+ls -ltr
+cd nginx
+ls
+ls -ltr
+cd logs
+ls
+l s-lr
+ls -ltr
+pwd
+alias
+php_stop
+nginx_stop
+ps -ef | grep nginx
+ps -ef | grep php-fpm
+apache_start
+ps -ef | grep apache
+ls -ltr
+cd /usr/local/nginx
+ls
+cd logs/
+ls
+cat access.log | grep "07:..:.." | more
+cat access.log | grep "07:..:.." | grep "1.255." | more
+cat access.log | grep "07:..:.." | grep "1.255.106." | more
+cat access.log | grep "07:..:.." | grep "1.255.107." | more
+cat error.log 
+cat error.log | more
+alais
+alias
+cd /usr/local/nginx/logs/
+ls -ltr
+cat access.log | grep 1.255.107*
+ls -ltr
+cat access.log | grep "1.255.107.*
+cat access.log | grep 1.255.107.*
+cat access.log | grep 1.255.108.*
+alias
+cd /usr/local/nginx/logs/
+tail -f access.log | grep stream
+cat access.log | grep stream
+cd /usr/local/nginx/logs
+ls
+ls -ltr
+cat ics.log | grep -E "1.255.107.|1.255.108.| >  movie.log
+ls -ltr
+vi ics.log
+ls -ltr
+rm ics.log
+ls -ltr
+ps -ef | more
+ls
+ps -ef
+cd /usr/local/apache2/logs/
+ls
+tail -f access_log.2017-10-20-08-00
+cd /usr/local/nginx
+cd logs/
+ls
+cd /usr/local
+ls
+cd nginx
+ls -ltr
+cd logs
+ls
+ls -ltr
+vi ics.log
+ls -ltr
+cat ics.log | grep /movie* > movie.log
+vi movie.log
+cat movie.log  | grep MISS > movie_miss.log
+vi movie_miss.log
+ls -ltr
+cd /usr/local/apache2/log
+ls
+cd /usr/local/apache2/log
+cd /usr/local/apache2/logs
+ls
+tail -f access_log.2017-10-20-08-00 | grep "1.255.107."
+cat access_log.2017-10-20-08-00 | grep "1.255.107."
+ls -ltr
+cd /usr/local
+ls
+nginx_conf
+ls
+ls -ltr
+vi nginx.conf
+cd /usr/local/
+ls
+cd apache2/
+ls
+cd logs
+ls
+pwd
+ls -lr
+ls -ltr
+pwd
+cd /contents
+clear
+ls -alth *.gz
+rm -f poker_3.tar.gz
+rm -f stimage_20141013.tar.gz
+rm -f smartdelivery.tar.gz
+rm -f matgo_4.tar.gz
+rm -f 150210_done_full.tar.gz
+clear
+df -h
+ls -alt | more
+clear
+ls -lt *.txt
+rm -f searchIWS*
+clear
+ls -alt
+clear
+df -h
+cd /usr/local/apache2/
+cd logs/
+ls
+nestsat -an
+nestat -an
+netstat -anpt
+netstat -anpt | more
+ls
+tail -f access_log.2017-11-20-12-00
+w
+ps -ef
+tail -f access_log.2017-11-20-12-00
+netstat -an
+cd /usr/local/apache2/
+ls
+cd logs/
+ls
+tail -f access_log.2017-11-23-00-00
+netstat -an
+netstat -an | more
+w
+ls
+cd /usr/local/dsms/bin/
+ls
+./sms stop
+./sms start
+alias
+netstat -anpt | grep "8080"
+netstat -an
+netstat -an | more
+netstat -an | grep "8080" | wc -l
+ls
+w
+ls
+cd /usr/local/nginx/logs/
+ls
+ls -alt
+rm -f access.log
+rm -f access.log-20171122 error.log-20171122 access.log-20171121 error.log-20171121
+ls
+rm -f access.log-20171120 access.log-20171119  error.log-20171119 error.log-20171120
+ls
+ls -alt
+ls -ltr
+cd /svc
+ls
+ps -ef | grep apache
+cd /usr/local
+ls
+ls -ltr
+alais
+alias
+nginx_conf
+ls -ltr
+vi nginx.conf
+cat nginx.conf
+ls -ltr
+cp nginx.conf nginx.conf.20171123
+cat /dev/null > nginx.conf
+vi nginx.conf
+cd /usr/local/app
+ls -ltr
+vi resize.php
+ls -ltr
+cat resize.php
+cat resie-class.ph
+cat resize-class.php
+ls -ltr
+cat /dev/null > resize.php
+vi resize.php
+ls -ltr
+cat /dev/null > resize-class.php 
+vi resize-class.php 
+ls -ltr
+alias
+nginx_conf
+ls -ltr
+vi nginx.conf
+netstat -an | grep 8081
+alas
+alias
+php_stop
+php_start
+nginx_stop
+nginx_start
+nginx_log
+cd /usr/local/nginx/logs/
+ls -ltr
+nginx_conf
+ls -ltr
+vi nginx.conf
+alias
+nginx_stop
+apache_stop
+nginx_start
+vi nginx.conf
+ls -ltr
+vi nginx.conf
+cd /etc/logrotate.d
+ls
+ls -ltr
+cat nginx 
+crontab -l
+cat /root/shell/log_delete.sh
+nginx_log
+ls -ltr
+cd log
+ls
+cd /usr/local/nginx/log
+ls
+cd /usr/local/nginx/logs
+ls -ltr
+tail -f access.log
+ls -ltr
+tail -f access.log
+ps -ef | grep apache
+ps -ef | grep nginx
+ls -ltr
+ps -ef | grep nginx
+cd /usr/local/nginx/sbin/
+ls -ltr
+cd ..
+ls -ltr
+cd logs
+ls
+ls -ltr
+tail -f access.log
+tail -f error.log
+ls ltr
+ls -ltr
+cd ..
+ls -ltr
+cd ..
+ls -ltr
+chown -R daemon:daemon nginx
+ls ltr
+ls -ltr
+cd nginx
+ls
+ls -ltr
+cd logs
+ls
+ls -ltr
+tail -f error.log
+ls -ltr
+tail -f 2017-11-23-02-access.log 
+ls -ltr
+tail -f 2017-11-23-03-access.log
+ls -ltr
+alias
+crontab -l
+cat /root/shell/log_delete.sh
+cd /usr/local/nginx/logs/
+ls
+ls -ltr
+cp 2017-11-23-02-access.log 2017-11-23-02-test.log
+ls -ltr
+top
+cd /usr/local/nginx
+ls
+cd logs/
+ls
+cat error.log-20171123
+ls
+tail -f error.log
+tail -f error.log-20171123
+ls
+tail -f 017-11-23-03-access.log | grep "igs"
+tail -f 2017-11-23-03-access.log | grep "igs"
+[root@IC-STIMG-04 ~]# 
+
+[root@IC-STIMG-04 ~]# cd /usr/local/app
+[root@IC-STIMG-04 app]# ls
+resize-class.php  resize.php  robots.txt
+
+[root@IC-STIMG-04 app]# cat robots.txt
+User-agent: *
+Disallow: /
+
+[root@IC-STIMG-04 app]# cat resize.php
+<?php
+    include("resize-class.php");    
+    date_default_timezone_set("Asia/Seoul");
+
+    $image_url = $_REQUEST["u"]; // /ontv/11000/T98976_315x452.jpg
+    $is_bmt = false;
+    
+    $remote_url = "";
+    if ($is_bmt == true) {
+        $remote_url = "http://stimage.hanafostv.com:8080"; // rsync server url 
+    } else {
+        $remote_url = "/contents"; // LIVE image local path
+    }
+        
+    $image_root = "/contents";
+    $resize_image = $image_root.$image_url; // /home/manager/server/images/contents/ontv/11000/T98976_315x452.jpg
+    $extension = strtolower(substr(strrchr($image_url, "."), 1));
+    
+    if ($extension == 'jpg') {
+        $extension = 'jpeg';
+    }
+    
+    $option = "exact"; // auto crop exact 
+    
+    if (file_exists($resize_image)) { // file exist
+        $resizeObj = new resize($resize_image);
+        $resizeObj->viewImage($extension, $resize_image);
+        ////////////////////////////////////////////////////////////////////////
+    } else { // file not exist
+        
+        $image_origin1 = "_src";
+        $image_origin2 = "_315x452";
+        $is_width_height = true;
+
+        $image_file_path = substr($resize_image, 0, strrpos($resize_image, '/')).'/'; // /home/manager/server/images/contents/ontv/11000/    
+        $image_file_name = str_replace($image_file_path, "", $resize_image); // T98976_315x452.jpg    
+        $image_file_name = substr($image_file_name, 0, strrpos($image_file_name, '.'));  // T98976_315x452
+        $width_height = strrchr($image_file_name, "_"); // _315x452        
+        $width = "";
+        $height = "";
+        $save_image = $resize_image;
+        $remote_image = "";
+
+        umask(0002);            
+        $path = pathinfo($resize_image);
+        
+        if (!file_exists($path['dirname'])) {
+            mkdir($path['dirname'], 0777, true);
+        }
+        
+        if ($width_height == NULL || $extension == 'png') { // png or 원본 이미지
+            if ($is_bmt == true) {
+                $remote_image = file_get_contents($remote_url.$image_url); // rsync 서버 BMT http://stimage.hanafostv.com:8080/ontv/11000/T98976_315x452.jpg            
+                file_put_contents($resize_image, $remote_image); // BMT /home/manager/server/images/contents/ontv/11000/T98976_315x452.jpg
+                touch($resize_image, strtotime(str_replace("Last-Modified: ", "", $http_response_header[3])));
+            }
+            $is_width_height = false;
+        } else { // resize 이미지
+            $width = substr($width_height, 1, strrpos($width_height, 'x')-1); // 315
+            $height = substr($width_height, strrpos($width_height, 'x')+1, strlen($width_height)); // 452
+            
+            if (is_numeric($width) && is_numeric($height)) { // resize 정보가 있으면    
+
+                $remote_image = @file_get_contents(str_replace($width_height, $image_origin1, $image_root.$image_url)); // 로컬 원본 _src
+                if ($remote_image === false) {
+                    $remote_image = @file_get_contents(str_replace($width_height, $image_origin2, $image_root.$image_url)); // 로컬 원본 _315x452  
+                    if ($remote_image === false) {
+                        if ($is_bmt == true) {
+                            $remote_image = @file_get_contents(str_replace($width_height, $image_origin1, $remote_url.$image_url)); // stimage 원본 _src                 
+                            if ($remote_image === false) {
+                                $remote_image = @file_get_contents(str_replace($width_height, $image_origin2, $remote_url.$image_url)); // stimage 원본 _315x452                    
+                                if ($remote_image === false) { // 원본 없음                                    
+                                    $remote_image = @file_get_contents($remote_url.$image_url); // BMT 호출된 원본   
+                                    $is_width_height = false;
+                                    if ($remote_image === false) { // 원본 없음
+                                        header("HTTP/1.1 404 Not Found");
+                                        return;
+                                    } else {
+                                        file_put_contents($resize_image, $remote_image); // BMT
+                                        touch($resize_image, strtotime(str_replace("Last-Modified: ", "", $http_response_header[3])));
+                                    }
+                                } else {
+                                    $resize_image = str_replace($width_height, $image_origin2, $resize_image);
+                                    file_put_contents($resize_image, $remote_image); // stimage 서버에 있는 이미지 BMT 서버에 다운로드
+                                    touch($resize_image, strtotime(str_replace("Last-Modified: ", "", $http_response_header[3])));
+                                }
+                            } else {
+                                $resize_image = str_replace($width_height, $image_origin1, $resize_image);
+                                file_put_contents($resize_image, $remote_image); // stimage 서버에 있는 이미지 BMT 서버에 다운로드
+                                touch($resize_image, strtotime(str_replace("Last-Modified: ", "", $http_response_header[3])));
+                            }                                                
+                        } else {
+                            header("HTTP/1.1 404 Not Found");
+                            return;
+                        }
+                    } else {
+                        $resize_image = str_replace($width_height, $image_origin2, $resize_image);
+                    }
+                } else {
+                    $resize_image = str_replace($width_height, $image_origin1, $resize_image);
+                }
+            } else { // resize 정보가 없으면
+                if ($is_bmt == true) {
+                    $remote_image = file_get_contents($remote_url.$image_url); // BMT
+                    file_put_contents($resize_image, $remote_image); // BMT
+                    touch($resize_image, strtotime(str_replace("Last-Modified: ", "", $http_response_header[3])));
+                }
+                $is_width_height = false;
+            }
+        }
+    
+        if ($is_width_height == true) {
+            $resizeObj = new resize($resize_image);
+            $resizeObj->resizeImage($width, $height, $option);
+            $resizeObj->saveImage($save_image); // resize image save
+            
+            $resizeObj2 = new resize($save_image);
+            $resizeObj2->viewImage($extension, $save_image);
+            //$resizeObj->viewImage($extension, $resize_image);
+        } else {
+            
+            $resizeObj = new resize($resize_image);
+            header('Accept-Ranges: bytes');
+            //header('Content-Length: '.filesize($resize_image));
+            header('Content-type: image/'.$extension);
+            header('ETag: '.md5_file($resize_image));
+            header('Last-Modified: '.gmdate("D, d M Y H:i:s", filemtime($resize_image))." GMT");
+
+            ob_start();
+            if ($extension == 'png') {
+                imagepng($resizeObj->getImage());
+            } else {
+                imagejpeg($resizeObj->getImage(), NULL, 100);
+            }
+            $size = ob_get_length();
+            header("Content-length: " .$size);
+            ob_flush();
+        }
+    }
+?>
+[root@IC-STIMG-04 app]# 
+
+[root@IC-STIMG-04 app]# cat resize-class.php 
+<?php
+// ========================================================================#
+//
+// Author: Jarrod Oberto
+// Version: 1.0
+// Date: 17-Jan-10
+// Purpose: Resizes and saves image
+// Requires : Requires PHP5, GD library.
+// Usage Example:
+// include("classes/resize_class.php");
+// $resizeObj = new resize('images/cars/large/input.jpg');
+// $resizeObj -> resizeImage(150, 100, 0);
+// $resizeObj -> saveImage('images/cars/large/output.jpg', 100);
+//
+//
+// ========================================================================#
+class resize {            
+    // *** Class variables
+    private $image;
+    private $width;
+    private $height;
+    private $imageResized;
+    private $originImage;
+    function __construct($fileName) {
+        // *** Open up the file
+        $this->image = $this->openImage ( $fileName );
+
+        if ($this->image == null) {
+            header("HTTP/1.1 404 Not Found");
+            return;
+        }
+
+        // *** Get width and height
+        $this->width = imagesx ( $this->image );
+        $this->height = imagesy ( $this->image );
+    }
+
+    // # --------------------------------------------------------
+    private function openImage($file) {
+        // *** Get extension
+        $this->originImage = $file;
+        $extension = strtolower(substr(strrchr($file, "."), 1));
+
+        switch (exif_imagetype ( $file )) {
+        case 1 :
+            $img = @imagecreatefromgif ( $file );
+            break;
+        case 2 :
+            $img = @imagecreatefromjpeg ( $file );
+            break;        
+        case 3 :
+            $img = @imagecreatefrompng ( $file );
+            // integer representation of the color black (rgb: 0,0,0)
+            $background = imagecolorallocate($img, 0, 0, 0);
+            // removing the black from the placeholder
+            imagecolortransparent($img, $background);
+            // turning off alpha blending (to ensure alpha channel information
+            // is preserved, rather than removed (blending with the rest of the
+            // image in the form of black))
+            imagealphablending($img, false);
+            // turning on alpha channel information saving (to ensure the full range
+            // of transparency is preserved)
+            imagesavealpha($img, true);
+            break;
+        default :
+            $img = @imagecreatefromjpeg ( $file );
+            break;
+        }
+        return $img;
+    }
+
+    // # --------------------------------------------------------
+    public function resizeImage($newWidth, $newHeight, $option = "auto") {
+        // *** Get optimal width and height - based on $option
+        $optionArray = $this->getDimensions ( $newWidth, $newHeight, $option );
+        $optimalWidth = $optionArray ['optimalWidth'];
+        $optimalHeight = $optionArray ['optimalHeight'];
+
+        // *** Resample - create image canvas of x, y size
+        $this->imageResized = imagecreatetruecolor ( $optimalWidth, $optimalHeight );
+        imagecopyresampled ( $this->imageResized, $this->image, 0, 0, 0, 0, $optimalWidth, $optimalHeight, $this->width, $this->height );
+        // *** if option is 'crop', then crop too
+        if ($option == 'crop') {
+            $this->crop ( $optimalWidth, $optimalHeight, $newWidth, $newHeight );
+        }
+    }
+
+    // # --------------------------------------------------------
+    private function getDimensions($newWidth, $newHeight, $option) {
+        switch ($option) {
+        case 'exact' :
+            $optimalWidth = $newWidth;
+            $optimalHeight = $newHeight;
+            break;
+        case 'portrait' :
+            $optimalWidth = $this->getSizeByFixedHeight ( $newHeight );
+            $optimalHeight = $newHeight;
+            break;
+        case 'landscape' :
+            $optimalWidth = $newWidth;
+            $optimalHeight = $this->getSizeByFixedWidth ( $newWidth );
+            break;
+        case 'auto' :
+            $optionArray = $this->getSizeByAuto ( $newWidth, $newHeight );
+            $optimalWidth = $optionArray ['optimalWidth'];
+            $optimalHeight = $optionArray ['optimalHeight'];
+            break;
+        case 'crop' :
+            $optionArray = $this->getOptimalCrop ( $newWidth, $newHeight );
+            $optimalWidth = $optionArray ['optimalWidth'];
+            $optimalHeight = $optionArray ['optimalHeight'];
+            break;
+        }
+        return array (
+                        'optimalWidth' => $optimalWidth,
+                        'optimalHeight' => $optimalHeight 
+        );
+    }
+
+    // # --------------------------------------------------------
+    private function getSizeByFixedHeight($newHeight) {
+        $ratio = $this->width / $this->height;
+        $newWidth = $newHeight * $ratio;
+        return $newWidth;
+    }
+
+    private function getSizeByFixedWidth($newWidth) {
+        $ratio = $this->height / $this->width;
+        $newHeight = $newWidth * $ratio;
+        return $newHeight;
+    }
+
+    private function getSizeByAuto($newWidth, $newHeight) {
+        if ($this->height < $this->width) { 
+            // *** Image to be resized is wider (landscape)    
+            $optimalWidth = $newWidth;
+            $optimalHeight = $this->getSizeByFixedWidth ( $newWidth );
+        } elseif ($this->height > $this->width) {
+            // *** Image to be resized is taller (portrait)
+        
+            $optimalWidth = $this->getSizeByFixedHeight ( $newHeight );
+            $optimalHeight = $newHeight;
+        } else {
+            // *** Image to be resizerd is a square        
+            if ($newHeight < $newWidth) {
+                $optimalWidth = $newWidth;
+                $optimalHeight = $this->getSizeByFixedWidth ( $newWidth );
+            } else if ($newHeight > $newWidth) {
+                $optimalWidth = $this->getSizeByFixedHeight ( $newHeight );
+                $optimalHeight = $newHeight;
+            } else {
+                // *** Sqaure being resized to a square
+                $optimalWidth = $newWidth;
+                $optimalHeight = $newHeight;
+            }
+        }
+        return array (
+                        'optimalWidth' => $optimalWidth,
+                        'optimalHeight' => $optimalHeight 
+        );
+    }
+
+    // # --------------------------------------------------------
+    private function getOptimalCrop($newWidth, $newHeight) {
+        $heightRatio = $this->height / $newHeight;
+        $widthRatio = $this->width / $newWidth;
+
+        if ($heightRatio < $widthRatio) {
+            $optimalRatio = $heightRatio;
+        } else {
+            $optimalRatio = $widthRatio;
+        }
+        $optimalHeight = $this->height / $optimalRatio;
+        $optimalWidth = $this->width / $optimalRatio;
+        return array (
+                        'optimalWidth' => $optimalWidth,
+                        'optimalHeight' => $optimalHeight 
+        );
+    }
+
+    // # --------------------------------------------------------
+    private function crop($optimalWidth, $optimalHeight, $newWidth, $newHeight) {
+        // *** Find center - this will be used for the crop
+        $cropStartX = ($optimalWidth / 2) - ($newWidth / 2);
+        $cropStartY = ($optimalHeight / 2) - ($newHeight / 2);
+        $crop = $this->imageResized;
+        // imagedestroy($this->imageResized);
+
+        // *** Now crop from center to exact requested size
+        $this->imageResized = imagecreatetruecolor ( $newWidth, $newHeight );
+        imagecopyresampled ( $this->imageResized, $crop, 0, 0, $cropStartX, $cropStartY, $newWidth, $newHeight, $newWidth, $newHeight );
+    }
+
+    // # --------------------------------------------------------
+    public function saveImage($savePath, $imageQuality = "100") {
+        // *** Get extension
+        $extension = strrchr ( $savePath, '.' );
+        $extension = strtolower ( $extension );
+
+        if (! file_exists ( dirname ( $savePath ) ))
+            mkdir ( dirname ( $savePath ), 0777, true );
+
+        $extension = strtolower(substr(strrchr($savePath, "."), 1));
+
+        switch (exif_imagetype ( $this->originImage )) {
+        case 1 : // gif
+            imagegif ( $this->imageResized, $savePath );
+            break;
+        case 2 :  // jpg
+            imagejpeg ( $this->imageResized, $savePath, $imageQuality );
+            break;        
+        case 3 :  // png
+            // *** Scale quality from 0-100 to 0-9
+            $scaleQuality = round ( ($imageQuality / 100) * 9 );
+            // *** Invert quality setting as 0 is best, not 9
+            $invertScaleQuality = 9 - $scaleQuality;
+            imagepng ( $this->imageResized, $savePath, $invertScaleQuality );
+            break;
+        // ... etc
+        default :
+                // *** No extension - No save.
+                break;
+        }
+        imagedestroy ( $this->imageResized );
+    }    
+
+    public function viewImage($extension, $savePath) {        
+        header('Accept-Ranges: bytes');
+        //header('Content-Length: '.filesize($resize_image));
+        header('Content-type: image/'.$extension);
+        header('ETag: '.md5_file($savePath));
+        header('Last-Modified: '.gmdate("D, d M Y H:i:s", filemtime($savePath))." GMT");
+        
+        ob_start();
+        if ($extension == 'png') {
+            imagepng($this->image);
+        } else {
+            imagejpeg($this->image, NULL, 100);
+        }
+        $size = ob_get_length();
+        header("Content-length: " .$size);         
+        ob_flush();
+        imagedestroy($this->image);
+    }
+
+    public function getWidth() {
+        return $this->width;
+    }
+    public function getHeight() {
+        return $this->height;
+    }
+    public function getImage() {
+        return $this->image;
+    }
+}
+?>
+
+-- .bashrc
+# .bashrc
+
+# User specific aliases and functions
+
+alias rm='rm -i'
+alias cp='cp -i'
+alias mv='mv -i'
+
+alias nginx_start='/usr/local/nginx/sbin/nginx'
+alias nginx_stop='/usr/local/nginx/sbin/nginx -s stop'
+alias nginx_conf='cd /usr/local/nginx/conf'
+#alias nginx_log='tail -f /usr/local/nginx/logs/*.log'
+alias nginx_log='tail -f /usr/local/nginx/logs/`date '+%Y-%m-%d-%H'`-access.log'
+alias php_start='/etc/rc.d/init.d/php-fpm start'
+alias php_stop='/etc/rc.d/init.d/php-fpm stop'
+#alias php_resize_log='tail -f /usr/local/php-7.1.5/log/monitoring.log'
+alias apache_start='/usr/local/apache2/bin/httpd -k start'
+alias apache_stop='/usr/local/apache2/bin/httpd -k stop'
+
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+        . /etc/bashrc
+fi
+
+[root@IC-STIMG-04 logs]# df -k
+Filesystem      1K-blocks      Used Available Use% Mounted on
+/dev/sda3       270984728  58669972 198542828  23% /
+tmpfs            16370508         0  16370508   0% /dev/shm
+/dev/sda1          194241     32319    151682  18% /boot
+/dev/sdb1      1153070996 805860088 288631608  74% /contents
+[root@IC-STIMG-04 logs]# 
+
+################################################################################
+cat /proc/cpuinfo
+cat /proc/meminfo
+################################################################################
+1.226.200.38_DOJ-STIMG-04
+1.226.200.39_DOJ-STIMG-02
+1.226.200.40_DOJ-STIMG-03
+1.226.200.41_DOJ-STIMG-01
+processor       : 11
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 45
+model name      : Intel(R) Xeon(R) CPU E5-2640 0 @ 2.50GHz
+MemTotal:       16284180 kB
+################################################################################
+116.126.70.231_IC-STIMG-01
+116.126.70.232_IC-STIMG-02
+116.126.70.233_IC-STIMG-03
+116.126.70.234_IC-STIMG-04
+processor       : 23
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 63
+model name      : Intel(R) Xeon(R) CPU E5-2620 v3 @ 2.40GHz
+MemTotal:       32741016 kB
+################################################################################
+1.226.200.166_IS-STIMG-01
+1.226.200.167_IS-STIMG-02
+1.226.200.168_IS-STIMG-03
+1.226.200.169_IS-STIMG-04
+processor       : 11
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 45
+model name      : Intel(R) Xeon(R) CPU E5-2640 0 @ 2.50GHz
+MemTotal:       16284180 kB
+
+################################################################################
+[root@DOJ-STIMG-04 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       533G  6.5G  500G   2% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+/dev/sda1       283M   74M  194M  28% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+
+[root@DOJ-STIMG-02 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       533G   33G  473G   7% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+/dev/sda1       283M   74M  194M  28% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@DOJ-STIMG-02 ~]# 
+
+[root@DOJ-STIMG-03 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       533G   34G  472G   7% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+/dev/sda1       283M   74M  194M  28% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@DOJ-STIMG-03 ~]# 
+
+[root@DOJ-STIMG-01 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       533G   33G  473G   7% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+/dev/sda1       283M   74M  194M  28% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@DOJ-STIMG-01 ~]# 
+################################################################################
+[root@IC-STIMG-01 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       259G   71G  176G  29% /
+tmpfs            16G     0   16G   0% /dev/shm
+/dev/sda1       190M   32M  149M  18% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@IC-STIMG-01 ~]# 
+
+[root@IC-STIMG-02 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       259G   70G  176G  29% /
+tmpfs            16G     0   16G   0% /dev/shm
+/dev/sda1       190M   32M  149M  18% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@IC-STIMG-02 ~]# 
+
+[root@IC-STIMG-03 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       259G   71G  176G  29% /
+tmpfs            16G     0   16G   0% /dev/shm
+/dev/sda1       190M   32M  149M  18% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@IC-STIMG-03 ~]# 
+
+[root@IC-STIMG-04 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       259G   78G  168G  32% /
+tmpfs            16G     0   16G   0% /dev/shm
+/dev/sda1       190M   32M  149M  18% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@IC-STIMG-04 ~]# 
+################################################################################
+[root@IS-STIMG-01 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       533G   34G  473G   7% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+/dev/sda1       283M   74M  194M  28% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@IS-STIMG-01 ~]# 
+
+[root@IS-STIMG-02 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       533G   34G  473G   7% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+/dev/sda1       283M   74M  194M  28% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@IS-STIMG-02 ~]# 
+
+[root@IS-STIMG-03 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       533G   34G  473G   7% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+/dev/sda1       283M   74M  194M  28% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@IS-STIMG-03 ~]# 
+
+[root@IS-STIMG-04 ~]# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda3       533G   34G  473G   7% /
+tmpfs           7.8G     0  7.8G   0% /dev/shm
+/dev/sda1       283M   74M  194M  28% /boot
+/dev/sdb1       1.1T  775G  270G  75% /contents
+[root@IS-STIMG-04 ~]# 
+
+

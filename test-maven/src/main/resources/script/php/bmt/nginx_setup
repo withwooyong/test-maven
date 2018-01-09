@@ -20,3 +20,109 @@ make && make install
 
 vi /usr/local/nginx/conf/nginx.conf
 
+/contents
+
+./configure --prefix=/home/manager/server/nginx_log_test --with-nginx_http_log_module --with-http_gzip_static_module --with-http_stub_status_module
+
+./configure --prefix=/home/manager/server/nginx_log_test --with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --add-module=/usr/local/nginx-module-vts
+
+
+
+
+[svc@VM-SCS-2-02 logrotate.d]$ ll
+합계 40
+-rw-rw-r--  1 root root 135 2016-01-18 02:12 ConsoleKit
+-rw-r--r--  1 root root  71 2016-05-11 14:00 cups
+-rw-r--r--  1 root root 139 2016-05-12 13:32 dracut
+-rw-r--r--  1 root root 185 2016-11-03 23:33 httpd
+-rw-r--r--  1 root root 284 2017-04-19 02:44 nginx
+-rw-r--r--. 1 root root 106 2015-06-03 20:06 numad
+-rw-r--r--. 1 root root 329 2012-07-17 17:02 psacct
+-rw-r--r--  1 root root 124 2016-05-11 08:40 stap-server
+-rw-r--r--. 1 root root 210 2014-12-10 19:05 syslog
+-rw-r--r--  1 root root  87 2016-07-13 01:45 yum
+[svc@VM-SCS-2-02 logrotate.d]$ cat nginx 
+/svc/appadmin/nginx/logs/stream.access /svc/appadmin/nginx/logs/error.log {
+  daily
+  missingok
+  nocompress
+  ifempty
+  create 640 svc svc
+  sharedscripts
+  postrotate
+    [ ! -f /svc/appadmin/nginx/run/nginx.pid ] || kill -USR1 `cat /svc/appadmin/nginx/run/nginx.pid`
+  endscript
+}
+
+/home/manager/server/nginx_bmt/logs/stream.access /home/manager/server/nginx_bmt/logs/error.log {
+  daily
+  missingok
+  nocompress
+  ifempty
+  create 640 svc svc
+  sharedscripts
+  postrotate
+    [ ! -f /svc/appadmin/nginx/run/nginx.pid ] || kill -USR1 `cat /home/manager/server/nginx_bmt/run/nginx.pid`
+  endscript
+}
+
+[svc@VM-SCS-2-02 logrotate.d]$ pwd
+/etc/logrotate.d
+[svc@VM-SCS-2-02 logrotate.d]$
+
+
+*ssl8443.conf
+
+upstream http_backend {
+#Tomcat is listening on default 8080 port
+  server 127.0.0.1:8080;
+  keepalive 1;
+}
+
+    log_format btv_combined '[$time_local] $request_time $remote_addr $remote_user - '
+        '"$request" $body_bytes_sent $status - '
+        '"$http_referer" "$http_user_agent"';
+
+server {
+    listen       8443 ssl;
+    server_name localhost;
+    
+    ssl_certificate     /svc/appadmin/nginx/server.crt;
+    ssl_certificate_key /svc/appadmin/nginx/server.key;
+    
+    # 1megabyte can store about 4000 sessions
+    ssl_session_cache    shared:SSL:8m;
+    ssl_session_timeout  5m;
+    
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2 SSLv3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   html;
+    }
+
+    if ($time_iso8601 ~ "^(\d{4})-(\d{2})-(\d{2})T(\d{2})") {
+      set $year $1;
+      set $month $2;
+      set $day $3;
+      set $hour $4;
+    }
+    access_log  logs/$year-$month-$day-$hour-access.log  btv_combined;
+
+    location / {
+        root   html;
+        index  example_main.html;
+    }
+
+    location ~ \.jsp$ {
+        proxy_pass http://http_backend;
+        proxy_http_version 1.1;
+        proxy_set_header Connection "close";
+        proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+}
+

@@ -3,7 +3,7 @@
     date_default_timezone_set("Asia/Seoul");
 
     $image_url = $_REQUEST["u"]; // /ontv/11000/T98976_315x452.jpg
-    $is_bmt = true;
+    $is_bmt = false;
     
     $remote_url = "";
     if ($is_bmt == true) {
@@ -21,8 +21,6 @@
     }
     
     $option = "exact"; // auto crop exact 
-
-    $monitoring_log = "/home/manager/server/nginx_bmt/logs/php_debug.log";    
     
     if (file_exists($resize_image)) { // file exist
         $resizeObj = new resize($resize_image);
@@ -30,7 +28,6 @@
         ////////////////////////////////////////////////////////////////////////
     } else { // file not exist
         
-        error_log (date("Y-m-d H:i:s")." resize.php file not exist _REQUEST : ".$image_url."\n", 3, $monitoring_log);
         $image_origin1 = "_src";
         $image_origin2 = "_315x452";
         $is_width_height = true;
@@ -76,8 +73,6 @@
                                     $remote_image = @file_get_contents($remote_url.$image_url); // BMT 호출된 원본   
                                     $is_width_height = false;
                                     if ($remote_image === false) { // 원본 없음
-                                        error_log (date("Y-m-d H:i:s")." resize.php image not found bmt : ".$image_url."\n", 3, $monitoring_log);
-                                        
                                         header("HTTP/1.1 404 Not Found");
                                         return;
                                     } else {
@@ -95,7 +90,6 @@
                                 touch($resize_image, strtotime(str_replace("Last-Modified: ", "", $http_response_header[3])));
                             }                                                
                         } else {
-                            error_log (date("Y-m-d H:i:s")." resize.php image not found : ".$image_url."\n", 3, $monitoring_log);
                             header("HTTP/1.1 404 Not Found");
                             return;
                         }
@@ -120,13 +114,10 @@
             $resizeObj->resizeImage($width, $height, $option);
             $resizeObj->saveImage($save_image); // resize image save
             
-            error_log (date("Y-m-d H:i:s")." resize.php is_width_height == true : ".$save_image."\n", 3, $monitoring_log);
-            
             $resizeObj2 = new resize($save_image);
             $resizeObj2->viewImage($extension, $save_image);
             //$resizeObj->viewImage($extension, $resize_image);
         } else {
-            error_log (date("Y-m-d H:i:s")." resize.php is_width_height == false : ".$resize_image."\n", 3, $monitoring_log);
             
             $resizeObj = new resize($resize_image);
             header('Accept-Ranges: bytes');
